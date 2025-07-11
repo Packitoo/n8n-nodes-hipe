@@ -84,6 +84,17 @@ export class hipe implements INodeType {
       // Operations will be dynamically loaded based on the selected resource
       ...this.getResourceOperations() as INodeProperties[],
       // Fields will be dynamically loaded based on the selected resource and operation
+      // Corrugated Format fields
+      ...corrugatedFormats.create.properties,
+      ...corrugatedFormats.get.properties,
+      ...corrugatedFormats.update.properties,
+      ...corrugatedFormats.list.properties,
+      
+      // Corrugated Flute fields
+      ...corrugatedFlutes.create.properties,
+      ...corrugatedFlutes.get.properties,
+      ...corrugatedFlutes.update.properties,
+      ...corrugatedFlutes.list.properties,
     ],
   };
 

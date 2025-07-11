@@ -11,6 +11,12 @@ export const properties: INodeProperties[] = [
     required: true,
     default: '',
     description: 'ID of the corrugated format to update',
+    displayOptions: {
+      show: {
+        resource: ['corrugatedFormat'],
+        operation: ['update']
+      }
+    },
   },
   {
     displayName: 'Update Fields',
@@ -18,14 +24,13 @@ export const properties: INodeProperties[] = [
     type: 'collection',
     placeholder: 'Add Field',
     default: {},
+    displayOptions: {
+      show: {
+        resource: ['corrugatedFormat'],
+        operation: ['update']
+      }
+    },
     options: [
-      {
-        displayName: 'Name',
-        name: 'name',
-        type: 'string',
-        default: '',
-        description: 'Name of the corrugated format',
-      },
       {
         displayName: 'Width',
         name: 'width',
@@ -50,28 +55,32 @@ export async function execute(
   this: IExecuteFunctions,
   items: INodeExecutionData[],
 ): Promise<INodeExecutionData[]> {
-  // This is just a scaffold, implementation will be added later
   const returnData: INodeExecutionData[] = [];
-  
-  // Process each item
+
+  // Get credentials
+  const credentials = await this.getCredentials('hipe');
+  let baseUrl = credentials.url;
+  if (typeof baseUrl !== 'string') {
+    throw new Error('HIPE base URL is not a string');
+  }
+  baseUrl = baseUrl.replace(/\/$/, '');
+
   for (let i = 0; i < items.length; i++) {
     try {
       // Get input data
       const formatId = this.getNodeParameter('formatId', i) as string;
       const updateFields = this.getNodeParameter('updateFields', i, {}) as ICorrugatedFormat;
-      
-      // In the actual implementation, this would make an API call to update the corrugated format
-      // For now, we just return placeholder data
-      returnData.push({
-        json: {
-          success: true,
-          data: {
-            id: formatId,
-            ...updateFields,
-          },
-        },
+
+      // Make API call to update the corrugated format
+      const response = await this.helpers.request!({
+        method: 'PATCH',
+        url: `${baseUrl}/api/corrugated-formats/${encodeURIComponent(formatId)}`,
+        body: updateFields,
+        json: true,
       });
-    } catch (error) {
+
+      returnData.push({ json: response });
+    } catch (error: any) {
       if (this.continueOnFail()) {
         returnData.push({ json: { error: error.message } });
         continue;
@@ -79,6 +88,7 @@ export async function execute(
       throw error;
     }
   }
-  
+
   return returnData;
 }
+

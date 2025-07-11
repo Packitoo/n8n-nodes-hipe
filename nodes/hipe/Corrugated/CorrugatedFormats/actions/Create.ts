@@ -5,20 +5,18 @@ import { ICorrugatedFormat } from '../../../interfaces';
 // Properties for the Create operation
 export const properties: INodeProperties[] = [
   {
-    displayName: 'Name',
-    name: 'name',
-    type: 'string',
-    required: true,
-    default: '',
-    description: 'Name of the corrugated format',
-  },
-  {
     displayName: 'Width',
     name: 'width',
     type: 'number',
     required: true,
     default: 0,
     description: 'Width of the corrugated format in mm',
+    displayOptions: {
+      show: {
+        resource: ['corrugatedFormat'],
+        operation: ['create']
+      }
+    }
   },
   {
     displayName: 'Length',
@@ -27,6 +25,12 @@ export const properties: INodeProperties[] = [
     required: true,
     default: 0,
     description: 'Length of the corrugated format in mm',
+    displayOptions: {
+      show: {
+        resource: ['corrugatedFormat'],
+        operation: ['create']
+      }
+    }
   },
   {
     displayName: 'Additional Fields',
@@ -34,6 +38,12 @@ export const properties: INodeProperties[] = [
     type: 'collection',
     placeholder: 'Add Field',
     default: {},
+    displayOptions: {
+      show: {
+        resource: ['corrugatedFormat'],
+        operation: ['create']
+      }
+    },
     options: [
       // Add any additional fields specific to creating corrugated formats
     ],
@@ -45,35 +55,42 @@ export async function execute(
   this: IExecuteFunctions,
   items: INodeExecutionData[],
 ): Promise<INodeExecutionData[]> {
-  // This is just a scaffold, implementation will be added later
   const returnData: INodeExecutionData[] = [];
-  
-  // Process each item
+
+  // Get credentials
+  const credentials = await this.getCredentials('hipe');
+  let baseUrl = credentials.url;
+  if (typeof baseUrl !== 'string') {
+    throw new Error('HIPE base URL is not a string');
+  }
+  baseUrl = baseUrl.replace(/\/$/, '');
+
   for (let i = 0; i < items.length; i++) {
     try {
       // Get input data
-      const name = this.getNodeParameter('name', i) as string;
       const width = this.getNodeParameter('width', i) as number;
       const length = this.getNodeParameter('length', i) as number;
       const additionalFields = this.getNodeParameter('additionalFields', i, {}) as object;
-      
+
       // Prepare request data
       const requestData: ICorrugatedFormat = {
-        name,
         width,
         length,
         ...additionalFields,
       };
-      
-      // In the actual implementation, this would make an API call to create the corrugated format
-      // For now, we just return the request data as a placeholder
-      returnData.push({
-        json: {
-          success: true,
-          data: requestData,
-        },
-      });
-    } catch (error) {
+
+      // Make API call to create the corrugated format
+      const response = await this.helpers.request!(
+        {
+          method: 'POST',
+          url: `${baseUrl}/api/corrugated-formats`,
+          body: requestData,
+          json: true,
+        }
+      );
+
+      returnData.push({ json: response });
+    } catch (error: any) {
       if (this.continueOnFail()) {
         returnData.push({ json: { error: error.message } });
         continue;
@@ -81,6 +98,7 @@ export async function execute(
       throw error;
     }
   }
-  
+
   return returnData;
 }
+

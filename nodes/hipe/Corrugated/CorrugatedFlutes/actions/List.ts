@@ -10,6 +10,12 @@ export const properties: INodeProperties[] = [
     type: 'boolean',
     default: false,
     description: 'Whether to return all results or only up to a given limit',
+    displayOptions: {
+      show: {
+        resource: ['corrugatedFlute'],
+        operation: ['getMany'],
+      },
+    }
   },
   {
     displayName: 'Limit',
@@ -17,6 +23,8 @@ export const properties: INodeProperties[] = [
     type: 'number',
     displayOptions: {
       show: {
+        resource: ['corrugatedFlute'],
+        operation: ['getMany'],
         returnAll: [false],
       },
     },
@@ -32,6 +40,12 @@ export const properties: INodeProperties[] = [
     type: 'collection',
     placeholder: 'Add Filter',
     default: {},
+    displayOptions: {
+      show: {
+        resource: ['corrugatedFlute'],
+        operation: ['getMany'],
+      },
+    },
     options: [
       {
         displayName: 'Name',
@@ -49,6 +63,12 @@ export const properties: INodeProperties[] = [
     type: 'collection',
     placeholder: 'Add Sort Option',
     default: {},
+    displayOptions: {
+      show: {
+        resource: ['corrugatedFlute'],
+        operation: ['getMany'],
+      },
+    },
     options: [
       {
         displayName: 'Sort By',
@@ -104,6 +124,14 @@ export async function execute(
       const filters = this.getNodeParameter('filters', i, {}) as object;
       const sort = this.getNodeParameter('sort', i, {}) as { sortBy?: string; sortOrder?: 'asc' | 'desc' };
       
+      // Get credentials
+      const credentials = await this.getCredentials('hipe');
+      let baseUrl = credentials.url;
+      if (typeof baseUrl !== 'string') {
+        throw new Error('HIPE base URL is not a string');
+      }
+      baseUrl = baseUrl.replace(/\/$/, '');
+      
       // Prepare pagination options
       const paginationOptions: IHIPEPaginationOptions = {
         page: 1,
@@ -117,36 +145,51 @@ export async function execute(
           [sort.sortBy]: sort.sortOrder || 'asc',
         };
       }
+
+      let hasNextPage = true;
+
+      while (hasNextPage) {
+        const response = await this.helpers.requestWithAuthentication.call(this, "hipe", {
+          method: 'GET',
+          url: `${baseUrl}/api/corrugated-flutes`,
+          qs: paginationOptions,
+          json: true,
+        });
+
+        paginationOptions.page = (paginationOptions.page ?? 1) + 1;
+        hasNextPage = response.pageCount >= paginationOptions.page;
+        returnData.push({ json: response });
+      }
       
       // In the actual implementation, this would make an API call to list corrugated flutes
       // For now, we just return placeholder data
-      returnData.push({
-        json: {
-          success: true,
-          data: [
-            {
-              id: '1',
-              name: 'A Flute',
-              height: 4.8,
-            },
-            {
-              id: '2',
-              name: 'B Flute',
-              height: 2.4,
-            },
-            {
-              id: '3',
-              name: 'C Flute',
-              height: 3.6,
-            },
-          ],
-          pagination: {
-            total: 3,
-            page: 1,
-            itemsPerPage: limit || 100,
-          },
-        },
-      });
+      // returnData.push({
+      //   json: {
+      //     success: true,
+      //     data: [
+      //       {
+      //         id: '1',
+      //         name: 'A Flute',
+      //         height: 4.8,
+      //       },
+      //       {
+      //         id: '2',
+      //         name: 'B Flute',
+      //         height: 2.4,
+      //       },
+      //       {
+      //         id: '3',
+      //         name: 'C Flute',
+      //         height: 3.6,
+      //       },
+      //     ],
+      //     pagination: {
+      //       total: 3,
+      //       page: 1,
+      //       itemsPerPage: limit || 100,
+      //     },
+      //   },
+      // });
     } catch (error) {
       if (this.continueOnFail()) {
         returnData.push({ json: { error: error.message } });

@@ -21,6 +21,7 @@ export interface IHIPEPaginationOptions {
   itemsPerPage?: number;
   order?: Record<string, 'asc' | 'desc'>;
   filters?: Record<string, any>;
+  [key: string]: any;
 }
 
 // Resource specific interfaces
@@ -56,7 +57,6 @@ export interface ICorrugatedMaterialCompositionPrice {
 // Corrugated Formats
 export interface ICorrugatedFormat {
   id?: string;
-  name: string;
   width: number;
   length: number;
   [key: string]: any;

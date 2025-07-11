@@ -10,6 +10,12 @@ export const properties: INodeProperties[] = [
     required: true,
     default: '',
     description: 'ID of the corrugated format to retrieve',
+    displayOptions: {
+      show: {
+        resource: ['corrugatedFormat'],
+        operation: ['get']
+      }
+    },
   },
   {
     displayName: 'Options',
@@ -17,6 +23,12 @@ export const properties: INodeProperties[] = [
     type: 'collection',
     placeholder: 'Add Option',
     default: {},
+    displayOptions: {
+      show: {
+        resource: ['corrugatedFormat'],
+        operation: ['get']
+      }
+    },
     options: [
       // Add any additional options for retrieving corrugated formats
     ],
@@ -28,31 +40,31 @@ export async function execute(
   this: IExecuteFunctions,
   items: INodeExecutionData[],
 ): Promise<INodeExecutionData[]> {
-  // This is just a scaffold, implementation will be added later
   const returnData: INodeExecutionData[] = [];
-  
-  // Process each item
+
+  // Get credentials
+  const credentials = await this.getCredentials('hipe');
+  let baseUrl = credentials.url;
+  if (typeof baseUrl !== 'string') {
+    throw new Error('HIPE base URL is not a string');
+  }
+  baseUrl = baseUrl.replace(/\/$/, '');
+
   for (let i = 0; i < items.length; i++) {
     try {
       // Get input data
       const formatId = this.getNodeParameter('formatId', i) as string;
-      const options = this.getNodeParameter('options', i, {}) as object;
-      
-      // In the actual implementation, this would make an API call to get the corrugated format
-      // For now, we just return placeholder data
-      returnData.push({
-        json: {
-          success: true,
-          data: {
-            id: formatId,
-            name: 'Sample Corrugated Format',
-            width: 1000,
-            length: 1200,
-            ...options,
-          },
-        },
+      // const options = this.getNodeParameter('options', i, {}) as object; // Not used for GET by ID
+
+      // Make API call to get the corrugated format
+      const response = await this.helpers.request!({
+        method: 'GET',
+        url: `${baseUrl}/api/corrugated-formats/${encodeURIComponent(formatId)}`,
+        json: true,
       });
-    } catch (error) {
+
+      returnData.push({ json: response });
+    } catch (error: any) {
       if (this.continueOnFail()) {
         returnData.push({ json: { error: error.message } });
         continue;
@@ -60,6 +72,7 @@ export async function execute(
       throw error;
     }
   }
-  
+
   return returnData;
 }
+
