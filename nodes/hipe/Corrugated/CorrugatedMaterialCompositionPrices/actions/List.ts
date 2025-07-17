@@ -1,6 +1,5 @@
 import { IExecuteFunctions } from 'n8n-workflow';
 import { INodeExecutionData, INodeProperties } from 'n8n-workflow';
-import { IHIPEPaginationOptions } from '../../../interfaces';
 
 // Properties for the List operation
 export const properties: INodeProperties[] = [
@@ -10,6 +9,12 @@ export const properties: INodeProperties[] = [
     type: 'boolean',
     default: false,
     description: 'Whether to return all results or only up to a given limit',
+    displayOptions: {
+      show: {
+        resource: ['corrugatedMaterialCompositionPrice'],
+        operation: ['getMany']
+      }
+    }
   },
   {
     displayName: 'Limit',
@@ -17,8 +22,10 @@ export const properties: INodeProperties[] = [
     type: 'number',
     displayOptions: {
       show: {
+        resource: ['corrugatedMaterialCompositionPrice'],
+        operation: ['getMany'],
         returnAll: [false],
-      },
+      }
     },
     typeOptions: {
       minValue: 1,
@@ -31,6 +38,12 @@ export const properties: INodeProperties[] = [
     name: 'filters',
     type: 'collection',
     placeholder: 'Add Filter',
+    displayOptions: {
+      show: {
+        resource: ['corrugatedMaterialCompositionPrice'],
+        operation: ['getMany'],
+      }
+    },
     default: {},
     options: [
       {
@@ -63,6 +76,12 @@ export const properties: INodeProperties[] = [
     type: 'collection',
     placeholder: 'Add Sort Option',
     default: {},
+    displayOptions: {
+      show: {
+        resource: ['corrugatedMaterialCompositionPrice'],
+        operation: ['getMany'],
+      }
+    },
     options: [
       {
         displayName: 'Sort By',
@@ -106,62 +125,44 @@ export async function execute(
   this: IExecuteFunctions,
   items: INodeExecutionData[],
 ): Promise<INodeExecutionData[]> {
-  // This is just a scaffold, implementation will be added later
   const returnData: INodeExecutionData[] = [];
-  
-  // Process each item
+  const credentials = await this.getCredentials('hipe');
+  let baseUrl = credentials.url;
+  if (typeof baseUrl !== 'string') {
+    throw new Error('HIPE base URL is not a string');
+  }
+  baseUrl = baseUrl.replace(/\/$/, '');
+
   for (let i = 0; i < items.length; i++) {
     try {
-      // Get input data
       const returnAll = this.getNodeParameter('returnAll', i) as boolean;
-      const limit = returnAll ? 0 : this.getNodeParameter('limit', i, 50) as number;
+      const limit = returnAll ? undefined : this.getNodeParameter('limit', i, 50) as number;
       const filters = this.getNodeParameter('filters', i, {}) as object;
       const sort = this.getNodeParameter('sort', i, {}) as { sortBy?: string; sortOrder?: 'asc' | 'desc' };
-      
-      // Prepare pagination options
-      const paginationOptions: IHIPEPaginationOptions = {
-        page: 1,
-        itemsPerPage: limit || 100,
-        filters,
-      };
-      
-      // Add sorting if specified
+
+      // Build query params
+      const qs: any = { ...filters };
+      if (!returnAll && limit) qs.limit = limit;
       if (sort.sortBy) {
-        paginationOptions.order = {
-          [sort.sortBy]: sort.sortOrder || 'asc',
-        };
+        qs.orderBy = sort.sortBy;
+        qs.order = sort.sortOrder || 'asc';
       }
-      
-      // In the actual implementation, this would make an API call to list corrugated material composition prices
-      // For now, we just return placeholder data
-      returnData.push({
-        json: {
-          success: true,
-          data: [
-            {
-              id: '1',
-              corrugatedMaterialComposition: 'sample-composition-id-1',
-              price: 100,
-              currency: 'EUR',
-              validFrom: '2025-01-01T00:00:00Z',
-              validTo: '2025-12-31T23:59:59Z',
-            },
-            {
-              id: '2',
-              corrugatedMaterialComposition: 'sample-composition-id-2',
-              price: 150,
-              currency: 'USD',
-              validFrom: '2025-01-01T00:00:00Z',
-              validTo: '2025-12-31T23:59:59Z',
-            },
-          ],
-          pagination: {
-            total: 2,
-            page: 1,
-            itemsPerPage: limit || 100,
-          },
-        },
+
+      const response = await this.helpers.requestWithAuthentication.call(this, 'hipe', {
+        method: 'GET',
+        url: `${baseUrl}/api/corrugated-material-composition-prices`,
+        qs,
+        json: true,
       });
+
+      // Assume response is either array or paginated { data, pagination }
+      if (Array.isArray(response)) {
+        returnData.push({ json: { data: response } });
+      } else if (response.data) {
+        returnData.push({ json: response });
+      } else {
+        returnData.push({ json: { data: response } });
+      }
     } catch (error) {
       if (this.continueOnFail()) {
         returnData.push({ json: { error: error.message } });
@@ -170,6 +171,5 @@ export async function execute(
       throw error;
     }
   }
-  
   return returnData;
 }

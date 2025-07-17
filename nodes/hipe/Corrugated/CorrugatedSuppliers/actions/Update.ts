@@ -11,6 +11,12 @@ export const properties: INodeProperties[] = [
     required: true,
     default: '',
     description: 'ID of the corrugated supplier to update',
+    displayOptions: {
+      show: {
+        resource: ['corrugatedSupplier'],
+        operation: ['update'],
+      },
+    },
   },
   {
     displayName: 'Update Fields',
@@ -18,6 +24,12 @@ export const properties: INodeProperties[] = [
     type: 'collection',
     placeholder: 'Add Field',
     default: {},
+    displayOptions: {
+      show: {
+        resource: ['corrugatedSupplier'],
+        operation: ['update'],
+      },
+    },
     options: [
       {
         displayName: 'Name',
@@ -25,6 +37,12 @@ export const properties: INodeProperties[] = [
         type: 'string',
         default: '',
         description: 'Name of the corrugated supplier',
+        displayOptions: {
+          show: {
+            resource: ['corrugatedSupplier'],
+            operation: ['update'],
+          },
+        },
       },
       {
         displayName: 'Contact Info',
@@ -32,6 +50,12 @@ export const properties: INodeProperties[] = [
         type: 'string',
         default: '',
         description: 'Contact information of the supplier',
+        displayOptions: {
+          show: {
+            resource: ['corrugatedSupplier'],
+            operation: ['update'],
+          },
+        },
       },
       // Add any additional fields specific to updating corrugated suppliers
     ],

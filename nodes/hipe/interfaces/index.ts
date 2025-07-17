@@ -94,3 +94,16 @@ export interface IProject {
   status?: string;
   [key: string]: any;
 }
+
+export interface IUser {
+  id?: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+  externalId: string;
+  phoneNumber: string;
+  mobilePhone: string;
+  job: string;
+  customFields: object;
+  [key: string]: any;
+}

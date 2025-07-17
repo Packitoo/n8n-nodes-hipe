@@ -11,6 +11,12 @@ export const properties: INodeProperties[] = [
     required: true,
     default: '',
     description: 'Name of the corrugated material',
+    displayOptions: {
+      show: {
+        resource: ['corrugatedMaterial'],
+        operation: ['create'],
+      },
+    },
   },
   {
     displayName: 'Description',
@@ -19,6 +25,12 @@ export const properties: INodeProperties[] = [
     required: false,
     default: '',
     description: 'Description of the corrugated material',
+    displayOptions: {
+      show: {
+        resource: ['corrugatedMaterial'],
+        operation: ['create'],
+      },
+    },
   },
   {
     displayName: 'Additional Fields',
@@ -26,6 +38,12 @@ export const properties: INodeProperties[] = [
     type: 'collection',
     placeholder: 'Add Field',
     default: {},
+    displayOptions: {
+      show: {
+        resource: ['corrugatedMaterial'],
+        operation: ['create'],
+      },
+    },
     options: [
       // Add any additional fields specific to creating corrugated materials
     ],

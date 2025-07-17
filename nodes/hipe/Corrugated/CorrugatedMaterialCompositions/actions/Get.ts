@@ -1,5 +1,6 @@
 import { IExecuteFunctions } from 'n8n-workflow';
 import { INodeExecutionData, INodeProperties } from 'n8n-workflow';
+import { ICorrugatedMaterialComposition } from '../../../interfaces';
 
 // Properties for the Get operation
 export const properties: INodeProperties[] = [
@@ -10,6 +11,12 @@ export const properties: INodeProperties[] = [
     required: true,
     default: '',
     description: 'ID of the corrugated material composition to retrieve',
+    displayOptions: {
+      show: {
+        resource: ['corrugatedMaterialComposition'],
+        operation: ['get'],
+      },
+    },
   },
   {
     displayName: 'Options',
@@ -17,6 +24,12 @@ export const properties: INodeProperties[] = [
     type: 'collection',
     placeholder: 'Add Option',
     default: {},
+    displayOptions: {
+      show: {
+        resource: ['corrugatedMaterialComposition'],
+        operation: ['get'],
+      },
+    },
     options: [
       // Add any additional options for retrieving corrugated material compositions
     ],
@@ -31,27 +44,23 @@ export async function execute(
   // This is just a scaffold, implementation will be added later
   const returnData: INodeExecutionData[] = [];
   
-  // Process each item
+  // Get credentials and baseUrl
+  const credentials = await this.getCredentials('hipe');
+  let baseUrl = credentials.url;
+  if (typeof baseUrl !== 'string') {
+    throw new Error('HIPE base URL is not a string');
+  }
+  baseUrl = baseUrl.replace(/\/$/, '');
+
   for (let i = 0; i < items.length; i++) {
     try {
-      // Get input data
       const compositionId = this.getNodeParameter('compositionId', i) as string;
-      const options = this.getNodeParameter('options', i, {}) as object;
-      
-      // In the actual implementation, this would make an API call to get the corrugated material composition
-      // For now, we just return placeholder data
-      returnData.push({
-        json: {
-          success: true,
-          data: {
-            id: compositionId,
-            corrugatedMaterial: 'sample-material-id',
-            flute: 'sample-flute-id',
-            liners: ['sample-liner-id-1', 'sample-liner-id-2'],
-            ...options,
-          },
-        },
+      const response = await this.helpers.requestWithAuthentication.call(this, 'hipe', {
+        method: 'GET',
+        url: `${baseUrl}/api/corrugated-material-compositions/${compositionId}`,
+        json: true,
       });
+      returnData.push({ json: response as ICorrugatedMaterialComposition });
     } catch (error) {
       if (this.continueOnFail()) {
         returnData.push({ json: { error: error.message } });
@@ -60,6 +69,5 @@ export async function execute(
       throw error;
     }
   }
-  
   return returnData;
 }

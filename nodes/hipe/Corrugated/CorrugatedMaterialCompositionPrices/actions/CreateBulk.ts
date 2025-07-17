@@ -10,6 +10,12 @@ export const properties: INodeProperties[] = [
     default: 'data',
     required: true,
     description: 'The name of the input field containing the array of composition prices to create',
+    displayOptions: {
+      show: {
+        resource: ['corrugatedMaterialCompositionPrice'],
+        operation: ['createBulk'],
+      },
+    },
   },
   {
     displayName: 'Options',
@@ -17,6 +23,12 @@ export const properties: INodeProperties[] = [
     type: 'collection',
     placeholder: 'Add Option',
     default: {},
+    displayOptions: {
+      show: {
+        resource: ['corrugatedMaterialCompositionPrice'],
+        operation: ['createBulk'],
+      },
+    },
     options: [
       {
         displayName: 'Continue on Error',

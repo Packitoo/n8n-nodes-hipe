@@ -4,15 +4,15 @@ import { INodeExecutionData, INodeProperties } from 'n8n-workflow';
 // Properties for the Get operation
 export const properties: INodeProperties[] = [
   {
-    displayName: 'Liner ID',
-    name: 'linerId',
+    displayName: 'user ID',
+    name: 'id',
     type: 'string',
     required: true,
     default: '',
-    description: 'ID of the corrugated liner to retrieve',
+    description: 'ID of the user to retrieve',
     displayOptions: {
       show: {
-        resource: ['corrugatedLiner'],
+        resource: ['user'],
         operation: ['get']
       }
     },
@@ -25,12 +25,12 @@ export const properties: INodeProperties[] = [
     default: {},
     displayOptions: {
       show: {
-        resource: ['corrugatedLiner'],
+        resource: ['user'],
         operation: ['get']
       }
     },
     options: [
-      // Add any additional options for retrieving corrugated liners
+      // Add any additional options for retrieving corrugated formats
     ],
   },
 ];
@@ -45,8 +45,8 @@ export async function execute(
   // Get credentials
   const credentials = await this.getCredentials('hipe');
   let baseUrl = credentials.url;
-  if (typeof baseUrl !== 'string') {
-    throw new Error('HIPE base URL is not a string');
+  if (!baseUrl || typeof baseUrl !== 'string' || !/^https?:\/\//.test(baseUrl)) {
+    throw new Error('HIPE base URL is not set or is invalid: ' + baseUrl);
   }
   baseUrl = baseUrl.replace(/\/$/, '');
 
@@ -54,17 +54,18 @@ export async function execute(
   for (let i = 0; i < items.length; i++) {
     try {
       // Get input data
-      const linerId = this.getNodeParameter('linerId', i) as string;
-      // const options = this.getNodeParameter('options', i, {}) as object;
-
-      // Make API call to get the corrugated liner
+      const id = this.getNodeParameter('id', i) as string;
+      // const options = this.getNodeParameter('options', i, {}) as { includeDetails?: boolean };
+      
+      // Make API call to get the corrugated format
       const response = await this.helpers.requestWithAuthentication.call(this, "hipe", {
         method: 'GET',
-        url: `${baseUrl}/api/corrugated-liners/${encodeURIComponent(linerId)}`,
+        url: `${baseUrl}/api/users/${id}`,
         json: true,
       });
+
       returnData.push({ json: response });
-    } catch (error: any) {
+    } catch (error) {
       if (this.continueOnFail()) {
         returnData.push({ json: { error: error.message } });
         continue;
@@ -72,5 +73,6 @@ export async function execute(
       throw error;
     }
   }
+  
   return returnData;
 }

@@ -4,88 +4,162 @@ import { ICorrugatedLiner } from '../../../interfaces';
 
 // Properties for the Update operation
 export const properties: INodeProperties[] = [
-  {
-    displayName: 'Liner ID',
-    name: 'linerId',
-    type: 'string',
-    required: true,
-    default: '',
-    description: 'ID of the corrugated liner to update',
-  },
-  {
-    displayName: 'Update Fields',
-    name: 'updateFields',
-    type: 'collection',
-    placeholder: 'Add Field',
-    default: {},
-    options: [
-      {
-        displayName: 'Name',
-        name: 'name',
-        type: 'string',
-        default: '',
-        description: 'Name of the corrugated liner',
-      },
-      {
-        displayName: 'Weight',
-        name: 'weight',
-        type: 'number',
-        default: 0,
-        description: 'Weight of the liner in g/m²',
-      },
-      {
-        displayName: 'Color',
-        name: 'color',
-        type: 'string',
-        default: '',
-        description: 'Color of the liner',
-      },
-      {
-        displayName: 'Type',
-        name: 'type',
-        type: 'string',
-        default: '',
-        description: 'Type of the liner (e.g., Kraft, Test)',
-      },
-      // Add any additional fields specific to updating corrugated liners
-    ],
-  },
+	{
+		displayName: 'Liner ID',
+		name: 'linerId',
+		type: 'string',
+		required: true,
+		default: '',
+		description: 'ID of the corrugated liner to update',
+		displayOptions: {
+			show: {
+				resource: ['corrugatedLiner'],
+				operation: ['update'],
+			},
+		},
+	},
+	{
+		displayName: 'Update Fields',
+		name: 'updateFields',
+		type: 'collection',
+		placeholder: 'Add Field',
+		default: {},
+		displayOptions: {
+			show: {
+				resource: ['corrugatedLiner'],
+				operation: ['update'],
+			},
+		},
+		options: [
+			{
+				displayName: 'Name',
+				name: 'name',
+				type: 'string',
+				required: true,
+				default: '',
+				description: 'Name of the corrugated liner',
+				displayOptions: {
+					show: {
+						resource: ['corrugatedLiner'],
+						operation: ['create'],
+					},
+				},
+			},
+			{
+				displayName: 'Label',
+				name: 'label',
+				type: 'json',
+				required: false,
+				default: {
+					'en-US': '',
+					'fr-FR': '',
+				},
+				description: 'Label of the corrugated liner',
+				displayOptions: {
+					show: {
+						resource: ['corrugatedLiner'],
+						operation: ['create'],
+					},
+				},
+			},
+			{
+				displayName: 'Category',
+				name: 'category',
+				type: 'options',
+				options: [
+					{
+						name: 'Kraft',
+						value: 'Kraft',
+					},
+					{
+						name: 'Test',
+						value: 'Test',
+					},
+					{
+						name: 'Other',
+						value: 'Other',
+					},
+				],
+				required: true,
+				default: 'Kraft',
+				description: 'Category of the corrugated liner',
+				displayOptions: {
+					show: {
+						resource: ['corrugatedLiner'],
+						operation: ['create'],
+					},
+				},
+			},
+			{
+				displayName: 'Ink porosity',
+				name: 'inkPorosity',
+				type: 'number',
+				required: true,
+				default: 0,
+				description: 'Ink porosity of the corrugated liner',
+				displayOptions: {
+					show: {
+						resource: ['corrugatedLiner'],
+						operation: ['create'],
+					},
+				},
+			},
+			{
+				displayName: 'Varnish porosity',
+				name: 'varnishPorosity',
+				type: 'number',
+				required: true,
+				default: 0,
+				description: 'Varnish porosity of the corrugated liner',
+				displayOptions: {
+					show: {
+						resource: ['corrugatedLiner'],
+						operation: ['create'],
+					},
+				},
+			},
+			// Add any additional fields specific to updating corrugated liners
+		],
+	},
 ];
 
 // Execute function for the Update operation
 export async function execute(
-  this: IExecuteFunctions,
-  items: INodeExecutionData[],
+	this: IExecuteFunctions,
+	items: INodeExecutionData[],
 ): Promise<INodeExecutionData[]> {
-  // This is just a scaffold, implementation will be added later
-  const returnData: INodeExecutionData[] = [];
-  
-  // Process each item
-  for (let i = 0; i < items.length; i++) {
-    try {
-      // Get input data
-      const linerId = this.getNodeParameter('linerId', i) as string;
-      const updateFields = this.getNodeParameter('updateFields', i, {}) as ICorrugatedLiner;
-      
-      // In the actual implementation, this would make an API call to update the corrugated liner
-      // For now, we just return placeholder data
-      returnData.push({
-        json: {
-          success: true,
-          data: {
-            id: linerId,
-            ...updateFields,
-          },
-        },
-      });
-    } catch (error) {
-      if (this.continueOnFail()) {
-        returnData.push({ json: { error: error.message } });
-        continue;
-      }
-      throw error;
-    }
-  }
-  
-  return returnData;
+	const returnData: INodeExecutionData[] = [];
+
+	// Get credentials
+	const credentials = await this.getCredentials('hipe');
+	let baseUrl = credentials.url;
+	if (typeof baseUrl !== 'string') {
+		throw new Error('HIPE base URL is not a string');
+	}
+	baseUrl = baseUrl.replace(/\/$/, '');
+
+	// Process each item
+	for (let i = 0; i < items.length; i++) {
+		try {
+			// Get input data
+			const linerId = this.getNodeParameter('linerId', i) as string;
+			const updateFields = this.getNodeParameter('updateFields', i, {}) as ICorrugatedLiner;
+
+			// Make API call to update the corrugated liner
+			const response = await this.helpers.requestWithAuthentication.call(this, 'hipe', {
+				method: 'PATCH',
+				url: `${baseUrl}/api/corrugated-liners/${encodeURIComponent(linerId)}`,
+				body: updateFields,
+				json: true,
+			});
+			returnData.push({ json: response });
+		} catch (error: any) {
+			if (this.continueOnFail()) {
+				returnData.push({ json: { error: error.message } });
+				continue;
+			}
+			throw error;
+		}
+	}
+	return returnData;
 }

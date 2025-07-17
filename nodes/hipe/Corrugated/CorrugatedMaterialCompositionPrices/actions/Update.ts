@@ -11,6 +11,12 @@ export const properties: INodeProperties[] = [
     required: true,
     default: '',
     description: 'ID of the corrugated material composition price to update',
+    displayOptions: {
+      show: {
+        resource: ['corrugatedMaterialCompositionPrice'],
+        operation: ['update'],
+      },
+    },
   },
   {
     displayName: 'Update Fields',
@@ -18,6 +24,12 @@ export const properties: INodeProperties[] = [
     type: 'collection',
     placeholder: 'Add Field',
     default: {},
+    displayOptions: {
+      show: {
+        resource: ['corrugatedMaterialCompositionPrice'],
+        operation: ['update'],
+      },
+    },
     options: [
       {
         displayName: 'Corrugated Material Composition',
@@ -25,6 +37,12 @@ export const properties: INodeProperties[] = [
         type: 'string',
         default: '',
         description: 'ID of the corrugated material composition',
+        displayOptions: {
+          show: {
+            resource: ['corrugatedMaterialCompositionPrice'],
+            operation: ['update'],
+          },
+        },
       },
       {
         displayName: 'Price',
@@ -32,13 +50,25 @@ export const properties: INodeProperties[] = [
         type: 'number',
         default: 0,
         description: 'Price of the composition',
+        displayOptions: {
+          show: {
+            resource: ['corrugatedMaterialCompositionPrice'],
+            operation: ['update'],
+          },
+        },
       },
       {
         displayName: 'Currency',
         name: 'currency',
         type: 'string',
-        default: '',
+        default: 'EUR',
         description: 'Currency of the price',
+        displayOptions: {
+          show: {
+            resource: ['corrugatedMaterialCompositionPrice'],
+            operation: ['update'],
+          },
+        },
       },
       {
         displayName: 'Valid From',
@@ -46,6 +76,12 @@ export const properties: INodeProperties[] = [
         type: 'dateTime',
         default: '',
         description: 'Date from which the price is valid',
+        displayOptions: {
+          show: {
+            resource: ['corrugatedMaterialCompositionPrice'],
+            operation: ['update'],
+          },
+        },
       },
       {
         displayName: 'Valid To',
@@ -53,6 +89,12 @@ export const properties: INodeProperties[] = [
         type: 'dateTime',
         default: '',
         description: 'Date until which the price is valid',
+        displayOptions: {
+          show: {
+            resource: ['corrugatedMaterialCompositionPrice'],
+            operation: ['update'],
+          },
+        },
       },
       // Add any additional fields specific to updating corrugated material composition prices
     ],

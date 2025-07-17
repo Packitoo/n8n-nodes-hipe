@@ -11,6 +11,12 @@ export const properties: INodeProperties[] = [
     required: true,
     default: '',
     description: 'ID of the corrugated material composition to update',
+    displayOptions: {
+      show: {
+        resource: ['corrugatedMaterialComposition'],
+        operation: ['update'],
+      },
+    },
   },
   {
     displayName: 'Update Fields',
@@ -18,6 +24,12 @@ export const properties: INodeProperties[] = [
     type: 'collection',
     placeholder: 'Add Field',
     default: {},
+    displayOptions: {
+      show: {
+        resource: ['corrugatedMaterialComposition'],
+        operation: ['update'],
+      },
+    },
     options: [
       {
         displayName: 'Corrugated Material',
@@ -25,6 +37,12 @@ export const properties: INodeProperties[] = [
         type: 'string',
         default: '',
         description: 'ID of the corrugated material',
+        displayOptions: {
+          show: {
+            resource: ['corrugatedMaterialComposition'],
+            operation: ['update'],
+          },
+        },
       },
       {
         displayName: 'Flute',
@@ -32,6 +50,12 @@ export const properties: INodeProperties[] = [
         type: 'string',
         default: '',
         description: 'ID of the flute',
+        displayOptions: {
+          show: {
+            resource: ['corrugatedMaterialComposition'],
+            operation: ['update'],
+          },
+        },
       },
       {
         displayName: 'Liners',
@@ -42,6 +66,12 @@ export const properties: INodeProperties[] = [
         },
         default: [],
         description: 'IDs of the liners',
+        displayOptions: {
+          show: {
+            resource: ['corrugatedMaterialComposition'],
+            operation: ['update'],
+          },
+        },
       },
       // Add any additional fields specific to updating corrugated material compositions
     ],

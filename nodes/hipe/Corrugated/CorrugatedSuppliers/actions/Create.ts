@@ -11,6 +11,12 @@ export const properties: INodeProperties[] = [
     required: true,
     default: '',
     description: 'Name of the corrugated supplier',
+    displayOptions: {
+      show: {
+        resource: ['corrugatedSupplier'],
+        operation: ['create'],
+      },
+    },
   },
   {
     displayName: 'Additional Fields',
@@ -18,6 +24,12 @@ export const properties: INodeProperties[] = [
     type: 'collection',
     placeholder: 'Add Field',
     default: {},
+    displayOptions: {
+      show: {
+        resource: ['corrugatedSupplier'],
+        operation: ['create'],
+      },
+    },
     options: [
       {
         displayName: 'Contact Info',
@@ -25,6 +37,12 @@ export const properties: INodeProperties[] = [
         type: 'string',
         default: '',
         description: 'Contact information of the supplier',
+        displayOptions: {
+          show: {
+            resource: ['corrugatedSupplier'],
+            operation: ['create'],
+          },
+        },
       },
       // Add any additional fields specific to creating corrugated suppliers
     ],

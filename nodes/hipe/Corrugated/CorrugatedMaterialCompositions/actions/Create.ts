@@ -11,6 +11,12 @@ export const properties: INodeProperties[] = [
     required: true,
     default: '',
     description: 'ID of the corrugated material',
+    displayOptions: {
+      show: {
+        resource: ['corrugatedMaterialComposition'],
+        operation: ['create'],
+      },
+    },
   },
   {
     displayName: 'Flute',
@@ -19,6 +25,12 @@ export const properties: INodeProperties[] = [
     required: true,
     default: '',
     description: 'ID of the flute',
+    displayOptions: {
+      show: {
+        resource: ['corrugatedMaterialComposition'],
+        operation: ['create'],
+      },
+    },
   },
   {
     displayName: 'Liners',
@@ -30,6 +42,12 @@ export const properties: INodeProperties[] = [
     required: true,
     default: [],
     description: 'IDs of the liners',
+    displayOptions: {
+      show: {
+        resource: ['corrugatedMaterialComposition'],
+        operation: ['create'],
+      },
+    },
   },
   {
     displayName: 'Additional Fields',
@@ -37,6 +55,12 @@ export const properties: INodeProperties[] = [
     type: 'collection',
     placeholder: 'Add Field',
     default: {},
+    displayOptions: {
+      show: {
+        resource: ['corrugatedMaterialComposition'],
+        operation: ['create'],
+      },
+    },
     options: [
       // Add any additional fields specific to creating corrugated material compositions
     ],

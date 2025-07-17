@@ -1,5 +1,6 @@
 import { IExecuteFunctions } from 'n8n-workflow';
 import { INodeExecutionData, INodeProperties } from 'n8n-workflow';
+import { ICorrugatedMaterial } from '../../../interfaces';
 
 // Properties for the Get operation
 export const properties: INodeProperties[] = [
@@ -10,6 +11,12 @@ export const properties: INodeProperties[] = [
     required: true,
     default: '',
     description: 'ID of the corrugated material to retrieve',
+    displayOptions: {
+      show: {
+        resource: ['corrugatedMaterial'],
+        operation: ['get'],
+      },
+    },
   },
   {
     displayName: 'Options',
@@ -17,6 +24,12 @@ export const properties: INodeProperties[] = [
     type: 'collection',
     placeholder: 'Add Option',
     default: {},
+    displayOptions: {
+      show: {
+        resource: ['corrugatedMaterial'],
+        operation: ['get'],
+      },
+    },
     options: [
       // Add any additional options for retrieving corrugated materials
     ],
@@ -31,26 +44,24 @@ export async function execute(
   // This is just a scaffold, implementation will be added later
   const returnData: INodeExecutionData[] = [];
   
+  // Get credentials and baseUrl
+  const credentials = await this.getCredentials('hipe');
+  let baseUrl = credentials.url;
+  if (typeof baseUrl !== 'string') {
+    throw new Error('HIPE base URL is not a string');
+  }
+  baseUrl = baseUrl.replace(/\/$/, '');
+
   // Process each item
   for (let i = 0; i < items.length; i++) {
     try {
-      // Get input data
       const materialId = this.getNodeParameter('materialId', i) as string;
-      const options = this.getNodeParameter('options', i, {}) as object;
-      
-      // In the actual implementation, this would make an API call to get the corrugated material
-      // For now, we just return placeholder data
-      returnData.push({
-        json: {
-          success: true,
-          data: {
-            id: materialId,
-            name: 'Sample Corrugated Material',
-            description: 'This is a sample corrugated material',
-            ...options,
-          },
-        },
+      const response = await this.helpers.requestWithAuthentication.call(this, 'hipe', {
+        method: 'GET',
+        url: `${baseUrl}/api/corrugated-materials/${materialId}`,
+        json: true,
       });
+      returnData.push({ json: response as ICorrugatedMaterial });
     } catch (error) {
       if (this.continueOnFail()) {
         returnData.push({ json: { error: error.message } });
@@ -59,6 +70,6 @@ export async function execute(
       throw error;
     }
   }
-  
+
   return returnData;
 }

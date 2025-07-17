@@ -10,6 +10,12 @@ export const properties: INodeProperties[] = [
     required: true,
     default: '',
     description: 'ID of the corrugated material composition price to delete',
+    displayOptions: {
+      show: {
+        resource: ['corrugatedMaterialCompositionPrice'],
+        operation: ['delete'],
+      },
+    },
   },
 ];
 

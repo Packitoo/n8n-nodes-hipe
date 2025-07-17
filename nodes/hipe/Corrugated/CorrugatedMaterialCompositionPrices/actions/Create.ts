@@ -11,6 +11,12 @@ export const properties: INodeProperties[] = [
     required: true,
     default: '',
     description: 'ID of the corrugated material composition',
+    displayOptions: {
+      show: {
+        resource: ['corrugatedMaterialCompositionPrice'],
+        operation: ['create'],
+      },
+    },
   },
   {
     displayName: 'Price',
@@ -19,6 +25,12 @@ export const properties: INodeProperties[] = [
     required: true,
     default: 0,
     description: 'Price of the composition',
+    displayOptions: {
+      show: {
+        resource: ['corrugatedMaterialCompositionPrice'],
+        operation: ['create'],
+      },
+    },
   },
   {
     displayName: 'Currency',
@@ -27,6 +39,12 @@ export const properties: INodeProperties[] = [
     required: true,
     default: 'EUR',
     description: 'Currency of the price',
+    displayOptions: {
+      show: {
+        resource: ['corrugatedMaterialCompositionPrice'],
+        operation: ['create'],
+      },
+    },
   },
   {
     displayName: 'Additional Fields',
@@ -34,6 +52,12 @@ export const properties: INodeProperties[] = [
     type: 'collection',
     placeholder: 'Add Field',
     default: {},
+    displayOptions: {
+      show: {
+        resource: ['corrugatedMaterialCompositionPrice'],
+        operation: ['create'],
+      },
+    },
     options: [
       {
         displayName: 'Valid From',
@@ -41,6 +65,12 @@ export const properties: INodeProperties[] = [
         type: 'dateTime',
         default: '',
         description: 'Date from which the price is valid',
+        displayOptions: {
+          show: {
+            resource: ['corrugatedMaterialCompositionPrice'],
+            operation: ['create'],
+          },
+        },
       },
       {
         displayName: 'Valid To',
@@ -48,6 +78,12 @@ export const properties: INodeProperties[] = [
         type: 'dateTime',
         default: '',
         description: 'Date until which the price is valid',
+        displayOptions: {
+          show: {
+            resource: ['corrugatedMaterialCompositionPrice'],
+            operation: ['create'],
+          },
+        },
       },
       // Add any additional fields specific to creating corrugated material composition prices
     ],

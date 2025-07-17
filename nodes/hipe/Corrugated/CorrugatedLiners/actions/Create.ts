@@ -11,14 +11,86 @@ export const properties: INodeProperties[] = [
     required: true,
     default: '',
     description: 'Name of the corrugated liner',
+    displayOptions: {
+      show: {
+        resource: ['corrugatedLiner'],
+        operation: ['create']
+      }
+    },
   },
   {
-    displayName: 'Weight',
-    name: 'weight',
+    displayName: 'Label',
+    name: 'label',
+    type: 'json',
+    placeholder: 'Add Label',
+    required: false,
+    default: {
+      'en-US': '',
+      'fr-FR': ''
+    },
+    description: 'Label of the corrugated liner',
+    displayOptions: {
+      show: {
+        resource: ['corrugatedLiner'],
+        operation: ['create']
+      }
+    },
+  },
+  {
+    displayName: "Category",
+    name: "category",
+    type: 'options',
+    options: [
+      {
+        name: 'Kraft',
+        value: 'Kraft',
+      },
+      {
+        name: 'Test',
+        value: 'Test',
+      },
+      {
+        name: 'Other',
+        value: 'Other',
+      }
+    ],
+    required: true,
+    default: 'Kraft',
+    description: "Category of the corrugated liner",
+    displayOptions: {
+      show: {
+        resource: ['corrugatedLiner'],
+        operation: ['create']
+      }
+    },
+  },
+  {
+    displayName: 'Ink porosity',
+    name: 'inkPorosity',
     type: 'number',
     required: true,
     default: 0,
-    description: 'Weight of the liner in g/m²',
+    description: 'Ink porosity of the corrugated liner',
+    displayOptions: {
+      show: {
+        resource: ['corrugatedLiner'],
+        operation: ['create']
+      }
+    },
+  },
+  {
+    displayName: 'Varnish porosity',
+    name: 'varnishPorosity',
+    type: 'number',
+    required: true,
+    default: 0,
+    description: 'Varnish porosity of the corrugated liner',
+    displayOptions: {
+      show: {
+        resource: ['corrugatedLiner'],
+        operation: ['create']
+      }
+    },
   },
   {
     displayName: 'Additional Fields',
@@ -26,21 +98,13 @@ export const properties: INodeProperties[] = [
     type: 'collection',
     placeholder: 'Add Field',
     default: {},
+    displayOptions: {
+      show: {
+        resource: ['corrugatedLiner'],
+        operation: ['create']
+      }
+    },
     options: [
-      {
-        displayName: 'Color',
-        name: 'color',
-        type: 'string',
-        default: '',
-        description: 'Color of the liner',
-      },
-      {
-        displayName: 'Type',
-        name: 'type',
-        type: 'string',
-        default: '',
-        description: 'Type of the liner (e.g., Kraft, Test)',
-      },
       // Add any additional fields specific to creating corrugated liners
     ],
   },
@@ -51,9 +115,16 @@ export async function execute(
   this: IExecuteFunctions,
   items: INodeExecutionData[],
 ): Promise<INodeExecutionData[]> {
-  // This is just a scaffold, implementation will be added later
   const returnData: INodeExecutionData[] = [];
-  
+
+  // Get credentials
+  const credentials = await this.getCredentials('hipe');
+  let baseUrl = credentials.url;
+  if (typeof baseUrl !== 'string') {
+    throw new Error('HIPE base URL is not a string');
+  }
+  baseUrl = baseUrl.replace(/\/$/, '');
+
   // Process each item
   for (let i = 0; i < items.length; i++) {
     try {
@@ -61,23 +132,23 @@ export async function execute(
       const name = this.getNodeParameter('name', i) as string;
       const weight = this.getNodeParameter('weight', i) as number;
       const additionalFields = this.getNodeParameter('additionalFields', i, {}) as object;
-      
+
       // Prepare request data
       const requestData: ICorrugatedLiner = {
         name,
         weight,
         ...additionalFields,
       };
-      
-      // In the actual implementation, this would make an API call to create the corrugated liner
-      // For now, we just return the request data as a placeholder
-      returnData.push({
-        json: {
-          success: true,
-          data: requestData,
-        },
+
+      // Make API call to create the corrugated liner
+      const response = await this.helpers.requestWithAuthentication.call(this, "hipe", {
+        method: 'POST',
+        url: `${baseUrl}/api/corrugated-liners`,
+        body: requestData,
+        json: true,
       });
-    } catch (error) {
+      returnData.push({ json: response });
+    } catch (error: any) {
       if (this.continueOnFail()) {
         returnData.push({ json: { error: error.message } });
         continue;
@@ -85,6 +156,5 @@ export async function execute(
       throw error;
     }
   }
-  
   return returnData;
 }
