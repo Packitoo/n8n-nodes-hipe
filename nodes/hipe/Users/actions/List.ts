@@ -1,6 +1,5 @@
 import { IExecuteFunctions } from 'n8n-workflow';
 import { INodeExecutionData, INodeProperties } from 'n8n-workflow';
-import { IHIPEPaginationOptions } from '../../interfaces';
 
 // Properties for the List operation
 export const properties: INodeProperties[] = [
@@ -102,6 +101,12 @@ export const properties: INodeProperties[] = [
     name: 'sort',
     type: 'collection',
     placeholder: 'Add Sort Option',
+    displayOptions: {
+      show: {
+        resource: ['user'],
+        operation: ['getMany'],
+      },
+    },
     default: {},
     options: [
       {
@@ -156,71 +161,43 @@ export async function execute(
 ): Promise<INodeExecutionData[]> {
   // This is just a scaffold, implementation will be added later
   const returnData: INodeExecutionData[] = [];
-  
-  // Process each item
+  const credentials = await this.getCredentials('hipe');
+  let baseUrl = credentials.url;
+  if (typeof baseUrl !== 'string') {
+    throw new Error('HIPE base URL is not a string');
+  }
+  baseUrl = baseUrl.replace(/\/$/, '');
+
   for (let i = 0; i < items.length; i++) {
     try {
-      // Get input data
       const returnAll = this.getNodeParameter('returnAll', i) as boolean;
-      const limit = returnAll ? 0 : this.getNodeParameter('limit', i, 50) as number;
+      const limit = returnAll ? undefined : this.getNodeParameter('limit', i, 50) as number;
       const filters = this.getNodeParameter('filters', i, {}) as object;
       const sort = this.getNodeParameter('sort', i, {}) as { sortBy?: string; sortOrder?: 'asc' | 'desc' };
-      
-      // Prepare pagination options
-      const paginationOptions: IHIPEPaginationOptions = {
-        page: 1,
-        itemsPerPage: limit || 100,
-        filters,
-      };
-      
-      // Add sorting if specified
+
+      // Build query params
+      const qs: any = { ...filters };
+      if (!returnAll && limit) qs.limit = limit;
       if (sort.sortBy) {
-        paginationOptions.order = {
-          [sort.sortBy]: sort.sortOrder || 'desc',
-        };
+        qs.orderBy = sort.sortBy;
+        qs.order = sort.sortOrder || 'asc';
       }
-      
-      // In the actual implementation, this would make an API call to list projects
-      // For now, we just return placeholder data
-      returnData.push({
-        json: {
-          success: true,
-          data: [
-            {
-              id: 'project-1',
-              name: 'Sample Project 1',
-              description: 'This is sample project 1',
-              clientId: 'client-123',
-              status: 'in_progress',
-              createdAt: '2023-01-01T00:00:00Z',
-              updatedAt: '2023-01-02T00:00:00Z',
-            },
-            {
-              id: 'project-2',
-              name: 'Sample Project 2',
-              description: 'This is sample project 2',
-              clientId: 'client-456',
-              status: 'draft',
-              createdAt: '2023-01-03T00:00:00Z',
-              updatedAt: '2023-01-03T00:00:00Z',
-            },
-            {
-              id: 'project-3',
-              name: 'Sample Project 3',
-              description: 'This is sample project 3',
-              clientId: 'client-123',
-              status: 'completed',
-              createdAt: '2022-12-01T00:00:00Z',
-              updatedAt: '2023-01-05T00:00:00Z',
-            },
-          ],
-          pagination: {
-            total: 3,
-            page: 1,
-            itemsPerPage: limit || 100,
-          },
-        },
+
+      const response = await this.helpers.requestWithAuthentication.call(this, 'hipe', {
+        method: 'GET',
+        url: `${baseUrl}/api/users`,
+        qs,
+        json: true,
       });
+
+      // Assume response is either array or paginated { data, pagination }
+      if (Array.isArray(response)) {
+        returnData.push({ json: { data: response } });
+      } else if (response.data) {
+        returnData.push({ json: response });
+      } else {
+        returnData.push({ json: { data: response } });
+      }
     } catch (error) {
       if (this.continueOnFail()) {
         returnData.push({ json: { error: error.message } });
@@ -229,6 +206,5 @@ export async function execute(
       throw error;
     }
   }
-  
   return returnData;
 }
