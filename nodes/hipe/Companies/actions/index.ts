@@ -28,7 +28,7 @@ export function buildProperties() {
         { name: 'Get Many', value: 'getMany', description: 'Get multiple companies', action: 'Get Many' },
         { name: 'Update', value: 'update', description: 'Update a specific company', action: 'Update' },
       ],
-      default: 'getMany',
+      default: 'get',
       noDataExpression: true,
     },
     ...create.properties,

@@ -58,12 +58,30 @@ export const properties: INodeProperties[] = [
     },
     options: [
       {
-        displayName: 'Collaborater Ids',
+        displayName: 'Collaborator Ids',
         name: 'collaboraterIds',
-        type: 'collection',
-        placeholder: 'Add Collaborater Id',
-        default: [],
-        description: 'Collaborater Ids of the contacts',
+        type: 'fixedCollection',
+        placeholder: 'Add Collaborator Id',
+        default: {},
+        typeOptions: {
+          multipleValues: true,
+        },
+        options: [
+          {
+            name: 'collaboratorIdFields',
+            displayName: 'Collaborator Id',
+            values: [
+              {
+                displayName: 'Id',
+                name: 'id',
+                type: 'string',
+                default: '',
+                description: 'Collaborator Id',
+              },
+            ],
+          },
+        ],
+        description: 'Add one or more Collaborator Ids',
       },
       {
         displayName: 'Parent Id',
@@ -129,32 +147,34 @@ export async function execute(
   // Process each item
   for (let i = 0; i < items.length; i++) {
     try {
-      const name = this.getNodeParameter('name', i) as string;
-      const managedById = this.getNodeParameter('managedById', i, '') as string;
-      const externalId = this.getNodeParameter('externalId', i, '') as string;
-      const collaboraterIds = this.getNodeParameter('collaboraterIds', i, []) as string[];
-      const parentId = this.getNodeParameter('parentId', i, '') as string;
-      const email = this.getNodeParameter('email', i, '') as string;
-      const website = this.getNodeParameter('website', i, '') as string;
-      const phone = this.getNodeParameter('phone', i, '') as string;
-      const vat = this.getNodeParameter('vat', i, '') as string;
-      const customFields = this.getNodeParameter('customFields', i, {}) as object;
-      
+			const additionalFields = this.getNodeParameter('additionalFields', i, {}) as ICompany;
+      additionalFields.name = this.getNodeParameter('name', i) as string;
+      additionalFields.managedById = this.getNodeParameter('managedById', i, '') as string;
+      additionalFields.externalId = this.getNodeParameter('externalId', i, '') as string;
+
+
+      let collab: string[] = [];
+      // Transform collaboratorIds from fixedCollection to flat array
+      const collaboratorIdsGroup: any = this.getNodeParameter('additionalFields', i, {}).collaboraterIds;
+      console.debug('collaboratorIdsGroup', collaboratorIdsGroup);
+      if (collaboratorIdsGroup && Array.isArray(collaboratorIdsGroup.collaboratorIdFields)) {
+        console.debug('collaboratorIdsGroup', collaboratorIdsGroup.collaboratorIdFields);
+        collab = collaboratorIdsGroup.collaboratorIdFields
+          .map((entry: { id: string }) => entry.id)
+          .filter((id: string) => !!id);
+        console.debug('collab', collaboratorIdsGroup.collaboratorIdFields);
+      }
+
+      console.debug('collab', collab);
+      delete (additionalFields as any).collaboraterIds;
+
       // Prepare request data
       const requestData: ICompany = {
-        name,
-        externalId,
-        managedById,
-        collaboraterIds,
-        parentId,
-        email,
-        website,
-        phone,
-        vat,
-        customFields,
+        ...additionalFields,
+        collaboratorIds: collab,
       };
       // Make API call to create the corrugated format
-      const response = await this.helpers.request!(
+      const response = await this.helpers.requestWithAuthentication.call(this, 'hipe',
         {
           method: 'POST',
           url: `${baseUrl}/api/companies`,

@@ -35,7 +35,6 @@ export const properties: INodeProperties[] = [
 				displayName: 'Name',
 				name: 'name',
 				type: 'string',
-				required: true,
 				default: '',
 				description: 'Name of the company',
 			},
@@ -102,8 +101,7 @@ export const properties: INodeProperties[] = [
 				type: 'json',
 				default: {},
 				description: 'Custom fields of the company',
-			},
-
+			}
 			// Add any additional fields specific to updating projects
 		],
 	},
@@ -132,9 +130,9 @@ export async function execute(
 			const updateFields = this.getNodeParameter('updateFields', i, {}) as ICompany;
 
 			// Make API call to update the company
-			const response = await this.helpers.request!({
+			const response = await this.helpers.requestWithAuthentication.call(this, 'hipe', {
 				method: 'PATCH',
-				url: `${baseUrl}/api/companies/${encodeURIComponent(companyId)}`,
+				url: `${baseUrl}/api/companies/${companyId}`,
 				json: true,
 				body: updateFields,
 			});
