@@ -111,14 +111,14 @@ export interface IUser {
 export interface ICompany {
   id?: string;
   name: string;
-  customFields: object
-  managedById: string
-  collaboraterIds: string[]
-  parentId: string
-  email: string
-  website: string
-  phone: string
-  vat: string
-  externalId: string
+  customFields?: object
+  managedById?: string
+  collaboraterIds?: string[]
+  parentId?: string
+  email?: string
+  website?: string
+  phone?: string
+  vat?: string
+  externalId?: string
   [key: string]: any;
 }

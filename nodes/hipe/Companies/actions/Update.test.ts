@@ -5,18 +5,20 @@ describe('Update action', () => {
     const mockThis = {
       getCredentials: async () => ({ url: 'https://fake.api' }),
       helpers: {
-        request: jest.fn().mockResolvedValue({ updated: true }),
+        requestWithAuthentication: { call: jest.fn().mockResolvedValue({ updated: true }) },
       },
-      getNodeParameter: (name: string, i: number) => {
+      getNodeParameter: (name: string, i: number, defaultValue?: any) => {
         if (name === 'id') return '1';
         if (name === 'updateFields') return { name: 'Acme Updated' };
-        return undefined;
+        return defaultValue;
       },
       continueOnFail: () => false,
     } as any;
     const items = [{ json: {} }];
     const result = await execute.call(mockThis, items);
-    expect(mockThis.helpers.request).toHaveBeenCalledWith(
+    expect(mockThis.helpers.requestWithAuthentication.call).toHaveBeenCalledWith(
+      mockThis,
+      'hipe',
       expect.objectContaining({
         method: 'PATCH',
         url: 'https://fake.api/api/companies/1',
@@ -29,13 +31,11 @@ describe('Update action', () => {
   it('should handle errors and push error object when continueOnFail is true (edge case)', async () => {
     const mockThis = {
       getCredentials: async () => ({ url: 'https://fake.api' }),
-      helpers: {
-        request: jest.fn().mockRejectedValue(new Error('fail!')),
-      },
-      getNodeParameter: (name: string, i: number) => {
+      helpers: { requestWithAuthentication: { call: jest.fn().mockRejectedValue(new Error('fail!')) } },
+      getNodeParameter: (name: string, i: number, defaultValue?: any) => {
         if (name === 'id') return '1';
         if (name === 'updateFields') return { name: 'Acme Updated' };
-        return undefined;
+        return defaultValue;
       },
       continueOnFail: () => true,
     } as any;

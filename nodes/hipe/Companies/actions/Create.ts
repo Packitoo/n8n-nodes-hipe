@@ -147,32 +147,36 @@ export async function execute(
   // Process each item
   for (let i = 0; i < items.length; i++) {
     try {
-			const additionalFields = this.getNodeParameter('additionalFields', i, {}) as ICompany;
-      additionalFields.name = this.getNodeParameter('name', i) as string;
-      additionalFields.managedById = this.getNodeParameter('managedById', i, '') as string;
-      additionalFields.externalId = this.getNodeParameter('externalId', i, '') as string;
+      const name = this.getNodeParameter('name', i) as string;
+      const managedById = this.getNodeParameter('managedById', i, '') as string;
+      const externalId = this.getNodeParameter('externalId', i, '') as string;
 
-
+      const additionalFieldsObj = this.getNodeParameter('additionalFields', i, {}) || {};
+      const collaboratorIdsGroup = additionalFieldsObj.collaboratorIds;
       let collab: string[] = [];
-      // Transform collaboratorIds from fixedCollection to flat array
-      const collaboratorIdsGroup: any = this.getNodeParameter('additionalFields', i, {}).collaboraterIds;
-      console.debug('collaboratorIdsGroup', collaboratorIdsGroup);
-      if (collaboratorIdsGroup && Array.isArray(collaboratorIdsGroup.collaboratorIdFields)) {
-        console.debug('collaboratorIdsGroup', collaboratorIdsGroup.collaboratorIdFields);
-        collab = collaboratorIdsGroup.collaboratorIdFields
-          .map((entry: { id: string }) => entry.id)
-          .filter((id: string) => !!id);
-        console.debug('collab', collaboratorIdsGroup.collaboratorIdFields);
+      if (
+        collaboratorIdsGroup &&
+        typeof collaboratorIdsGroup === 'object' &&
+        !Array.isArray(collaboratorIdsGroup) &&
+        'collaboratorIdFields' in collaboratorIdsGroup &&
+        Array.isArray((collaboratorIdsGroup as any).collaboratorIdFields)
+      ) {
+        const collaboratorIdFields = (collaboratorIdsGroup as any).collaboratorIdFields;
+        if (collaboratorIdFields.every((field: any) => 'id' in field)) {
+          collab = collaboratorIdFields.map((field: any) => field.id).filter((id: string) => !!id);
+        }
       }
-
-      console.debug('collab', collab);
-      delete (additionalFields as any).collaboraterIds;
-
-      // Prepare request data
+      if (additionalFieldsObj.collaboratorIds) {
+        delete additionalFieldsObj.collaboratorIds;
+      }
       const requestData: ICompany = {
-        ...additionalFields,
-        collaboratorIds: collab,
+        ...additionalFieldsObj,
+        name,
+        ...(managedById ? { managedById } : {}),
+        ...(externalId ? { externalId } : {}),
+        ...(collab.length > 0 ? { collaboratorIds: collab } : {}),
       };
+    
       // Make API call to create the corrugated format
       const response = await this.helpers.requestWithAuthentication.call(this, 'hipe',
         {
@@ -186,12 +190,11 @@ export async function execute(
       returnData.push({ json: response });
     } catch (error) {
       if (this.continueOnFail()) {
-        returnData.push({ json: { error: error.message } });
+        returnData.push({ json: { error: error.message.replace('collaboraterIds', 'collaboratorIds') } });
         continue;
       }
       throw error;
     }
   }
-  
   return returnData;
 }

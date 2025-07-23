@@ -5,32 +5,49 @@ describe('Create action', () => {
     const mockThis = {
       getCredentials: async () => ({ url: 'https://fake.api' }),
       helpers: {
-        request: jest.fn().mockResolvedValue({ created: true }),
+        requestWithAuthentication: jest.fn().mockResolvedValue({ created: true }),
       },
-      getNodeParameter: (name: string, i: number) => {
+      getNodeParameter: (name: string, i: number, defaultValue?: any) => {
+        // Simulate n8n parameter structure
+        if (name === 'additionalFields') {
+          return {
+            parentId: 'parent-1',
+            email: 'info@acme.com',
+            website: 'acme.com',
+            phone: '555-0000',
+            vat: 'FR123',
+            customFields: {},
+            collaboratorIds: { collaboratorIdFields: [ { id: 'collab-1' }, { id: 'collab-2' } ] },
+          };
+        }
         const params: { [key: string]: any } = {
           name: 'Acme',
           managedById: 'mgr-1',
           externalId: 'ext-1',
-          collaboraterIds: ['collab-1'],
+        };
+        return params[name] !== undefined ? params[name] : defaultValue;
+      },
+      continueOnFail: () => false,
+    } as any;
+    const items = [{ json: {} }];
+    const result = await execute.call(mockThis, items);
+    expect(mockThis.helpers.requestWithAuthentication).toHaveBeenCalledWith(
+      'hipe',
+      expect.objectContaining({
+        method: 'POST',
+        url: 'https://fake.api/api/companies',
+        body: expect.objectContaining({
+          name: 'Acme',
+          managedById: 'mgr-1',
+          externalId: 'ext-1',
           parentId: 'parent-1',
           email: 'info@acme.com',
           website: 'acme.com',
           phone: '555-0000',
           vat: 'FR123',
           customFields: {},
-        };
-        return params[name];
-      },
-      continueOnFail: () => false,
-    } as any;
-    const items = [{ json: {} }];
-    const result = await execute.call(mockThis, items);
-    expect(mockThis.helpers.request).toHaveBeenCalledWith(
-      expect.objectContaining({
-        method: 'POST',
-        url: 'https://fake.api/api/companies',
-        body: expect.objectContaining({ name: 'Acme' }),
+          collaboratorIds: ['collab-1', 'collab-2'],
+        }),
       })
     );
     expect(result[0].json).toEqual({ created: true });
@@ -40,9 +57,14 @@ describe('Create action', () => {
     const mockThis = {
       getCredentials: async () => ({ url: 'https://fake.api' }),
       helpers: {
-        request: jest.fn().mockRejectedValue(new Error('fail!')),
+        requestWithAuthentication: { call: jest.fn().mockRejectedValue(new Error('fail!')) },
       },
-      getNodeParameter: () => undefined,
+      getNodeParameter: (name: string, i: number, defaultValue?: any) => {
+        if (name === 'additionalFields') {
+          return { collaboratorIds: { collaboratorIdFields: [ { id: 'collab-1' }, { id: 'collab-2' } ] } };
+        }
+        return defaultValue;
+      },
       continueOnFail: () => true,
     } as any;
     const items = [{ json: {} }];

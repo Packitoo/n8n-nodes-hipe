@@ -53,13 +53,31 @@ export const properties: INodeProperties[] = [
 				description: 'External ID of the contact',
 			},
 			{
-				displayName: 'Collaborater Ids',
-				name: 'collaboraterIds',
-				type: 'collection',
-				placeholder: 'Add Collaborater Id',
-				default: [],
-				description: 'Collaborater Ids of the contacts',
-			},
+        displayName: 'Collaborator Ids',
+        name: 'collaboraterIds',
+        type: 'fixedCollection',
+        placeholder: 'Add Collaborator Id',
+        default: {},
+        typeOptions: {
+          multipleValues: true,
+        },
+        options: [
+          {
+            name: 'collaboratorIdFields',
+            displayName: 'Collaborator Id',
+            values: [
+              {
+                displayName: 'Id',
+                name: 'id',
+                type: 'string',
+                default: '',
+                description: 'Collaborator Id',
+              },
+            ],
+          },
+        ],
+        description: 'Add one or more Collaborator Ids',
+      },
 			{
 				displayName: 'Parent Id',
 				name: 'parentId',
@@ -129,12 +147,35 @@ export async function execute(
 			const companyId = this.getNodeParameter('id', i) as string;
 			const updateFields = this.getNodeParameter('updateFields', i, {}) as ICompany;
 
+      const collaboratorIdsGroup = updateFields.collaboratorIds;
+      let collab: string[] = [];
+      if (
+        collaboratorIdsGroup &&
+        typeof collaboratorIdsGroup === 'object' &&
+        !Array.isArray(collaboratorIdsGroup) &&
+        'collaboratorIdFields' in collaboratorIdsGroup &&
+        Array.isArray((collaboratorIdsGroup as any).collaboratorIdFields)
+      ) {
+        const collaboratorIdFields = (collaboratorIdsGroup as any).collaboratorIdFields;
+        if (collaboratorIdFields.every((field: any) => 'id' in field)) {
+          collab = collaboratorIdFields.map((field: any) => field.id).filter((id: string) => !!id);
+        }
+      }
+      if (updateFields.collaboratorIds) {
+        delete updateFields.collaboratorIds;
+      }
+
+      const requestData: ICompany = {
+        ...updateFields,
+        ...(collab.length > 0 ? { collaboratorIds: collab } : {}),
+      };
+
 			// Make API call to update the company
 			const response = await this.helpers.requestWithAuthentication.call(this, 'hipe', {
 				method: 'PATCH',
 				url: `${baseUrl}/api/companies/${companyId}`,
 				json: true,
-				body: updateFields,
+				body: requestData,
 			});
 			returnData.push({ json: response });
 		} catch (error) {
