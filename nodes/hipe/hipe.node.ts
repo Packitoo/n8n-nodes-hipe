@@ -16,10 +16,10 @@ import {
 // import * as corrugatedFlutes from './Corrugated/CorrugatedFlutes/actions';
 // import * as corrugatedLiners from './Corrugated/CorrugatedLiners/actions';
 // import * as projects from './Projects/actions';
-// import * as users from './Users/actions';
+import * as users from './Users/actions';
 import * as companies from './Companies/actions';
 
-const EMBEDDED_RESOURCES = [companies];
+const EMBEDDED_RESOURCES = [companies, users];
 
 // Runtime check for resource registration
 for (const res of EMBEDDED_RESOURCES) {
