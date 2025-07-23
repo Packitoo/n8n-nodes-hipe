@@ -35,6 +35,7 @@ export const properties: INodeProperties[] = [
     displayName: 'Email',
     name: 'email',
     type: 'string',
+				placeholder: 'name@email.com',
     default: '',
     description: 'Email of the contact',
     displayOptions: {
@@ -100,11 +101,11 @@ export const properties: INodeProperties[] = [
         displayName: 'Job Title',
         name: 'job',
         type: 'string',
-        default: null,
+        default: '',
         description: 'Job title of the contact',
       },
       {
-        displayName: 'Custom fields',
+        displayName: 'Custom Fields',
         name: 'customFields',
         type: 'json',
         default: {},

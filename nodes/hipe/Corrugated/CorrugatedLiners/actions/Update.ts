@@ -35,7 +35,6 @@ export const properties: INodeProperties[] = [
 				displayName: 'Name',
 				name: 'name',
 				type: 'string',
-				required: true,
 				default: '',
 				description: 'Name of the corrugated liner',
 				displayOptions: {
@@ -49,7 +48,6 @@ export const properties: INodeProperties[] = [
 				displayName: 'Label',
 				name: 'label',
 				type: 'json',
-				required: false,
 				default: {
 					'en-US': '',
 					'fr-FR': '',
@@ -91,7 +89,7 @@ export const properties: INodeProperties[] = [
 				},
 			},
 			{
-				displayName: 'Ink porosity',
+				displayName: 'Ink Porosity',
 				name: 'inkPorosity',
 				type: 'number',
 				required: true,
@@ -105,7 +103,7 @@ export const properties: INodeProperties[] = [
 				},
 			},
 			{
-				displayName: 'Varnish porosity',
+				displayName: 'Varnish Porosity',
 				name: 'varnishPorosity',
 				type: 'number',
 				required: true,

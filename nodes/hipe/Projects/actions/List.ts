@@ -65,7 +65,7 @@ export const properties: INodeProperties[] = [
             value: 'completed',
           },
         ],
-        default: '',
+        default: 'draft',
         description: 'Filter by status',
       },
       // Add any additional filters for listing projects

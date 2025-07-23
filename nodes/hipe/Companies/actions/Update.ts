@@ -32,18 +32,45 @@ export const properties: INodeProperties[] = [
 		},
 		options: [
 			{
-				displayName: 'Name',
-				name: 'name',
-				type: 'string',
-				default: '',
-				description: 'Name of the company',
+				displayName: 'Collaborator IDs',
+				name: 'collaboraterIds',
+				type: 'fixedCollection',
+				placeholder: 'Add Collaborator ID',
+				default: {},
+				typeOptions: {
+					multipleValues: true,
+				},
+				options: [
+					{
+						name: 'collaboratorIdFields',
+						displayName: 'Collaborator Id',
+						values: [
+							{
+								displayName: 'ID',
+								name: 'id',
+								type: 'string',
+								default: '',
+								description: 'Collaborator ID',
+							},
+						],
+					},
+				],
+				description: 'Add one or more Collaborator IDs',
 			},
 			{
-				displayName: 'ManagedByID',
-				name: 'managedById',
+				displayName: 'Custom Fields',
+				name: 'customFields',
+				type: 'json',
+				default: {},
+				description: 'Custom fields of the company',
+			},
+			{
+				displayName: 'Email',
+				name: 'email',
 				type: 'string',
+				placeholder: 'name@email.com',
 				default: '',
-				description: 'ManagedById of the company',
+				description: 'Email of the company',
 			},
 			{
 				displayName: 'External ID',
@@ -53,51 +80,25 @@ export const properties: INodeProperties[] = [
 				description: 'External ID of the contact',
 			},
 			{
-        displayName: 'Collaborator Ids',
-        name: 'collaboraterIds',
-        type: 'fixedCollection',
-        placeholder: 'Add Collaborator Id',
-        default: {},
-        typeOptions: {
-          multipleValues: true,
-        },
-        options: [
-          {
-            name: 'collaboratorIdFields',
-            displayName: 'Collaborator Id',
-            values: [
-              {
-                displayName: 'Id',
-                name: 'id',
-                type: 'string',
-                default: '',
-                description: 'Collaborator Id',
-              },
-            ],
-          },
-        ],
-        description: 'Add one or more Collaborator Ids',
-      },
+				displayName: 'ManagedByID',
+				name: 'managedById',
+				type: 'string',
+				default: '',
+				description: 'ManagedById of the company',
+			},
 			{
-				displayName: 'Parent Id',
+				displayName: 'Name',
+				name: 'name',
+				type: 'string',
+				default: '',
+				description: 'Name of the company',
+			},
+			{
+				displayName: 'Parent ID',
 				name: 'parentId',
 				type: 'string',
 				default: '',
-				description: 'Parent Id of the company',
-			},
-			{
-				displayName: 'Email',
-				name: 'email',
-				type: 'string',
-				default: '',
-				description: 'Email of the company',
-			},
-			{
-				displayName: 'Website',
-				name: 'website',
-				type: 'string',
-				default: '',
-				description: 'Website of the company',
+				description: 'Parent ID of the company',
 			},
 			{
 				displayName: 'Phone',
@@ -114,11 +115,11 @@ export const properties: INodeProperties[] = [
 				description: 'Vat of the company',
 			},
 			{
-				displayName: 'Custom fields',
-				name: 'customFields',
-				type: 'json',
-				default: {},
-				description: 'Custom fields of the company',
+				displayName: 'Website',
+				name: 'website',
+				type: 'string',
+				default: '',
+				description: 'Website of the company',
 			}
 			// Add any additional fields specific to updating projects
 		],

@@ -23,9 +23,9 @@ export function buildProperties() {
         show: { resource: [RESOURCE] },
       },
       options: [
-        { name: 'Create Contact', value: 'createContact', description: 'Create a new contact', action: 'Create Contact' },
+        { name: 'Create Contact', value: 'createContact', description: 'Create a new contact', action: 'Create contact' },
         { name: 'Get', value: 'get', description: 'Get a specific user', action: 'Get' },
-        { name: 'Get Many', value: 'getMany', description: 'Get multiple users', action: 'Get Many' },
+        { name: 'Get Many', value: 'getMany', description: 'Get multiple users', action: 'Get many' },
         { name: 'Update', value: 'update', description: 'Update a specific user', action: 'Update' },
       ],
       default: 'getMany',

@@ -58,7 +58,7 @@ export const properties: INodeProperties[] = [
             value: 'completed',
           },
         ],
-        default: '',
+        default: 'draft',
         description: 'Status of the project',
       },
       {

@@ -59,13 +59,12 @@ export class hipe implements INodeType {
 		description: 'Interact with HIPE API',
 		defaults: {
 			name: 'hipe',
-			color: '#000000',
 		},
 		inputs: ['main'] as NodeConnectionType[],
 		outputs: ['main'] as NodeConnectionType[],
 		credentials: [
 			{
-				name: 'hipe',
+				name: 'hipeApi',
 				required: true,
 			},
 		],
@@ -92,9 +91,7 @@ export class hipe implements INodeType {
 
 		for (const embeddedResource of embeddedResources) {
 			const [resourceName, resourceProperties] = embeddedResource.buildProperties();
-			console.debug(
-				`[hipe][BUILD PROPERTIES] Processing resource: ${resourceName}`,
-			);
+			console.debug(`[hipe][BUILD PROPERTIES] Processing resource: ${resourceName}`);
 			resource.options?.push({
 				name: resourceName,
 				value: resourceName,
@@ -106,45 +103,45 @@ export class hipe implements INodeType {
 	}
 
 	async execute(this: IExecuteFunctions): Promise<INodeExecutionData[][]> {
-    console.debug('[hipe][EXECUTE] === HIPE NODE EXECUTE START ===');
-    try {
-		const items = this.getInputData();
-		// const returnData: INodeExecutionData[] = [];
-		const resource = this.getNodeParameter('resource', 0) as string;
-		const operation = this.getNodeParameter('operation', 0) as string;
+		console.debug('[hipe][EXECUTE] === HIPE NODE EXECUTE START ===');
+		try {
+			const items = this.getInputData();
+			// const returnData: INodeExecutionData[] = [];
+			const resource = this.getNodeParameter('resource', 0) as string;
+			const operation = this.getNodeParameter('operation', 0) as string;
 
-		// Find the correct embedded resource
-		console.debug(`[hipe][EXECUTE] Resource: ${resource}`);
-		const embeddedResource = EMBEDDED_RESOURCES.find((r) => r.RESOURCE === resource);
-		if (!embeddedResource) {
-			console.error(`[hipe][EXECUTE] Resource not found: ${resource}`);
-			throw new Error(`Resource "${resource}" not found!`);
-		}
-		console.debug(`[hipe][EXECUTE] Found resource: ${embeddedResource.RESOURCE}`);
+			// Find the correct embedded resource
+			console.debug(`[hipe][EXECUTE] Resource: ${resource}`);
+			const embeddedResource = EMBEDDED_RESOURCES.find((r) => r.RESOURCE === resource);
+			if (!embeddedResource) {
+				console.error(`[hipe][EXECUTE] Resource not found: ${resource}`);
+				throw new Error(`Resource "${resource}" not found!`);
+			}
+			console.debug(`[hipe][EXECUTE] Found resource: ${embeddedResource.RESOURCE}`);
 
-		// Find the correct action
-		const action = embeddedResource.ACTIONS[operation as keyof typeof embeddedResource.ACTIONS];
-		console.debug(
-			`[hipe][EXECUTE] Action key: ${operation}, available: ${Object.keys(embeddedResource.ACTIONS)}`,
-		);
-		if (!action || typeof action.execute !== 'function') {
-			console.error(
-				`[hipe][EXECUTE] Operation not found or invalid for resource: ${resource}, operation: ${operation}`,
+			// Find the correct action
+			const action = embeddedResource.ACTIONS[operation as keyof typeof embeddedResource.ACTIONS];
+			console.debug(
+				`[hipe][EXECUTE] Action key: ${operation}, available: ${Object.keys(embeddedResource.ACTIONS)}`,
 			);
-			throw new Error(`Operation "${operation}" not found for resource "${resource}"!`);
+			if (!action || typeof action.execute !== 'function') {
+				console.error(
+					`[hipe][EXECUTE] Operation not found or invalid for resource: ${resource}, operation: ${operation}`,
+				);
+				throw new Error(`Operation "${operation}" not found for resource "${resource}"!`);
+			}
+
+			// Call the action's execute
+			const result = await action.execute.call(this, items);
+
+			// Normalize result for n8n
+			if (Array.isArray(result)) {
+				return [result];
+			}
+			return [[{ json: result }]];
+		} catch (error) {
+			console.error(`[hipe][EXECUTE] ERROR: ${error instanceof Error ? error.stack : error}`);
+			throw error;
 		}
-
-        // Call the action's execute
-        const result = await action.execute.call(this, items);
-
-        // Normalize result for n8n
-        if (Array.isArray(result)) {
-            return [result];
-        }
-        return [[{ json: result }]];
-    } catch (error) {
-        console.error(`[hipe][EXECUTE] ERROR: ${error instanceof Error ? error.stack : error}`);
-        throw error;
-    }
-}
+	}
 }

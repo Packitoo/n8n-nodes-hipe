@@ -91,7 +91,7 @@ export const properties: INodeProperties[] = [
           },
           // Add any additional sort options
         ],
-        default: 'name',
+        default: 'width',
       },
       {
         displayName: 'Sort Order',

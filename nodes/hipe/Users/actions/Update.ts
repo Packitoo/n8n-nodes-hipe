@@ -49,6 +49,7 @@ export const properties: INodeProperties[] = [
         displayName: 'Email',
         name: 'email',
         type: 'string',
+								placeholder: 'name@email.com',
         default: '',
         description: 'Email of the user',
       },
@@ -77,7 +78,7 @@ export const properties: INodeProperties[] = [
             value: 'sales',
           },
           {
-            name: 'External sales',
+            name: 'External Sales',
             value: 'external_sales',
           },
           {

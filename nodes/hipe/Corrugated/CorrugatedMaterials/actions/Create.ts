@@ -22,7 +22,6 @@ export const properties: INodeProperties[] = [
     displayName: 'Description',
     name: 'description',
     type: 'string',
-    required: false,
     default: '',
     description: 'Description of the corrugated material',
     displayOptions: {

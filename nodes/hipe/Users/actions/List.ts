@@ -78,7 +78,7 @@ export const properties: INodeProperties[] = [
             value: 'sales',
           },
           {
-            name: 'External sales',
+            name: 'External Sales',
             value: 'external_sales',
           },
           {
@@ -90,7 +90,7 @@ export const properties: INodeProperties[] = [
             value: 'guest',
           }
         ],
-        default: 'guest',
+        default: [],
         description: 'Filter by role',
       },
       // Add any additional filters for listing projects

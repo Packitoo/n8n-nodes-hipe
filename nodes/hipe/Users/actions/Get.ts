@@ -4,7 +4,7 @@ import { INodeExecutionData, INodeProperties } from 'n8n-workflow';
 // Properties for the Get operation
 export const properties: INodeProperties[] = [
   {
-    displayName: 'user ID',
+    displayName: 'User ID',
     name: 'id',
     type: 'string',
     required: true,

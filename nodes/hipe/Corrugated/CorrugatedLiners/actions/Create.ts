@@ -23,7 +23,6 @@ export const properties: INodeProperties[] = [
     name: 'label',
     type: 'json',
     placeholder: 'Add Label',
-    required: false,
     default: {
       'en-US': '',
       'fr-FR': ''
@@ -65,7 +64,7 @@ export const properties: INodeProperties[] = [
     },
   },
   {
-    displayName: 'Ink porosity',
+    displayName: 'Ink Porosity',
     name: 'inkPorosity',
     type: 'number',
     required: true,
@@ -79,7 +78,7 @@ export const properties: INodeProperties[] = [
     },
   },
   {
-    displayName: 'Varnish porosity',
+    displayName: 'Varnish Porosity',
     name: 'varnishPorosity',
     type: 'number',
     required: true,

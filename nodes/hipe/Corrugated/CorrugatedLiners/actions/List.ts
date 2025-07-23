@@ -64,7 +64,7 @@ export const properties: INodeProperties[] = [
       {
         displayName: 'Color',
         name: 'color',
-        type: 'string',
+        type: 'color',
         default: '',
         description: 'Filter by color',
       },

@@ -45,14 +45,14 @@ export const properties: INodeProperties[] = [
 		},
 		options: [
 			{
-				displayName: 'Outside gain',
+				displayName: 'Outside Gain',
 				name: 'outsideGain',
 				type: 'number',
 				default: 0,
 				description: 'Outside gain of the flute',
 			},
 			{
-				displayName: 'Inside loss',
+				displayName: 'Inside Loss',
 				name: 'insideLoss',
 				type: 'number',
 				default: 0,

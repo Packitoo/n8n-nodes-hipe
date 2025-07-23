@@ -25,7 +25,7 @@ export function buildProperties() {
       options: [
         { name: 'Create', value: 'create', description: 'Create a new company', action: 'Create' },
         { name: 'Get', value: 'get', description: 'Get a specific company', action: 'Get' },
-        { name: 'Get Many', value: 'getMany', description: 'Get multiple companies', action: 'Get Many' },
+        { name: 'Get Many', value: 'getMany', description: 'Get multiple companies', action: 'Get many' },
         { name: 'Update', value: 'update', description: 'Update a specific company', action: 'Update' },
       ],
       default: 'get',
