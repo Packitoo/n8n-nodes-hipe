@@ -4,6 +4,8 @@ import * as list from './List';
 import * as update from './Update';
 import * as linkContact from './linkContact';
 import * as unlinkContact from './unlinkContact';
+import * as getAddressess from './getAddresses';
+// import * as createAddress from './createAddress';
 
 export const RESOURCE = 'company';
 
@@ -14,6 +16,8 @@ export const ACTIONS = {
   update: update,
   linkContact: linkContact,
   unlinkContact: unlinkContact,
+  getAddressess: getAddressess,
+  // createAddress: createAddress,
 };
 
 // Factory function to build all user properties for node usage
@@ -33,6 +37,8 @@ export function buildProperties() {
         { name: 'Update', value: 'update', description: 'Update a specific company', action: 'Update' },
         { name: 'Link Contact', value: 'linkContact', description: 'Link an existing contact to a company', action: 'Link contact' },
         { name: 'Unlink Contact', value: 'unlinkContact', description: 'Unlink a contact from a company', action: 'Unlink contact' },
+        { name: 'Get Addresses', value: 'getAddresses', description: 'Get addresses of a company', action: 'Get addresses' },
+        // { name: 'Create Address', value: 'createAddress', description: 'Create a new address for a company', action: 'Create address' },
       ],
       default: 'get',
       noDataExpression: true,
@@ -41,6 +47,10 @@ export function buildProperties() {
     ...get.properties,
     ...list.properties,
     ...update.properties,
+    ...linkContact.properties,
+    ...unlinkContact.properties,
+    ...getAddressess.properties,
+    // ...createAddress.properties,
   ];
   return [RESOURCE, properties];
 }

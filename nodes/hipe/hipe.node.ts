@@ -18,8 +18,9 @@ import * as corrugatedLiners from './Corrugated/CorrugatedLiners/actions';
 // import * as projects from './Projects/actions';
 import * as users from './Users/actions';
 import * as companies from './Companies/actions';
+import * as addresses from './Addresses/actions';
 
-const EMBEDDED_RESOURCES = [companies, users, corrugatedMaterials, corrugatedMaterialCompositions, corrugatedMaterialCompositionPrices, corrugatedFormats, corrugatedSuppliers, corrugatedFlutes, corrugatedLiners];
+const EMBEDDED_RESOURCES = [companies, addresses, users, corrugatedMaterials, corrugatedMaterialCompositions, corrugatedMaterialCompositionPrices, corrugatedFormats, corrugatedSuppliers, corrugatedFlutes, corrugatedLiners];
 
 // Runtime check for resource registration
 for (const res of EMBEDDED_RESOURCES) {
@@ -48,17 +49,17 @@ for (const res of EMBEDDED_RESOURCES) {
 	);
 }
 
-export class hipe implements INodeType {
+export class Hipe implements INodeType {
 	description: INodeTypeDescription = {
 		displayName: 'HIPE',
-		name: 'hipe',
+		name: 'Hipe',
 		icon: 'file:logo.svg',
 		group: ['transform'],
 		version: 1,
 		subtitle: '={{$parameter["operation"] + ": " + $parameter["resource"]}}',
 		description: 'Interact with HIPE API',
 		defaults: {
-			name: 'hipe',
+			name: 'Hipe',
 		},
 		inputs: ['main'] as NodeConnectionType[],
 		outputs: ['main'] as NodeConnectionType[],

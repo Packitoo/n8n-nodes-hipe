@@ -39,7 +39,7 @@
       "dist/credentials/hipeApi.credentials.js"
     ],
     "nodes": [
-      "dist/nodes/hipe/hipe.node.js"
+      "dist/nodes/Hipe/Hipe.node.js"
     ]
   },
   "devDependencies": {
