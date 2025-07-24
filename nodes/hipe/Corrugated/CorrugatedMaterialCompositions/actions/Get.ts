@@ -45,7 +45,7 @@ export async function execute(
   const returnData: INodeExecutionData[] = [];
   
   // Get credentials and baseUrl
-  const credentials = await this.getCredentials('hipe');
+  const credentials = await this.getCredentials('hipeApi');
   let baseUrl = credentials.url;
   if (typeof baseUrl !== 'string') {
     throw new Error('HIPE base URL is not a string');
@@ -55,7 +55,7 @@ export async function execute(
   for (let i = 0; i < items.length; i++) {
     try {
       const compositionId = this.getNodeParameter('compositionId', i) as string;
-      const response = await this.helpers.requestWithAuthentication.call(this, 'hipe', {
+      const response = await this.helpers.requestWithAuthentication.call(this, 'hipeApi', {
         method: 'GET',
         url: `${baseUrl}/api/corrugated-material-compositions/${compositionId}`,
         json: true,

@@ -29,12 +29,12 @@ export class hipeApi implements ICredentialType {
 				'X-ACCESS-TOKEN': '={{$credentials.accessToken}}',
 			},
 		},
-		test: {
-			request: {
-				baseURL: '={{$credentials?.url}}',
-				url: '/api/users/me',
-				method: 'GET',
-			},
-		},
+		// test: {
+		// 	request: {
+		// 		baseURL: '={{$credentials?.url}}',
+		// 		url: '/api/users/me',
+		// 		method: 'GET',
+		// 	},
+		// },
 	};
 }

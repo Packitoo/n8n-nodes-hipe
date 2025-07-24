@@ -43,7 +43,7 @@ export async function execute(
   const returnData: INodeExecutionData[] = [];
 
   // Get credentials
-  const credentials = await this.getCredentials('hipe');
+  const credentials = await this.getCredentials('hipeApi');
   let baseUrl = credentials.url;
   if (!baseUrl || typeof baseUrl !== 'string' || !/^https?:\/\//.test(baseUrl)) {
     throw new Error('HIPE base URL is not set or is invalid: ' + baseUrl);
@@ -58,7 +58,7 @@ export async function execute(
       // const options = this.getNodeParameter('options', i, {}) as { includeDetails?: boolean };
       
       // Make API call to get the corrugated format
-      const response = await this.helpers.requestWithAuthentication.call(this, "hipe", {
+      const response = await this.helpers.requestWithAuthentication.call(this, "hipeApi", {
         method: 'GET',
         url: `${baseUrl}/api/companies/${id}`,
         json: true,

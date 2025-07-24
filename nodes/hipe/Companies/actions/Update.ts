@@ -120,7 +120,7 @@ export const properties: INodeProperties[] = [
 				type: 'string',
 				default: '',
 				description: 'Website of the company',
-			}
+			},
 			// Add any additional fields specific to updating projects
 		],
 	},
@@ -134,7 +134,7 @@ export async function execute(
 	const returnData: INodeExecutionData[] = [];
 
 	// Get credentials
-	const credentials = await this.getCredentials('hipe');
+	const credentials = await this.getCredentials('hipeApi');
 	let baseUrl = credentials.url;
 	if (typeof baseUrl !== 'string') {
 		throw new Error('HIPE base URL is not a string');
@@ -148,31 +148,31 @@ export async function execute(
 			const companyId = this.getNodeParameter('id', i) as string;
 			const updateFields = this.getNodeParameter('updateFields', i, {}) as ICompany;
 
-      const collaboratorIdsGroup = updateFields.collaboratorIds;
-      let collab: string[] = [];
-      if (
-        collaboratorIdsGroup &&
-        typeof collaboratorIdsGroup === 'object' &&
-        !Array.isArray(collaboratorIdsGroup) &&
-        'collaboratorIdFields' in collaboratorIdsGroup &&
-        Array.isArray((collaboratorIdsGroup as any).collaboratorIdFields)
-      ) {
-        const collaboratorIdFields = (collaboratorIdsGroup as any).collaboratorIdFields;
-        if (collaboratorIdFields.every((field: any) => 'id' in field)) {
-          collab = collaboratorIdFields.map((field: any) => field.id).filter((id: string) => !!id);
-        }
-      }
-      if (updateFields.collaboratorIds) {
-        delete updateFields.collaboratorIds;
-      }
+			const collaboratorIdsGroup = updateFields.collaboratorIds;
+			let collab: string[] = [];
+			if (
+				collaboratorIdsGroup &&
+				typeof collaboratorIdsGroup === 'object' &&
+				!Array.isArray(collaboratorIdsGroup) &&
+				'collaboratorIdFields' in collaboratorIdsGroup &&
+				Array.isArray((collaboratorIdsGroup as any).collaboratorIdFields)
+			) {
+				const collaboratorIdFields = (collaboratorIdsGroup as any).collaboratorIdFields;
+				if (collaboratorIdFields.every((field: any) => 'id' in field)) {
+					collab = collaboratorIdFields.map((field: any) => field.id).filter((id: string) => !!id);
+				}
+			}
+			if (updateFields.collaboratorIds) {
+				delete updateFields.collaboratorIds;
+			}
 
-      const requestData: ICompany = {
-        ...updateFields,
-        ...(collab.length > 0 ? { collaboratorIds: collab } : {}),
-      };
+			const requestData: ICompany = {
+				...updateFields,
+				...(collab.length > 0 ? { collaboratorIds: collab } : {}),
+			};
 
 			// Make API call to update the company
-			const response = await this.helpers.requestWithAuthentication.call(this, 'hipe', {
+			const response = await this.helpers.requestWithAuthentication.call(this, 'hipeApi', {
 				method: 'PATCH',
 				url: `${baseUrl}/api/companies/${companyId}`,
 				json: true,

@@ -18,7 +18,7 @@ describe('Update action', () => {
     const result = await execute.call(mockThis, items);
     expect(mockThis.helpers.requestWithAuthentication.call).toHaveBeenCalledWith(
       mockThis,
-      'hipe',
+      'hipeApi',
       expect.objectContaining({
         method: 'PATCH',
         url: 'https://fake.api/api/companies/1',

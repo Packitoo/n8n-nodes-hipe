@@ -71,7 +71,7 @@ export async function execute(
 	// This is just a scaffold, implementation will be added later
 	const returnData: INodeExecutionData[] = [];
 
-  const credentials = await this.getCredentials('hipe');
+  const credentials = await this.getCredentials('hipeApi');
   let baseUrl = credentials.url;
   if (typeof baseUrl !== 'string') {
     throw new Error('HIPE base URL is not a string');
@@ -91,7 +91,7 @@ export async function execute(
 				...additionalFields,
 			};
 
-      const response = await this.helpers.requestWithAuthentication.call(this, "hipe", {
+      const response = await this.helpers.requestWithAuthentication.call(this, "hipeApi", {
         method: 'POST',
         url: `${baseUrl}/api/corrugated-flutes`,
         body: requestData,

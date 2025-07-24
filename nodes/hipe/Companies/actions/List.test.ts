@@ -21,7 +21,7 @@ describe('List action', () => {
     const result = await execute.call(mockThis, items);
     expect(mockThis.helpers.requestWithAuthentication.call).toHaveBeenCalledWith(
       mockThis,
-      'hipe',
+      'hipeApi',
       expect.objectContaining({
         method: 'GET',
         url: 'https://fake.api/api/companies',

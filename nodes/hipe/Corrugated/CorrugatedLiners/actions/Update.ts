@@ -129,7 +129,7 @@ export async function execute(
 	const returnData: INodeExecutionData[] = [];
 
 	// Get credentials
-	const credentials = await this.getCredentials('hipe');
+	const credentials = await this.getCredentials('hipeApi');
 	let baseUrl = credentials.url;
 	if (typeof baseUrl !== 'string') {
 		throw new Error('HIPE base URL is not a string');
@@ -144,7 +144,7 @@ export async function execute(
 			const updateFields = this.getNodeParameter('updateFields', i, {}) as ICorrugatedLiner;
 
 			// Make API call to update the corrugated liner
-			const response = await this.helpers.requestWithAuthentication.call(this, 'hipe', {
+			const response = await this.helpers.requestWithAuthentication.call(this, 'hipeApi', {
 				method: 'PATCH',
 				url: `${baseUrl}/api/corrugated-liners/${encodeURIComponent(linerId)}`,
 				body: updateFields,

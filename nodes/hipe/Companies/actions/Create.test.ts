@@ -5,7 +5,7 @@ describe('Create action', () => {
     const mockThis = {
       getCredentials: async () => ({ url: 'https://fake.api' }),
       helpers: {
-        requestWithAuthentication: jest.fn().mockResolvedValue({ created: true }),
+        requestWithAuthentication: { call: jest.fn().mockResolvedValue({ created: true }) },
       },
       getNodeParameter: (name: string, i: number, defaultValue?: any) => {
         // Simulate n8n parameter structure
@@ -31,8 +31,9 @@ describe('Create action', () => {
     } as any;
     const items = [{ json: {} }];
     const result = await execute.call(mockThis, items);
-    expect(mockThis.helpers.requestWithAuthentication).toHaveBeenCalledWith(
-      'hipe',
+    expect(mockThis.helpers.requestWithAuthentication.call).toHaveBeenCalledWith(
+      mockThis,
+      'hipeApi',
       expect.objectContaining({
         method: 'POST',
         url: 'https://fake.api/api/companies',

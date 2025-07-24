@@ -8,18 +8,18 @@ import {
 } from 'n8n-workflow';
 
 // Import all resource operations
-// import * as corrugatedMaterials from './Corrugated/CorrugatedMaterials/actions';
-// import * as corrugatedMaterialCompositions from './Corrugated/CorrugatedMaterialCompositions/actions';
-// import * as corrugatedMaterialCompositionPrices from './Corrugated/CorrugatedMaterialCompositionPrices/actions';
-// import * as corrugatedFormats from './Corrugated/CorrugatedFormats/actions';
-// import * as corrugatedSuppliers from './Corrugated/CorrugatedSuppliers/actions';
-// import * as corrugatedFlutes from './Corrugated/CorrugatedFlutes/actions';
-// import * as corrugatedLiners from './Corrugated/CorrugatedLiners/actions';
+import * as corrugatedMaterials from './Corrugated/CorrugatedMaterials/actions';
+import * as corrugatedMaterialCompositions from './Corrugated/CorrugatedMaterialCompositions/actions';
+import * as corrugatedMaterialCompositionPrices from './Corrugated/CorrugatedMaterialCompositionPrices/actions';
+import * as corrugatedFormats from './Corrugated/CorrugatedFormats/actions';
+import * as corrugatedSuppliers from './Corrugated/CorrugatedSuppliers/actions';
+import * as corrugatedFlutes from './Corrugated/CorrugatedFlutes/actions';
+import * as corrugatedLiners from './Corrugated/CorrugatedLiners/actions';
 // import * as projects from './Projects/actions';
 import * as users from './Users/actions';
 import * as companies from './Companies/actions';
 
-const EMBEDDED_RESOURCES = [companies, users];
+const EMBEDDED_RESOURCES = [companies, users, corrugatedMaterials, corrugatedMaterialCompositions, corrugatedMaterialCompositionPrices, corrugatedFormats, corrugatedSuppliers, corrugatedFlutes, corrugatedLiners];
 
 // Runtime check for resource registration
 for (const res of EMBEDDED_RESOURCES) {
@@ -50,7 +50,7 @@ for (const res of EMBEDDED_RESOURCES) {
 
 export class hipe implements INodeType {
 	description: INodeTypeDescription = {
-		displayName: 'hipe',
+		displayName: 'HIPE',
 		name: 'hipe',
 		icon: 'file:logo.svg',
 		group: ['transform'],

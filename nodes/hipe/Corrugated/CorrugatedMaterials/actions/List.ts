@@ -112,7 +112,7 @@ export async function execute(
   items: INodeExecutionData[],
 ): Promise<INodeExecutionData[]> {
   const returnData: INodeExecutionData[] = [];
-  const credentials = await this.getCredentials('hipe');
+  const credentials = await this.getCredentials('hipeApi');
   let baseUrl = credentials.url;
   if (typeof baseUrl !== 'string') {
     throw new Error('HIPE base URL is not a string');
@@ -134,7 +134,7 @@ export async function execute(
         qs.order = sort.sortOrder || 'asc';
       }
 
-      const response = await this.helpers.requestWithAuthentication.call(this, 'hipe', {
+      const response = await this.helpers.requestWithAuthentication.call(this, 'hipeApi', {
         method: 'GET',
         url: `${baseUrl}/api/corrugated-materials`,
         qs,

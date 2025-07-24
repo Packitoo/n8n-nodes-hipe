@@ -22,7 +22,7 @@
   },
   "main": "index.js",
   "scripts": {
-    "test": "jest",
+    "test": "rm -rf dist && jest --coverage",
     "build": "npx rimraf dist && tsc && gulp build:icons",
     "dev": "tsc --watch",
     "format": "prettier nodes credentials --write",
@@ -36,7 +36,7 @@
   "n8n": {
     "n8nNodesApiVersion": 1,
     "credentials": [
-      "dist/credentials/hipe.credentials.js"
+      "dist/credentials/hipeApi.credentials.js"
     ],
     "nodes": [
       "dist/nodes/hipe/hipe.node.js"
