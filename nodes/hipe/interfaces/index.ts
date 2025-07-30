@@ -92,6 +92,14 @@ export interface IProject {
   name: string;
   description?: string;
   status?: string;
+  companyId?: string;
+  managerId?: string;
+  externalId?: string;
+  estimatedValues?: number;
+  dueDate?: string;
+  opportunityPipelineId?: string;
+  opportunityStepId?: string;
+  customFields?: object;
   [key: string]: any;
 }
 

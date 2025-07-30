@@ -10,6 +10,12 @@ export const properties: INodeProperties[] = [
     required: true,
     default: '',
     description: 'ID of the project to retrieve',
+    displayOptions: {
+      show: {
+        resource: ['project'],
+        operation: ['get'],
+      },
+    },
   },
   {
     displayName: 'Options',
@@ -17,14 +23,13 @@ export const properties: INodeProperties[] = [
     type: 'collection',
     placeholder: 'Add Option',
     default: {},
-    options: [
-      {
-        displayName: 'Include Details',
-        name: 'includeDetails',
-        type: 'boolean',
-        default: false,
-        description: 'Whether to include additional project details',
+    displayOptions: {
+      show: {
+        resource: ['project'],
+        operation: ['get'],
       },
+    },
+    options: [
       // Add any additional options for retrieving projects
     ],
   },
@@ -35,48 +40,28 @@ export async function execute(
   this: IExecuteFunctions,
   items: INodeExecutionData[],
 ): Promise<INodeExecutionData[]> {
-  // This is just a scaffold, implementation will be added later
   const returnData: INodeExecutionData[] = [];
-  
-  // Process each item
+
+	// Get credentials
+	const credentials = await this.getCredentials('hipeApi');
+	let baseUrl = credentials.url;
+	if (typeof baseUrl !== 'string') {
+		throw new Error('HIPE base URL is not a string');
+	}
+	baseUrl = baseUrl.replace(/\/$/, '');
+	// Process each item
   for (let i = 0; i < items.length; i++) {
     try {
       // Get input data
       const projectId = this.getNodeParameter('projectId', i) as string;
-      const options = this.getNodeParameter('options', i, {}) as { includeDetails?: boolean };
-      
-      // In the actual implementation, this would make an API call to get the project
-      // For now, we just return placeholder data
-      const projectData = {
-        id: projectId,
-        name: 'Sample Project',
-        description: 'This is a sample project description',
-        clientId: 'client-123',
-        status: 'in_progress',
-        createdAt: '2023-01-01T00:00:00Z',
-        updatedAt: '2023-01-02T00:00:00Z',
-      };
-      
-      // Add additional details if requested
-      if (options.includeDetails) {
-        Object.assign(projectData, {
-          tasks: [
-            { id: 'task-1', name: 'Task 1', status: 'completed' },
-            { id: 'task-2', name: 'Task 2', status: 'in_progress' },
-          ],
-          team: [
-            { id: 'user-1', name: 'User 1', role: 'manager' },
-            { id: 'user-2', name: 'User 2', role: 'developer' },
-          ],
-        });
-      }
-      
-      returnData.push({
-        json: {
-          success: true,
-          data: projectData,
-        },
+      // const options = this.getNodeParameter('options', i, {}) as { includeDetails?: boolean };
+
+      const response = await this.helpers.requestWithAuthentication.call(this, "hipeApi", {
+        method: 'GET',
+        url: `${baseUrl}/api/projects/${projectId}`,
+        json: true,
       });
+      returnData.push({ json: response });
     } catch (error) {
       if (this.continueOnFail()) {
         returnData.push({ json: { error: error.message } });

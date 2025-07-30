@@ -1,6 +1,5 @@
 import { IExecuteFunctions } from 'n8n-workflow';
 import { INodeExecutionData, INodeProperties } from 'n8n-workflow';
-import { IProject } from '../../interfaces';
 
 // Properties for the Create operation
 export const properties: INodeProperties[] = [
@@ -11,20 +10,54 @@ export const properties: INodeProperties[] = [
     required: true,
     default: '',
     description: 'Name of the project',
+    displayOptions: {
+      show: {
+        resource: ['project'],
+        operation: ['create'],
+      },
+    },
   },
   {
-    displayName: 'Description',
-    name: 'description',
+    displayName: 'External ID',
+    name: 'externalId',
+    required: true,
     type: 'string',
     default: '',
-    description: 'Description of the project',
+    description: 'External ID of the project',
+    displayOptions: {
+      show: {
+        resource: ['project'],
+        operation: ['create'],
+      },
+    },
   },
   {
-    displayName: 'Client ID',
-    name: 'clientId',
+    displayName: 'Company ID',
+    name: 'companyId',
+    required: true,
     type: 'string',
     default: '',
-    description: 'ID of the client associated with this project',
+    description: 'ID of the company associated with this project',
+    displayOptions: {
+      show: {
+        resource: ['project'],
+        operation: ['create'],
+      },
+    },
+  },
+  {
+    displayName: 'Manager ID',
+    name: 'managerId',
+    required: true,
+    type: 'string',
+    default: '',
+    description: 'ID of the manager associated with this project (Internal user ID)',
+    displayOptions: {
+      show: {
+        resource: ['project'],
+        operation: ['create'],
+      },
+    },
   },
   {
     displayName: 'Additional Fields',
@@ -32,27 +65,19 @@ export const properties: INodeProperties[] = [
     type: 'collection',
     placeholder: 'Add Field',
     default: {},
+    displayOptions: {
+      show: {
+        resource: ['project'],
+        operation: ['create'],
+      },
+    },
     options: [
       {
-        displayName: 'Status',
-        name: 'status',
-        type: 'options',
-        options: [
-          {
-            name: 'Draft',
-            value: 'draft',
-          },
-          {
-            name: 'In Progress',
-            value: 'in_progress',
-          },
-          {
-            name: 'Completed',
-            value: 'completed',
-          },
-        ],
-        default: 'draft',
-        description: 'Status of the project',
+        displayName: "Estimated values",
+        name: "estimatedValues",
+        type: "number",
+        default: 0,
+        description: "Estimated values of the project",
       },
       {
         displayName: 'Due Date',
@@ -61,7 +86,34 @@ export const properties: INodeProperties[] = [
         default: '',
         description: 'Due date of the project',
       },
-      // Add any additional fields specific to creating projects
+      {
+        displayName: "Estimated values",
+        name: "opportunityPipelineId",
+        type: "number",
+        default: 0,
+        description: "Estimated values of the project",
+      },
+      {
+        displayName: 'Opportunity pipeline ID',
+        name: 'opportunityPipelineId',
+        type: 'string',
+        default: '',
+        description: 'Opportunity pipeline ID of the project (required if opportunityStepId is set)',
+      },
+      {
+        displayName: 'Opportunity step ID',
+        name: 'opportunityStepId',
+        type: 'string',
+        default: '',
+        description: 'Opportunity step ID of the project',
+      },
+      {
+        displayName: 'Custom Fields',
+        name: 'customFields',
+        type: 'json',
+        default: {},
+        description: 'Custom fields of the project',
+      },
     ],
   },
 ];
@@ -71,46 +123,48 @@ export async function execute(
   this: IExecuteFunctions,
   items: INodeExecutionData[],
 ): Promise<INodeExecutionData[]> {
-  // This is just a scaffold, implementation will be added later
   const returnData: INodeExecutionData[] = [];
-  
-  // Process each item
-  for (let i = 0; i < items.length; i++) {
+
+	// Get credentials
+	const credentials = await this.getCredentials('hipeApi');
+	let baseUrl = credentials.url;
+	if (typeof baseUrl !== 'string') {
+		throw new Error('HIPE base URL is not a string');
+	}
+	baseUrl = baseUrl.replace(/\/$/, '');
+	// Process each item
+	for (let i = 0; i < items.length; i++) {
     try {
-      // Get input data
+			// Get input data
       const name = this.getNodeParameter('name', i) as string;
-      const description = this.getNodeParameter('description', i, '') as string;
-      const clientId = this.getNodeParameter('clientId', i, '') as string;
+      const companyId = this.getNodeParameter('companyId', i) as string;
+      const managerId = this.getNodeParameter('managerId', i) as string;
+      const externalId = this.getNodeParameter('externalId', i) as string;
       const additionalFields = this.getNodeParameter('additionalFields', i, {}) as object;
-      
-      // Prepare request data
-      const requestData: IProject = {
-        name,
-        description,
-        clientId,
-        ...additionalFields,
-      };
-      
-      // In the actual implementation, this would make an API call to create the project
-      // For now, we just return the request data as a placeholder
-      returnData.push({
-        json: {
-          success: true,
-          data: {
-            id: 'new-project-id',
-            ...requestData,
-            createdAt: new Date().toISOString(),
-          },
-        },
-      });
-    } catch (error) {
-      if (this.continueOnFail()) {
-        returnData.push({ json: { error: error.message } });
-        continue;
-      }
-      throw error;
-    }
-  }
+
+			// Make API call to get the corrugated format
+			const response = await this.helpers.requestWithAuthentication.call(this, 'hipeApi', {
+				method: 'POST',
+				url: `${baseUrl}/api/projects`,
+				json: true,
+				body: {
+					companyId,
+					name,
+					managerId,
+					externalId,
+					...additionalFields,
+				}
+			});
+
+			returnData.push({ json: response });
+		} catch (error) {
+			if (this.continueOnFail()) {
+				returnData.push({ json: { error: error.message } });
+				continue;
+			}
+			throw error;
+		}
+	}
   
   return returnData;
 }
