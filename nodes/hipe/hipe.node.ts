@@ -20,6 +20,7 @@ import * as users from './Users/actions';
 import * as companies from './Companies/actions';
 import * as addresses from './Addresses/actions';
 import * as statuses from './Statuses/actions';
+import * as pipelines from './Pipelines/actions';
 
 export const EMBEDDED_RESOURCES = [
 	companies,
@@ -27,6 +28,7 @@ export const EMBEDDED_RESOURCES = [
 	users,
 	projects,
 	statuses,
+	pipelines,
 	corrugatedMaterials,
 	corrugatedMaterialCompositions,
 	corrugatedMaterialCompositionPrices,
