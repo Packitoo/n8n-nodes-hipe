@@ -6,7 +6,8 @@ describe('CreateContact action', () => {
     const mockThis = {
       getCredentials: async () => ({ url: 'https://fake.api' }),
       helpers: {
-        request: jest.fn().mockResolvedValue({ success: true }),
+  requestWithAuthentication: { call: jest.fn().mockResolvedValue({ success: true }) },
+  request: jest.fn().mockResolvedValue({ success: true }),
       },
       getNodeParameter: (name: string, i: number) => {
         const params: { [key: string]: any } = {
@@ -27,7 +28,9 @@ describe('CreateContact action', () => {
     const items = [{ json: {} }];
     const result = await execute.call(mockThis, items);
 
-    expect(mockThis.helpers.request).toHaveBeenCalledWith(
+    expect(mockThis.helpers.requestWithAuthentication.call).toHaveBeenCalledWith(
+      mockThis,
+      'hipeApi',
       expect.objectContaining({
         method: 'POST',
         url: 'https://fake.api/api/users/contacts',

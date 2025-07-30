@@ -130,3 +130,17 @@ export interface ICompany {
   externalId?: string
   [key: string]: any;
 }
+
+export interface IStatus {
+  id?: string;
+  entity: string;
+  position: number;
+  internalLabel: string;
+  externalLabel: string;
+  externalId: string;
+  isCompleted: boolean;
+  isCreation: boolean;
+  isOverdue: boolean;
+  additionalFields: object;
+  [key: string]: any;
+}

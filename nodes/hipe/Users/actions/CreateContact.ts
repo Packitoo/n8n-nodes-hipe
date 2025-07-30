@@ -156,7 +156,7 @@ export async function execute(
         customFields,
       };
       // Make API call to create the corrugated format
-      const response = await this.helpers.request!(
+      const response = await this.helpers.requestWithAuthentication.call(this, 'hipeApi',
         {
           method: 'POST',
           url: `${baseUrl}/api/users/contacts`,

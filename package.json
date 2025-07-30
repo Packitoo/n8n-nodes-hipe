@@ -22,7 +22,13 @@
   },
   "main": "index.js",
   "scripts": {
+    "workspace:clean": "rm -rf dist node_modules",
+    "workspace:rebuild": "npm install && npm run build",
+    "workspace:link": "npm link",
+    "workspace:reload-n8n": "npm test && npm run workspace:clean && npm run workspace:rebuild && npm run workspace:link && cd ~/.n8n/custom && rm -rf node_modules && npm link n8n-nodes-hipe && N8N_LOG_LEVEL=debug n8n start",
     "test": "rm -rf dist && jest --coverage",
+    "test:coverage": "rm -rf dist && jest --coverage",
+    "test:watch": "rm -rf dist && jest --watch",
     "build": "npx rimraf dist && tsc && gulp build:icons",
     "dev": "tsc --watch",
     "format": "prettier nodes credentials --write",

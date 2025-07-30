@@ -1,18 +1,31 @@
 import { IExecuteFunctions, INodeExecutionData, INodeProperties } from 'n8n-workflow';
+import { ENTITIES_OPTIONS } from './constant';
 
 export const properties: INodeProperties[] = [
 	{
-		displayName: 'Address ID',
-		name: 'id',
-		type: 'collection',
-		options: [],
-		required: true,
-		default: '',
-		description: 'ID of the address to delete',
+		displayName: 'Entity',
+		name: 'entity',
+		type: 'options',
+		options: ENTITIES_OPTIONS || [],
+		default: ENTITIES_OPTIONS?.[0]?.value || 'QUOTES',
 		displayOptions: {
 			show: {
-				resource: ['address'],
-				operation: ['delete'],
+				resource: ['statuses'],
+				operation: ['getMany'],
+			},
+		},
+	},
+	{
+		displayName: 'Options',
+		name: 'options',
+		type: 'collection',
+	options: [],
+		placeholder: 'Add Option',
+		default: {},
+		displayOptions: {
+			show: {
+				resource: ['statuses'],
+				operation: ['getMany'],
 			},
 		},
 	},
@@ -34,16 +47,20 @@ export async function execute(
 	// Process each item
 	for (let i = 0; i < items.length; i++) {
 		try {
-			const id = this.getNodeParameter('id', i) as string;
-
+			// Get input data
+			const entity = this.getNodeParameter('entity', i) as string;
 			// Make API call to get the corrugated format
 			const response = await this.helpers.requestWithAuthentication.call(this, 'hipeApi', {
-				method: 'DELETE',
-				url: `${baseUrl}/api/addresses/${id}`,
+				method: 'GET',
+				url: `${baseUrl}/api/statuses/entity?entity=${entity}`,
 				json: true,
 			});
-
-			returnData.push({ json: response });
+			// If response is an array, push each item; otherwise, push the object
+			if (Array.isArray(response)) {
+				response.forEach(item => returnData.push({ json: item }));
+			} else if (response) {
+				returnData.push({ json: response });
+			}
 		} catch (error) {
 			if (this.continueOnFail()) {
 				returnData.push({ json: { error: error.message } });
