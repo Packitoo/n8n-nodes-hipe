@@ -9,8 +9,8 @@ export const properties: INodeProperties[] = [
 		displayName: 'Entity',
 		name: 'entity',
 		type: 'options',
+		default: '',
 		options: ENTITIES_OPTIONS || [],
-		default: ENTITIES_OPTIONS?.[0]?.value || 'QUOTES',
 		displayOptions: {
 			show: {
 				resource: ['statuses'],
@@ -32,7 +32,7 @@ export const properties: INodeProperties[] = [
 		},
 	},
 	{
-		displayName: 'Internal label',
+		displayName: 'Internal Label',
 		name: 'internalLabel',
 		type: 'json',
 		default: {
@@ -48,7 +48,7 @@ export const properties: INodeProperties[] = [
 		},
 	},
 	{
-		displayName: 'External label',
+		displayName: 'External Label',
 		name: 'externalLabel',
 		type: 'json',
 		default: {
@@ -77,7 +77,7 @@ export const properties: INodeProperties[] = [
 		},
 	},
 	{
-		displayName: 'Is completed',
+		displayName: 'Is Completed',
 		name: 'isCompleted',
 		type: 'boolean',
 		default: false,
@@ -90,7 +90,7 @@ export const properties: INodeProperties[] = [
 		},
 	},
 	{
-		displayName: 'Is creation',
+		displayName: 'Is Creation',
 		name: 'isCreation',
 		type: 'boolean',
 		default: false,
@@ -103,7 +103,7 @@ export const properties: INodeProperties[] = [
 		},
 	},
 	{
-		displayName: 'Is overdue',
+		displayName: 'Is Overdue',
 		name: 'isOverdue',
 		type: 'boolean',
 		default: false,
@@ -131,14 +131,14 @@ export const properties: INodeProperties[] = [
 			{
 				displayName: 'Foreground color',
 				name: 'fgColor',
-				type: 'string',
+				type: 'color',
 				default: '',
 				description: 'Foreground color of the status',
 			},
 			{
 				displayName: 'Background color',
 				name: 'bgColor',
-				type: 'string',
+				type: 'color',
 				default: '',
 				description: 'Background color of the status',
 			},

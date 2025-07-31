@@ -73,7 +73,7 @@ export const properties: INodeProperties[] = [
     },
     options: [
       {
-        displayName: "Estimated values",
+        displayName: 'Estimated Values',
         name: "estimatedValues",
         type: "number",
         default: 0,
@@ -87,21 +87,21 @@ export const properties: INodeProperties[] = [
         description: 'Due date of the project',
       },
       {
-        displayName: "Estimated values",
+        displayName: 'Estimated Values',
         name: "opportunityPipelineId",
         type: "number",
         default: 0,
         description: "Estimated values of the project",
       },
       {
-        displayName: 'Opportunity pipeline ID',
+        displayName: 'Opportunity Pipeline ID',
         name: 'opportunityPipelineId',
         type: 'string',
         default: '',
         description: 'Opportunity pipeline ID of the project (required if opportunityStepId is set)',
       },
       {
-        displayName: 'Opportunity step ID',
+        displayName: 'Opportunity Step ID',
         name: 'opportunityStepId',
         type: 'string',
         default: '',

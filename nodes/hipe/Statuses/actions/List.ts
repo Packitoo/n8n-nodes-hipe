@@ -6,8 +6,8 @@ export const properties: INodeProperties[] = [
 		displayName: 'Entity',
 		name: 'entity',
 		type: 'options',
+		default: '',
 		options: ENTITIES_OPTIONS || [],
-		default: ENTITIES_OPTIONS?.[0]?.value || 'QUOTES',
 		displayOptions: {
 			show: {
 				resource: ['statuses'],

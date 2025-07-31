@@ -33,8 +33,8 @@ export const properties: INodeProperties[] = [
 				displayName: 'Entity',
 				name: 'entity',
 				type: 'options',
+				default: '',
 				options: ENTITIES_OPTIONS,
-				default: ENTITIES_OPTIONS[0].value,
 			},
 			{
 				displayName: 'Position',
@@ -44,7 +44,7 @@ export const properties: INodeProperties[] = [
 				description: 'Position of the status',
 			},
 			{
-				displayName: 'Internal label',
+				displayName: 'Internal Label',
 				name: 'internalLabel',
 				type: 'json',
 				default: {
@@ -54,7 +54,7 @@ export const properties: INodeProperties[] = [
 				description: 'Internal label of the status',
 			},
 			{
-				displayName: 'External label',
+				displayName: 'External Label',
 				name: 'externalLabel',
 				type: 'json',
 				default: {
@@ -71,21 +71,21 @@ export const properties: INodeProperties[] = [
 				description: 'External ID of the status',
 			},
 			{
-				displayName: 'Is completed',
+				displayName: 'Is Completed',
 				name: 'isCompleted',
 				type: 'boolean',
 				default: false,
 				description: 'Is the status completed?',
 			},
 			{
-				displayName: 'Is creation',
+				displayName: 'Is Creation',
 				name: 'isCreation',
 				type: 'boolean',
 				default: false,
 				description: 'Is the status creation?',
 			},
 			{
-				displayName: 'Is overdue',
+				displayName: 'Is Overdue',
 				name: 'isOverdue',
 				type: 'boolean',
 				default: false,
@@ -94,14 +94,14 @@ export const properties: INodeProperties[] = [
 			{
 				displayName: 'Foreground color',
 				name: 'fgColor',
-				type: 'string',
+				type: 'color',
 				default: '',
 				description: 'Foreground color of the status',
 			},
 			{
 				displayName: 'Background color',
 				name: 'bgColor',
-				type: 'string',
+				type: 'color',
 				default: '',
 				description: 'Background color of the status',
 			},

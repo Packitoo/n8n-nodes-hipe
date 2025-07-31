@@ -44,7 +44,7 @@ export const EMBEDDED_RESOURCES = [
 export class Hipe implements INodeType {
 	description: INodeTypeDescription = {
 		displayName: 'HIPE',
-		name: 'Hipe',
+		name: 'hipe',
 		icon: 'file:logo.svg',
 		group: ['transform'],
 		version: 1,

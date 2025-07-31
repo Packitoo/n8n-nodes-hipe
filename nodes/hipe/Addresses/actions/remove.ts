@@ -7,7 +7,7 @@ export const properties: INodeProperties[] = [
 		type: 'collection',
 		options: [],
 		required: true,
-		default: '',
+		default: {},
 		description: 'ID of the address to delete',
 		displayOptions: {
 			show: {
