@@ -1,17 +1,31 @@
 import { IExecuteFunctions, INodeExecutionData, INodeProperties } from 'n8n-workflow';
+import { ENTITIES_OPTIONS } from './constant';
 
 export const properties: INodeProperties[] = [
+	{
+		displayName: 'Entity',
+		name: 'entity',
+		type: 'options',
+		default: '',
+		options: ENTITIES_OPTIONS || [],
+		displayOptions: {
+			show: {
+				resource: ['pipelines'],
+				operation: ['getMany'],
+			},
+		},
+	},
 	{
 		displayName: 'Options',
 		name: 'options',
 		type: 'collection',
-    options: [],
+	options: [],
 		placeholder: 'Add Option',
 		default: {},
 		displayOptions: {
 			show: {
-				resource: ['address'],
-				operation: ['list'],
+				resource: ['pipelines'],
+				operation: ['getMany'],
 			},
 		},
 	},
@@ -34,16 +48,19 @@ export async function execute(
 	for (let i = 0; i < items.length; i++) {
 		try {
 			// Get input data
-			// const options = this.getNodeParameter('options', i, {}) as { includeDetails?: boolean };
-
+			const entity = this.getNodeParameter('entity', i) as string;
 			// Make API call to get the corrugated format
 			const response = await this.helpers.requestWithAuthentication.call(this, 'hipeApi', {
 				method: 'GET',
-				url: `${baseUrl}/api/addresses`,
+				url: `${baseUrl}/api/pipelines?type=${entity}`,
 				json: true,
 			});
-
-			returnData.push({ json: response });
+			// If response is an array, push each item; otherwise, push the object
+			if (Array.isArray(response)) {
+				response.forEach(item => returnData.push({ json: item }));
+			} else if (response) {
+				returnData.push({ json: response });
+			}
 		} catch (error) {
 			if (this.continueOnFail()) {
 				returnData.push({ json: { error: error.message } });

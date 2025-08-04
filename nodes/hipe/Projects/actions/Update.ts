@@ -6,11 +6,17 @@ import { IProject } from '../../interfaces';
 export const properties: INodeProperties[] = [
   {
     displayName: 'Project ID',
-    name: 'projectId',
+    name: 'id',
     type: 'string',
     required: true,
     default: '',
     description: 'ID of the project to update',
+    displayOptions: {
+      show: {
+        resource: ['project'],
+        operation: ['update'],
+      },
+    },
   },
   {
     displayName: 'Update Fields',
@@ -18,6 +24,12 @@ export const properties: INodeProperties[] = [
     type: 'collection',
     placeholder: 'Add Field',
     default: {},
+    displayOptions: {
+      show: {
+        resource: ['project'],
+        operation: ['update'],
+      },
+    },
     options: [
       {
         displayName: 'Name',
@@ -27,39 +39,46 @@ export const properties: INodeProperties[] = [
         description: 'Name of the project',
       },
       {
-        displayName: 'Description',
-        name: 'description',
+        displayName: 'Status ID',
+        name: 'statusId',
         type: 'string',
         default: '',
-        description: 'Description of the project',
+        description: 'Status ID of the project',
       },
       {
-        displayName: 'Client ID',
-        name: 'clientId',
+        displayName: 'Manager ID',
+        name: 'managerId',
         type: 'string',
         default: '',
-        description: 'ID of the client associated with this project',
+        description: 'Manager ID of the project',
       },
       {
-        displayName: 'Status',
-        name: 'status',
-        type: 'options',
-        options: [
-          {
-            name: 'Draft',
-            value: 'draft',
-          },
-          {
-            name: 'In Progress',
-            value: 'in_progress',
-          },
-          {
-            name: 'Completed',
-            value: 'completed',
-          },
-        ],
-        default: 'draft',
-        description: 'Status of the project',
+        displayName: 'Company ID',
+        name: 'companyId',
+        type: 'string',
+        default: '',
+        description: 'Company ID of the project',
+      },
+      {
+        displayName: 'Opportunity Pipeline ID',
+        name: 'opportunityPipelineId',
+        type: 'string',
+        default: '',
+        description: 'Opportunity pipeline ID of the project',
+      },
+      {
+        displayName: 'Opportunity Step ID',
+        name: 'opportunityStepId',
+        type: 'string',
+        default: '',
+        description: 'Opportunity step ID of the project',
+      },
+      {
+        displayName: 'Estimated Values',
+        name: 'estimatedValues',
+        type: 'number',
+        default: 0,
+        description: 'Estimated values of the project',
       },
       {
         displayName: 'Due Date',
@@ -67,6 +86,13 @@ export const properties: INodeProperties[] = [
         type: 'dateTime',
         default: '',
         description: 'Due date of the project',
+      },
+      {
+        displayName: 'Custom Fields',
+        name: 'customFields',
+        type: 'json',
+        default: {},
+        description: 'Custom fields of the project',
       },
       // Add any additional fields specific to updating projects
     ],
@@ -78,28 +104,31 @@ export async function execute(
   this: IExecuteFunctions,
   items: INodeExecutionData[],
 ): Promise<INodeExecutionData[]> {
-  // This is just a scaffold, implementation will be added later
   const returnData: INodeExecutionData[] = [];
+
+  // Get credentials
+  const credentials = await this.getCredentials('hipeApi');
+  let baseUrl = credentials.url;
+  if (typeof baseUrl !== 'string') {
+    throw new Error('HIPE base URL is not a string');
+  }
+  baseUrl = baseUrl.replace(/\/$/, '');
   
   // Process each item
   for (let i = 0; i < items.length; i++) {
     try {
       // Get input data
-      const projectId = this.getNodeParameter('projectId', i) as string;
+      const projectId = this.getNodeParameter('id', i) as string;
       const updateFields = this.getNodeParameter('updateFields', i, {}) as IProject;
       
-      // In the actual implementation, this would make an API call to update the project
-      // For now, we just return placeholder data
-      returnData.push({
-        json: {
-          success: true,
-          data: {
-            id: projectId,
-            ...updateFields,
-            updatedAt: new Date().toISOString(),
-          },
-        },
+      // Make API call to update the user
+      const response = await this.helpers.request!({
+        method: 'PATCH',
+        url: `${baseUrl}/api/projects/${encodeURIComponent(projectId)}`,
+        json: true,
+        body: updateFields,
       });
+      returnData.push({ json: response });
     } catch (error) {
       if (this.continueOnFail()) {
         returnData.push({ json: { error: error.message } });

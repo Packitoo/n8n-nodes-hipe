@@ -92,6 +92,14 @@ export interface IProject {
   name: string;
   description?: string;
   status?: string;
+  companyId?: string;
+  managerId?: string;
+  externalId?: string;
+  estimatedValues?: number;
+  dueDate?: string;
+  opportunityPipelineId?: string;
+  opportunityStepId?: string;
+  customFields?: object;
   [key: string]: any;
 }
 
@@ -120,5 +128,19 @@ export interface ICompany {
   phone?: string
   vat?: string
   externalId?: string
+  [key: string]: any;
+}
+
+export interface IStatus {
+  id?: string;
+  entity: string;
+  position: number;
+  internalLabel: string;
+  externalLabel: string;
+  externalId: string;
+  isCompleted: boolean;
+  isCreation: boolean;
+  isOverdue: boolean;
+  additionalFields: object;
   [key: string]: any;
 }

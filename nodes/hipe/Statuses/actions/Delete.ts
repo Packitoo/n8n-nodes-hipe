@@ -1,36 +1,23 @@
-import { IExecuteFunctions, INodeExecutionData, INodeProperties } from 'n8n-workflow';
+import { IExecuteFunctions } from 'n8n-workflow';
+import { INodeExecutionData, INodeProperties } from 'n8n-workflow';
 
+// Properties for the Create Contact
 export const properties: INodeProperties[] = [
     {
-        displayName: 'Company ID',
-        name: 'companyId',
+        displayName: 'Status ID',
+        name: 'statusID',
         type: 'string',
-        required: true,
         default: '',
-        description: 'ID of the company to retrieve',
         displayOptions: {
             show: {
-                resource: ['company'],
-                operation: ['getAddresses'],
-            },
-        },
-    },
-    {
-        displayName: 'Options',
-        name: 'options',
-        type: 'collection',
-        placeholder: 'Add Option',
-        default: {},
-        options: [],
-        displayOptions: {
-            show: {
-                resource: ['company'],
-                operation: ['getAddresses'],
+                resource: ['statuses'],
+                operation: ['delete'],
             },
         },
     },
 ];
 
+// Execute function for the Create operation
 export async function execute(
     this: IExecuteFunctions,
     items: INodeExecutionData[],
@@ -44,20 +31,19 @@ export async function execute(
         throw new Error('HIPE base URL is not a string');
     }
     baseUrl = baseUrl.replace(/\/$/, '');
+
     // Process each item
     for (let i = 0; i < items.length; i++) {
         try {
             // Get input data
-            const companyId = this.getNodeParameter('companyId', i) as string;
-            // const options = this.getNodeParameter('options', i, {}) as { includeDetails?: boolean };
+            const statusId = this.getNodeParameter('statusId', i) as string;
 
-            // Make API call to get the corrugated format
+            // Make API call to create the corrugated format
             const response = await this.helpers.requestWithAuthentication.call(this, 'hipeApi', {
-                method: 'GET',
-                url: `${baseUrl}/api/companies/${companyId}/addresses`,
+                method: 'DELETE',
+                url: `${baseUrl}/api/statuses/${statusId}`,
                 json: true,
             });
-
             returnData.push({ json: response });
         } catch (error) {
             if (this.continueOnFail()) {
@@ -67,5 +53,6 @@ export async function execute(
             throw error;
         }
     }
+
     return returnData;
 }

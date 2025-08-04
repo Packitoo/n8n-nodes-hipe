@@ -9,11 +9,11 @@ export const properties: INodeProperties[] = [
     type: 'string',
     required: true,
     default: '',
-    description: 'ID of the project to retrieve',
+    description: 'ID of the project to retrieve files',
     displayOptions: {
       show: {
         resource: ['project'],
-        operation: ['get'],
+        operation: ['getFiles'],
       },
     },
   },
@@ -26,7 +26,7 @@ export const properties: INodeProperties[] = [
     displayOptions: {
       show: {
         resource: ['project'],
-        operation: ['get'],
+        operation: ['getFiles'],
       },
     },
     options: [
@@ -42,14 +42,14 @@ export async function execute(
 ): Promise<INodeExecutionData[]> {
   const returnData: INodeExecutionData[] = [];
 
-	// Get credentials
-	const credentials = await this.getCredentials('hipeApi');
-	let baseUrl = credentials.url;
-	if (typeof baseUrl !== 'string') {
-		throw new Error('HIPE base URL is not a string');
-	}
-	baseUrl = baseUrl.replace(/\/$/, '');
-	// Process each item
+    // Get credentials
+    const credentials = await this.getCredentials('hipeApi');
+    let baseUrl = credentials.url;
+    if (typeof baseUrl !== 'string') {
+        throw new Error('HIPE base URL is not a string');
+    }
+    baseUrl = baseUrl.replace(/\/$/, '');
+    // Process each item
   for (let i = 0; i < items.length; i++) {
     try {
       // Get input data
@@ -58,7 +58,7 @@ export async function execute(
 
       const response = await this.helpers.requestWithAuthentication.call(this, "hipeApi", {
         method: 'GET',
-        url: `${baseUrl}/api/projects/${projectId}`,
+        url: `${baseUrl}/api/projects/${projectId}/files`,
         json: true,
       });
       returnData.push({ json: response });

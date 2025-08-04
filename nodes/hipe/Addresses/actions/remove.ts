@@ -4,9 +4,10 @@ export const properties: INodeProperties[] = [
 	{
 		displayName: 'Address ID',
 		name: 'id',
-		type: 'string',
+		type: 'collection',
+		options: [],
 		required: true,
-		default: '',
+		default: {},
 		description: 'ID of the address to delete',
 		displayOptions: {
 			show: {

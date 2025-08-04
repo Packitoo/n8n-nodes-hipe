@@ -107,6 +107,13 @@ export const properties: INodeProperties[] = [
         default: '',
         description: 'Mobile phone number of the user',
       },
+      {
+        displayName: 'Custom Fields',
+        name: 'customFields',
+        type: 'json',
+        default: {},
+        description: 'Custom fields of the user',
+      },
       // Add any additional fields specific to updating projects
     ],
   },
