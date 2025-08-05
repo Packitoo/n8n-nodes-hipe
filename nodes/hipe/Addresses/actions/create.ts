@@ -144,7 +144,7 @@ export const properties: INodeProperties[] = [
 		displayName: 'Options',
 		name: 'options',
 		type: 'collection',
-    options: [],
+		options: [],
 		placeholder: 'Add Option',
 		default: {},
 		displayOptions: {
@@ -175,10 +175,16 @@ export async function execute(
 		const address = this.getNodeParameter('address', i) as string;
 		const city = this.getNodeParameter('city', i) as string;
 		const country = this.getNodeParameter('country', i) as string;
-		const firstComplementaryAddress = this.getNodeParameter('firstComplementaryAddress', i) as string;
+		const firstComplementaryAddress = this.getNodeParameter(
+			'firstComplementaryAddress',
+			i,
+		) as string;
 		const name = this.getNodeParameter('name', i) as string;
 		const position = this.getNodeParameter('position', i) as number;
-		const secondComplementaryAddress = this.getNodeParameter('secondComplementaryAddress', i) as string;
+		const secondComplementaryAddress = this.getNodeParameter(
+			'secondComplementaryAddress',
+			i,
+		) as string;
 		const state = this.getNodeParameter('state', i) as string;
 		const zipCode = this.getNodeParameter('zipCode', i) as string;
 		try {
@@ -201,7 +207,7 @@ export async function execute(
 					secondComplementaryAddress,
 					state,
 					zipCode,
-				}
+				},
 			});
 
 			returnData.push({ json: response });

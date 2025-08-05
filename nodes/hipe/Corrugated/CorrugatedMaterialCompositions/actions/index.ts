@@ -8,41 +8,71 @@ import * as del from './Delete';
 export const RESOURCE = 'corrugatedMaterialComposition';
 
 export const ACTIONS = {
-  create: create,
-  createBulk: createBulk,
-  get: get,
-  getMany: list,
-  update: update,
-  delete: del,
+	create: create,
+	createBulk: createBulk,
+	get: get,
+	getMany: list,
+	update: update,
+	delete: del,
 };
 
 // Factory function to build all corrugated material composition properties for node usage
 export function buildProperties() {
-  const properties = [
-    {
-      displayName: 'Operation',
-      name: 'operation',
-      type: 'options',
-      displayOptions: {
-        show: { resource: [RESOURCE] },
-      },
-      options: [
-        { name: 'Create', value: 'create', description: 'Create a new corrugated material composition', action: 'Create' },
-        { name: 'Create Bulk', value: 'createBulk', description: 'Create multiple corrugated material compositions', action: 'Create bulk' },
-        { name: 'Get', value: 'get', description: 'Get a specific corrugated material composition', action: 'Get' },
-        { name: 'Get Many', value: 'getMany', description: 'Get multiple corrugated material compositions', action: 'Get many' },
-        { name: 'Update', value: 'update', description: 'Update a specific corrugated material composition', action: 'Update' },
-        { name: 'Delete', value: 'delete', description: 'Delete a specific corrugated material composition', action: 'Delete' },
-      ],
-      default: 'getMany',
-      noDataExpression: true,
-    },
-    ...create.properties,
-    ...createBulk.properties,
-    ...get.properties,
-    ...list.properties,
-    ...update.properties,
-    ...del.properties,
-  ];
-  return [RESOURCE, properties];
+	const properties = [
+		{
+			displayName: 'Operation',
+			name: 'operation',
+			type: 'options',
+			displayOptions: {
+				show: { resource: [RESOURCE] },
+			},
+			options: [
+				{
+					name: 'Create',
+					value: 'create',
+					description: 'Create a new corrugated material composition',
+					action: 'Create',
+				},
+				{
+					name: 'Create Bulk',
+					value: 'createBulk',
+					description: 'Create multiple corrugated material compositions',
+					action: 'Create bulk',
+				},
+				{
+					name: 'Delete',
+					value: 'delete',
+					description: 'Delete a specific corrugated material composition',
+					action: 'Delete',
+				},
+				{
+					name: 'Get',
+					value: 'get',
+					description: 'Get a specific corrugated material composition',
+					action: 'Get',
+				},
+				{
+					name: 'Get Many',
+					value: 'getMany',
+					description: 'Get multiple corrugated material compositions',
+					action: 'Get many',
+				},
+				{
+					name: 'Update',
+					value: 'update',
+					description: 'Update a specific corrugated material composition',
+					action: 'Update',
+				},
+			],
+			default: 'getMany',
+			noDataExpression: true,
+		},
+		...create.properties,
+		...createBulk.properties,
+		...get.properties,
+		...list.properties,
+		...update.properties,
+		...del.properties,
+	];
+	return [RESOURCE, properties];
 }

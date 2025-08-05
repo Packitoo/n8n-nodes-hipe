@@ -61,7 +61,9 @@ export async function execute(
 			const binaryEntry = items[i].binary?.[binaryPropertyName];
 			this.logger.debug(`binaryEntry: ${JSON.stringify(binaryEntry)}`);
 			if (!binaryEntry) {
-				throw new Error(`Binary property "${binaryPropertyName}" not found on item. Available binary keys: ${Object.keys(items[i].binary || {}).join(', ')}`);
+				throw new Error(
+					`Binary property "${binaryPropertyName}" not found on item. Available binary keys: ${Object.keys(items[i].binary || {}).join(', ')}`,
+				);
 			}
 
 			const buffer = await this.helpers.getBinaryDataBuffer(i, binaryPropertyName);
