@@ -68,7 +68,7 @@ export const properties: INodeProperties[] = [
 		name: 'externalId',
 		type: 'string',
 		default: '',
-		description: 'External ID of the status',
+		description: 'Whether external ID of the status',
 		displayOptions: {
 			show: {
 				resource: ['statuses'],
@@ -81,7 +81,7 @@ export const properties: INodeProperties[] = [
 		name: 'isCompleted',
 		type: 'boolean',
 		default: false,
-		description: 'Is the status completed?',
+		description: 'Whether the status is completed',
 		displayOptions: {
 			show: {
 				resource: ['statuses'],
@@ -94,7 +94,7 @@ export const properties: INodeProperties[] = [
 		name: 'isCreation',
 		type: 'boolean',
 		default: false,
-		description: 'Is the status creation?',
+		description: 'Whether the status is a creation status',
 		displayOptions: {
 			show: {
 				resource: ['statuses'],
@@ -107,7 +107,7 @@ export const properties: INodeProperties[] = [
 		name: 'isOverdue',
 		type: 'boolean',
 		default: false,
-		description: 'Is the status overdue?',
+		description: 'Whether the status is overdue',
 		displayOptions: {
 			show: {
 				resource: ['statuses'],
@@ -174,7 +174,6 @@ export async function execute(
 			const isCreation = this.getNodeParameter('isCreation', i) as boolean;
 			const isOverdue = this.getNodeParameter('isOverdue', i) as boolean;
 			const additionalFields = this.getNodeParameter('additionalFields', i) as object;
-			
 
 			// Prepare request data
 			const requestData: IStatus = {

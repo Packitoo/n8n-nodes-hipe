@@ -71,12 +71,12 @@ export async function execute(
 	// This is just a scaffold, implementation will be added later
 	const returnData: INodeExecutionData[] = [];
 
-  const credentials = await this.getCredentials('hipeApi');
-  let baseUrl = credentials.url;
-  if (typeof baseUrl !== 'string') {
-    throw new Error('HIPE base URL is not a string');
-  }
-  baseUrl = baseUrl.replace(/\/$/, '');
+	const credentials = await this.getCredentials('hipeApi');
+	let baseUrl = credentials.url;
+	if (typeof baseUrl !== 'string') {
+		throw new Error('HIPE base URL is not a string');
+	}
+	baseUrl = baseUrl.replace(/\/$/, '');
 
 	// Process each item
 	for (let i = 0; i < items.length; i++) {
@@ -91,13 +91,13 @@ export async function execute(
 				...additionalFields,
 			};
 
-      const response = await this.helpers.requestWithAuthentication.call(this, "hipeApi", {
-        method: 'POST',
-        url: `${baseUrl}/api/corrugated-flutes`,
-        body: requestData,
-        json: true,
-      });
-      returnData.push({ json: response });
+			const response = await this.helpers.requestWithAuthentication.call(this, 'hipeApi', {
+				method: 'POST',
+				url: `${baseUrl}/api/corrugated-flutes`,
+				body: requestData,
+				json: true,
+			});
+			returnData.push({ json: response });
 			// In the actual implementation, this would make an API call to create the corrugated flute
 			// For now, we just return the request data as a placeholder
 			// returnData.push({

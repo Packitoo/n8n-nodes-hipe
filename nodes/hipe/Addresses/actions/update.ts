@@ -148,7 +148,7 @@ export const properties: INodeProperties[] = [
 		displayName: 'Options',
 		name: 'options',
 		type: 'collection',
-    options: [],
+		options: [],
 		placeholder: 'Add Option',
 		default: {},
 		displayOptions: {

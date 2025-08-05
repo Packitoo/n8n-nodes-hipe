@@ -32,11 +32,39 @@ export const properties: INodeProperties[] = [
 		},
 		options: [
 			{
-				displayName: 'Name',
-				name: 'name',
-				type: 'string',
-				default: '',
-				description: 'Name of the corrugated liner',
+				displayName: 'Category',
+				name: 'category',
+				type: 'options',
+				options: [
+					{
+						name: 'Kraft',
+						value: 'Kraft',
+					},
+					{
+						name: 'Test',
+						value: 'Test',
+					},
+					{
+						name: 'Other',
+						value: 'Other',
+					},
+				],
+				default: 'Kraft',
+				description: 'Category of the corrugated liner',
+				displayOptions: {
+					show: {
+						resource: ['corrugatedLiner'],
+						operation: ['create'],
+					},
+				},
+			},
+			{
+				displayName: 'Ink Porosity',
+				name: 'inkPorosity',
+				type: 'number',
+				required: true,
+				default: 0,
+				description: 'Ink porosity of the corrugated liner',
 				displayOptions: {
 					show: {
 						resource: ['corrugatedLiner'],
@@ -61,40 +89,11 @@ export const properties: INodeProperties[] = [
 				},
 			},
 			{
-				displayName: 'Category',
-				name: 'category',
-				type: 'options',
-				options: [
-					{
-						name: 'Kraft',
-						value: 'Kraft',
-					},
-					{
-						name: 'Test',
-						value: 'Test',
-					},
-					{
-						name: 'Other',
-						value: 'Other',
-					},
-				],
-				required: true,
-				default: 'Kraft',
-				description: 'Category of the corrugated liner',
-				displayOptions: {
-					show: {
-						resource: ['corrugatedLiner'],
-						operation: ['create'],
-					},
-				},
-			},
-			{
-				displayName: 'Ink Porosity',
-				name: 'inkPorosity',
-				type: 'number',
-				required: true,
-				default: 0,
-				description: 'Ink porosity of the corrugated liner',
+				displayName: 'Name',
+				name: 'name',
+				type: 'string',
+				default: '',
+				description: 'Name of the corrugated liner',
 				displayOptions: {
 					show: {
 						resource: ['corrugatedLiner'],

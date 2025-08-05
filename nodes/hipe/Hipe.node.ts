@@ -5,6 +5,8 @@ import {
 	IExecuteFunctions,
 	NodeConnectionType,
 	INodeProperties,
+	ApplicationError,
+	NodeOperationError,
 } from 'n8n-workflow';
 
 // Import all resource operations
@@ -40,7 +42,6 @@ export const EMBEDDED_RESOURCES = [
 
 // Runtime check for resource registration
 
-
 export class Hipe implements INodeType {
 	description: INodeTypeDescription = {
 		displayName: 'HIPE',
@@ -68,15 +69,17 @@ export class Hipe implements INodeType {
 	validateResources() {
 		for (const res of EMBEDDED_RESOURCES) {
 			if (!res.RESOURCE || typeof res.RESOURCE !== 'string') {
-				throw new Error('[hipe][RESOURCE REGISTRATION] Resource missing RESOURCE property');
+				throw new ApplicationError(
+					'[hipe][RESOURCE REGISTRATION] Resource missing RESOURCE property',
+				);
 			}
 			if (!res.ACTIONS || typeof res.ACTIONS !== 'object') {
-				throw new Error(
+				throw new ApplicationError(
 					`[hipe][RESOURCE REGISTRATION] Resource ${res.RESOURCE} missing ACTIONS property`,
 				);
 			}
 			if (typeof res.buildProperties !== 'function') {
-				throw new Error(
+				throw new ApplicationError(
 					`[hipe][RESOURCE REGISTRATION] Resource ${res.RESOURCE} missing buildProperties function`,
 				);
 			}
@@ -103,7 +106,9 @@ export class Hipe implements INodeType {
 		for (const embeddedResource of embeddedResources) {
 			const [resourceName, resourceProperties] = embeddedResource.buildProperties();
 			if (!Array.isArray(resourceProperties)) {
-				throw new Error(`Resource "${resourceName}" did not return a valid properties array!`);
+				throw new ApplicationError(
+					`Resource "${resourceName}" did not return a valid properties array!`,
+				);
 			}
 			resource.options?.push({
 				name: resourceName,
@@ -128,7 +133,7 @@ export class Hipe implements INodeType {
 			const embeddedResource = EMBEDDED_RESOURCES.find((r) => r.RESOURCE === resource);
 			if (!embeddedResource) {
 				this.logger.error(`[hipe][EXECUTE] Resource not found: ${resource}`);
-				throw new Error(`Resource "${resource}" not found!`);
+				throw new NodeOperationError(this.getNode(), `Resource "${resource}" not found!`);
 			}
 			this.logger.debug(`[hipe][EXECUTE] Found resource: ${embeddedResource.RESOURCE}`);
 
@@ -141,7 +146,10 @@ export class Hipe implements INodeType {
 				this.logger.error(
 					`[hipe][EXECUTE] Operation not found or invalid for resource: ${resource}, operation: ${operation}`,
 				);
-				throw new Error(`Operation "${operation}" not found for resource "${resource}"!`);
+				throw new NodeOperationError(
+					this.getNode(),
+					`Operation "${operation}" not found for resource "${resource}"!`,
+				);
 			}
 
 			// Call the action's execute

@@ -1,11 +1,11 @@
 import * as CreateBulk from './CreateBulk';
 
 describe('CorrugatedMaterialCompositionPrices CreateBulk Action', () => {
-  it('should export properties array', () => {
-    expect(Array.isArray(CreateBulk.properties)).toBe(true);
-  });
+	it('should export properties array', () => {
+		expect(Array.isArray(CreateBulk.properties)).toBe(true);
+	});
 
-  it('should export an execute function', () => {
-    expect(typeof CreateBulk.execute).toBe('function');
-  });
+	it('should export an execute function', () => {
+		expect(typeof CreateBulk.execute).toBe('function');
+	});
 });

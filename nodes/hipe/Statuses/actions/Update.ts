@@ -4,18 +4,18 @@ import { ENTITIES_OPTIONS } from './constant';
 
 // Properties for the Create Contact
 export const properties: INodeProperties[] = [
-    {
-        displayName: 'Status ID',
-        name: 'statusID',
-        type: 'string',
-        default: '',
-        displayOptions: {
-            show: {
-                resource: ['statuses'],
-                operation: ['update'],
-            },
-        },
-    },
+	{
+		displayName: 'Status ID',
+		name: 'statusID',
+		type: 'string',
+		default: '',
+		displayOptions: {
+			show: {
+				resource: ['statuses'],
+				operation: ['update'],
+			},
+		},
+	},
 	{
 		displayName: 'Additional Fields',
 		name: 'additionalFields',
@@ -30,6 +30,13 @@ export const properties: INodeProperties[] = [
 		},
 		options: [
 			{
+				displayName: 'Background color',
+				name: 'bgColor',
+				type: 'color',
+				default: '',
+				description: 'Background color of the status',
+			},
+			{
 				displayName: 'Entity',
 				name: 'entity',
 				type: 'options',
@@ -37,21 +44,11 @@ export const properties: INodeProperties[] = [
 				options: ENTITIES_OPTIONS,
 			},
 			{
-				displayName: 'Position',
-				name: 'position',
-				type: 'number',
-				default: 0,
-				description: 'Position of the status',
-			},
-			{
-				displayName: 'Internal Label',
-				name: 'internalLabel',
-				type: 'json',
-				default: {
-					en: '',
-					fr: '',
-				},
-				description: 'Internal label of the status',
+				displayName: 'External ID',
+				name: 'externalId',
+				type: 'string',
+				default: '',
+				description: 'External ID of the status',
 			},
 			{
 				displayName: 'External Label',
@@ -64,34 +61,6 @@ export const properties: INodeProperties[] = [
 				description: 'External label of the status',
 			},
 			{
-				displayName: 'External ID',
-				name: 'externalId',
-				type: 'string',
-				default: '',
-				description: 'External ID of the status',
-			},
-			{
-				displayName: 'Is Completed',
-				name: 'isCompleted',
-				type: 'boolean',
-				default: false,
-				description: 'Is the status completed?',
-			},
-			{
-				displayName: 'Is Creation',
-				name: 'isCreation',
-				type: 'boolean',
-				default: false,
-				description: 'Is the status creation?',
-			},
-			{
-				displayName: 'Is Overdue',
-				name: 'isOverdue',
-				type: 'boolean',
-				default: false,
-				description: 'Is the status overdue?',
-			},
-			{
 				displayName: 'Foreground color',
 				name: 'fgColor',
 				type: 'color',
@@ -99,11 +68,42 @@ export const properties: INodeProperties[] = [
 				description: 'Foreground color of the status',
 			},
 			{
-				displayName: 'Background color',
-				name: 'bgColor',
-				type: 'color',
-				default: '',
-				description: 'Background color of the status',
+				displayName: 'Internal Label',
+				name: 'internalLabel',
+				type: 'json',
+				default: {
+					en: '',
+					fr: '',
+				},
+				description: 'Internal label of the status',
+			},
+			{
+				displayName: 'Is Completed',
+				name: 'isCompleted',
+				type: 'boolean',
+				default: false,
+				description: 'Whether the status is completed',
+			},
+			{
+				displayName: 'Is Creation',
+				name: 'isCreation',
+				type: 'boolean',
+				default: false,
+				description: 'Whether the status is a creation status',
+			},
+			{
+				displayName: 'Is Overdue',
+				name: 'isOverdue',
+				type: 'boolean',
+				default: false,
+				description: 'Whether the status is overdue',
+			},
+			{
+				displayName: 'Position',
+				name: 'position',
+				type: 'number',
+				default: 0,
+				description: 'Position of the status',
 			},
 		],
 	},

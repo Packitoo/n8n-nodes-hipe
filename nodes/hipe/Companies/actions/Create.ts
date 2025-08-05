@@ -59,7 +59,7 @@ export const properties: INodeProperties[] = [
 		options: [
 			{
 				displayName: 'Collaborator IDs',
-				name: 'collaboraterIds',
+				name: 'collaboratorIds',
 				type: 'fixedCollection',
 				placeholder: 'Add Collaborator ID',
 				default: {},
@@ -84,11 +84,11 @@ export const properties: INodeProperties[] = [
 				description: 'Add one or more Collaborator IDs',
 			},
 			{
-				displayName: 'Parent ID',
-				name: 'parentId',
-				type: 'string',
-				default: '',
-				description: 'Parent ID of the company',
+				displayName: 'Custom Fields',
+				name: 'customFields',
+				type: 'json',
+				default: {},
+				description: 'Custom fields of the company',
 			},
 			{
 				displayName: 'Email',
@@ -99,11 +99,11 @@ export const properties: INodeProperties[] = [
 				description: 'Email of the company',
 			},
 			{
-				displayName: 'Website',
-				name: 'website',
+				displayName: 'Parent ID',
+				name: 'parentId',
 				type: 'string',
 				default: '',
-				description: 'Website of the company',
+				description: 'Parent ID of the company',
 			},
 			{
 				displayName: 'Phone',
@@ -120,11 +120,11 @@ export const properties: INodeProperties[] = [
 				description: 'Vat of the company',
 			},
 			{
-				displayName: 'Custom Fields',
-				name: 'customFields',
-				type: 'json',
-				default: {},
-				description: 'Custom fields of the company',
+				displayName: 'Website',
+				name: 'website',
+				type: 'string',
+				default: '',
+				description: 'Website of the company',
 			},
 		],
 	},

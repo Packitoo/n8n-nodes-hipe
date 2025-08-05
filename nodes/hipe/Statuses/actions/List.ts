@@ -19,7 +19,7 @@ export const properties: INodeProperties[] = [
 		displayName: 'Options',
 		name: 'options',
 		type: 'collection',
-	options: [],
+		options: [],
 		placeholder: 'Add Option',
 		default: {},
 		displayOptions: {
@@ -57,7 +57,7 @@ export async function execute(
 			});
 			// If response is an array, push each item; otherwise, push the object
 			if (Array.isArray(response)) {
-				response.forEach(item => returnData.push({ json: item }));
+				response.forEach((item) => returnData.push({ json: item }));
 			} else if (response) {
 				returnData.push({ json: response });
 			}
