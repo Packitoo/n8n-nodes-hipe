@@ -1,87 +1,91 @@
 # n8n-nodes-hipe
 
-This package contains a custom n8n node for integrating with the HIPE API from Packitoo. It provides access to Corrugated resources and Projects endpoints.
+<!-- TODO: Add npm version badge, CI status, Packitoo logo, and other relevant badges here -->
 
-## Features
+![Packitoo Logo](docs/logo.svg)
 
-This node provides access to the following HIPE API resources:
 
-### Corrugated Resources
-- CorrugatedMaterials (Create, Get, List, Update)
-- CorrugatedMaterialCompositions (Create, CreateBulk, Get, List, Update, Delete)
-- CorrugatedMaterialCompositionPrices (Create, CreateBulk, Get, List, Update, Delete)
-- CorrugatedFormats (Create, Get, List, Update)
-- CorrugatedSuppliers (Create, List, Update)
-- CorrugatedFlutes (Create, Get, List, Update)
-- CorrugatedLiners (Create, Get, List, Update)
+Official n8n integration node for [HIPE](https://hipe.packitoo.com) by Packitoo.
 
-### Projects Resource
-- Projects (Create, Get, List, Update)
+Easily connect your n8n workflows to the HIPE SaaS API to automate business processes, manage users, companies, projects, and more.
 
-## Prerequisites
+---
 
-- [n8n](https://n8n.io/) (version 1.0.0 or later)
-- HIPE API access credentials (API URL and Bearer Token)
+## Table of Contents
+- [Module Readiness](#module-readiness)
+- [Installation](#installation)
+- [Getting Started](#getting-started)
+- [Usage](#usage)
+- [Authentication](#authentication)
+- [Contributing](#contributing)
+- [Support](#support)
+- [License](#license)
+
+---
+
+
+## Module Readiness
+
+| Module       | Status   | Notes                                      |
+| ------------ | -------- | ------------------------------------------ |
+| Users        | ✅ Ready | Full CRUD                                  |
+| Companies    | ✅ Ready | Full CRUD                                  |
+| Projects     | ✅ Ready | Full CRUD                                  |
+| Pipelines    | ✅ Ready |                                            |
+| Statuses     | ✅ Ready |                                            |
+| Addresses    | ✅ Ready |                                            |
+| Corrugated   | 🟡 Partial | Some submodules in progress                |
+| ...          | 🚧 Planned | Planned for future releases                |
+
+<!-- Update this table as modules mature -->
 
 ## Installation
 
-### Local Installation
-
-To use this node locally, you can install it using npm:
-
+### From npm (recommended)
 ```bash
 npm install n8n-nodes-hipe
 ```
 
-### n8n Community Node Installation
-
-For n8n community node installation, follow these steps:
-
-1. Go to **Settings > Community Nodes**
-2. Select **Install**
-3. Enter `n8n-nodes-hipe` in the input field
-4. Click **Install**
-
-Alternatively, you can install it directly using the n8n CLI:
-
+### From GitHub (latest/dev)
 ```bash
-n8n community-node install n8n-nodes-hipe
+npm install github:packitoo/n8n-nodes-hipe
 ```
+
+## Getting Started
+1. Install the node as above.
+2. Restart n8n if running locally.
+3. Add the "HIPE" node to your workflow from the n8n node palette.
+4. Configure authentication (see below).
+
+## Authentication
+
+To use this node, you need an API token from HIPE.
+
+- Follow the guide here: [Create Access Token](https://developers.packitoo.com/guides/create-access-token/)
+- Enter your token in the HIPE credentials section when configuring the node in n8n.
 
 ## Usage
 
-1. Add the HIPE node to your workflow
-2. Configure your HIPE API credentials
-3. Select the resource and operation you want to perform
-4. Configure the operation parameters
-5. Connect the node to the rest of your workflow
+Basic usage involves adding the HIPE node to your workflow and selecting the desired module and operation. For detailed usage and examples, see the [examples directory](./examples) or the inline documentation in n8n.
 
-## Development
+> **Tip:** Hover over each parameter in the node UI for helpful descriptions.
 
-If you want to contribute to this node or modify it for your own needs:
+## Contributing
 
-```bash
-# Clone the repository
-git clone <repository-url>
+Contributions are welcome! Please see [CONTRIBUTING.md](./CONTRIBUTING.md) for guidelines.
 
-# Install dependencies
-npm install
+- Open issues for bugs or feature requests
+- Submit pull requests for improvements
 
-# Build the node
-npm run build
+## Support
 
-# Link to your local n8n installation
-npm link
-cd ~/.n8n/nodes
-npm link n8n-nodes-hipe
-```
-
-## API Documentation
-
-For more information about the HIPE API, refer to the official API documentation:
-
-[HIPE API Documentation](https://dev-hipe.packitoo.com/doc-json)
+- For common issues and questions, please use [GitHub Issues](https://github.com/packitoo/n8n-nodes-hipe/issues).
+- For integration help or custom pipeline requests, please contact your assigned Customer Success Manager.
 
 ## License
 
-[MIT](LICENSE.md)
+MIT © [Packitoo](https://packitoo.com)
+
+---
+
+<!-- TODO: Add links to documentation, and other resources as needed -->
