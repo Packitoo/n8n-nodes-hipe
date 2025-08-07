@@ -143,7 +143,7 @@ export async function execute(
 			const updateFields = this.getNodeParameter('updateFields', i, {}) as IUser;
 
 			// Make API call to update the user
-			const response = await this.helpers.request!({
+			const response = await this.helpers.requestWithAuthentication.call(this, 'hipeApi', {
 				method: 'PATCH',
 				url: `${baseUrl}/api/users/${encodeURIComponent(userId)}`,
 				json: true,
