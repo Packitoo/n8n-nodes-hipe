@@ -1,11 +1,12 @@
+import { IExecuteFunctions } from 'n8n-workflow';
 import { execute } from './Update';
 
 describe('Update action', () => {
 	it('should call helpers.request and return correct data (happy path)', async () => {
-		const mockThis = {
+		const mockThis: IExecuteFunctions = {
 			getCredentials: async () => ({ url: 'https://fake.api' }),
 			helpers: {
-				request: jest.fn().mockResolvedValue({ updated: true }),
+				requestWithAuthentication: jest.fn().mockResolvedValue({ updated: true }),
 			},
 			getNodeParameter: (name: string, i: number) => {
 				if (name === 'id') return '1';
@@ -16,13 +17,14 @@ describe('Update action', () => {
 		} as any;
 		const items = [{ json: {} }];
 		const result = await execute.call(mockThis, items);
-		expect(mockThis.helpers.request).toHaveBeenCalledWith(
-			expect.objectContaining({
-				method: 'PATCH',
-				url: 'https://fake.api/api/users/1',
-				body: { firstName: 'Jane' },
-			}),
-		);
+		expect(mockThis.helpers.requestWithAuthentication).toHaveBeenCalledWith(
+				"hipeApi",
+				expect.objectContaining({
+					method: 'PATCH',
+					url: 'https://fake.api/api/users/1',
+					body: { firstName: 'Jane' },
+				}),
+			);
 		expect(result[0].json).toEqual({ updated: true });
 	});
 
@@ -30,7 +32,7 @@ describe('Update action', () => {
 		const mockThis = {
 			getCredentials: async () => ({ url: 'https://fake.api' }),
 			helpers: {
-				request: jest.fn().mockRejectedValue(new Error('fail!')),
+				requestWithAuthentication: jest.fn().mockRejectedValue(new Error('fail!')),
 			},
 			getNodeParameter: (name: string, i: number) => {
 				if (name === 'id') return '1';

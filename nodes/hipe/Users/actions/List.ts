@@ -61,6 +61,13 @@ export const properties: INodeProperties[] = [
 				description: 'Filter by client ID',
 			},
 			{
+				displayName: 'Search',
+				name: 's',
+				type: 'string',
+				default: '',
+				description: 'Filter by search parameter',
+			},
+			{
 				displayName: 'Role',
 				name: 'role',
 				type: 'multiOptions',
