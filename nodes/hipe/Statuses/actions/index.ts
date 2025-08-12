@@ -23,24 +23,24 @@ export function buildProperties() {
 				show: { resource: [RESOURCE] },
 			},
 			options: [
-				{ name: 'Create', value: 'create', description: 'Create a new status', action: 'Create' },
+				{ name: 'Create', value: 'create', description: 'Create a new status', action: 'Create a new status' },
 				{
 					name: 'Get Many',
 					value: 'getMany',
 					description: 'Get statuses for a given entity',
-					action: 'Get many',
+					action: 'Get statuses for a given entity',
 				},
 				{
 					name: 'Update',
 					value: 'update',
 					description: 'Update a specific status',
-					action: 'Update',
+					action: 'Update a specific status',
 				},
 				{
 					name: 'Delete',
 					value: 'delete',
 					description: 'Delete a specific status',
-					action: 'Delete',
+					action: 'Delete a specific status',
 				},
 			],
 			default: 'getMany',

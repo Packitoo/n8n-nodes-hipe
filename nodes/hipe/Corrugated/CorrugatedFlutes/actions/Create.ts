@@ -68,7 +68,6 @@ export async function execute(
 	this: IExecuteFunctions,
 	items: INodeExecutionData[],
 ): Promise<INodeExecutionData[]> {
-	// This is just a scaffold, implementation will be added later
 	const returnData: INodeExecutionData[] = [];
 
 	const credentials = await this.getCredentials('hipeApi');
@@ -98,14 +97,6 @@ export async function execute(
 				json: true,
 			});
 			returnData.push({ json: response });
-			// In the actual implementation, this would make an API call to create the corrugated flute
-			// For now, we just return the request data as a placeholder
-			// returnData.push({
-			// 	json: {
-			// 		success: true,
-			// 		data: requestData,
-			// 	},
-			// });
 		} catch (error) {
 			if (this.continueOnFail()) {
 				returnData.push({ json: { error: error.message } });

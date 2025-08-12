@@ -24,20 +24,20 @@ export function buildProperties() {
 				show: { resource: [RESOURCE] },
 			},
 			options: [
-				{ name: 'Create', value: 'create', description: 'Create a new address', action: 'Create' },
-				{ name: 'Get', value: 'get', description: 'Get a specific address', action: 'Get' },
+				{ name: 'Create', value: 'create', description: 'Create a new address', action: 'Create a new address' },
+				{ name: 'Get', value: 'get', description: 'Get a specific address', action: 'Get a specific address' },
 				// { name: 'Get Many', value: 'getMany', description: 'Get multiple addresses', action: 'Get many' }, // TODO: implement backend
 				{
 					name: 'Update',
 					value: 'update',
 					description: 'Update a specific address',
-					action: 'Update',
+					action: 'Update a specific address',
 				},
 				{
 					name: 'Delete',
 					value: 'delete',
 					description: 'Delete a specific address',
-					action: 'Delete',
+					action: 'Delete a specific address',
 				},
 			],
 			default: 'get',

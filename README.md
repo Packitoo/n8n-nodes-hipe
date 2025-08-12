@@ -35,7 +35,9 @@ Easily connect your n8n workflows to the HIPE SaaS API to automate business proc
 | Statuses     | ✅ Ready |                                            |
 | Addresses    | ✅ Ready |                                            |
 | Corrugated   | 🟡 Partial | Some submodules in progress                |
-| ...          | 🚧 Planned | Planned for future releases                |
+| Articles     | 🚧 Planned |                                            |
+| Orders       | 🚧 Planned |                                            |
+| Quotes       | 🚧 Planned |                                            |
 
 <!-- Update this table as modules mature -->
 
