@@ -34,6 +34,23 @@ export const properties: INodeProperties[] = [
 		description: 'Max number of results to return',
 	},
 	{
+		displayName: 'Page',
+		name: 'page',
+		type: 'number',
+		displayOptions: {
+			show: {
+				returnAll: [false],
+				resource: ['user'],
+				operation: ['getMany'],
+			},
+		},
+		typeOptions: {
+			minValue: 1,
+		},
+		default: 1,
+		description: 'Page number to fetch (starts at 1)',
+	},
+	{
 		displayName: 'Filters',
 		name: 'filters',
 		type: 'collection',
@@ -47,13 +64,6 @@ export const properties: INodeProperties[] = [
 		},
 		options: [
 			{
-				displayName: 'Name',
-				name: 'name',
-				type: 'string',
-				default: '',
-				description: 'Filter by name',
-			},
-			{
 				displayName: 'Client ID',
 				name: 'clientId',
 				type: 'string',
@@ -61,11 +71,18 @@ export const properties: INodeProperties[] = [
 				description: 'Filter by client ID',
 			},
 			{
-				displayName: 'Search',
-				name: 's',
+				displayName: 'Filter ID',
+				name: 'filterId',
 				type: 'string',
 				default: '',
-				description: 'Filter by search parameter',
+				description: 'ID of the saved filter to apply',
+			},
+			{
+				displayName: 'Name',
+				name: 'name',
+				type: 'string',
+				default: '',
+				description: 'Filter by name',
 			},
 			{
 				displayName: 'Role',
@@ -99,6 +116,13 @@ export const properties: INodeProperties[] = [
 				],
 				default: [],
 				description: 'Filter by role',
+			},
+			{
+				displayName: 'Search',
+				name: 's',
+				type: 'string',
+				default: '',
+				description: 'Filter by search parameter',
 			},
 			// Add any additional filters for listing projects
 		],
@@ -166,7 +190,6 @@ export async function execute(
 	this: IExecuteFunctions,
 	items: INodeExecutionData[],
 ): Promise<INodeExecutionData[]> {
-	// This is just a scaffold, implementation will be added later
 	const returnData: INodeExecutionData[] = [];
 	const credentials = await this.getCredentials('hipeApi');
 	let baseUrl = credentials.url;
@@ -178,39 +201,82 @@ export async function execute(
 	for (let i = 0; i < items.length; i++) {
 		try {
 			const returnAll = this.getNodeParameter('returnAll', i) as boolean;
-			const limit = returnAll ? undefined : (this.getNodeParameter('limit', i, 50) as number);
-			const filters = this.getNodeParameter('filters', i, {}) as object;
+			const uiLimit = this.getNodeParameter('limit', i, 50) as number;
+			const uiPageRaw = this.getNodeParameter('page', i, 1) as number;
+			const uiPage =
+				typeof uiPageRaw === 'number' && Number.isFinite(uiPageRaw) && uiPageRaw > 0
+					? uiPageRaw
+					: 1;
+			const rawFilters = this.getNodeParameter('filters', i, {}) as {
+				name?: string;
+				clientId?: string;
+				s?: string;
+				search?: string;
+				role?: string[] | string;
+				filterId?: string;
+			};
 			const sort = this.getNodeParameter('sort', i, {}) as {
 				sortBy?: string;
 				sortOrder?: 'asc' | 'desc';
 			};
 
-			// Build query params
-			const qs: any = { ...filters };
-			if (!returnAll && limit) qs.limit = limit;
-			if (sort.sortBy) {
-				qs.orderBy = sort.sortBy;
-				qs.order = sort.sortOrder || 'asc';
-			}
+			// Build query params for Users pagination endpoint
+			const buildQs = (page: number, limit: number) => {
+				const qs: Record<string, any> = { page, limit };
 
-			const response = await this.helpers.requestWithAuthentication.call(this, 'hipeApi', {
-				method: 'GET',
-				url: `${baseUrl}/api/users`,
-				qs,
-				json: true,
-			});
+				// Map search: prefer explicit 'search', fallback to 's' provided in UI
+				const search = (rawFilters.search ?? rawFilters.s) as string | undefined;
+				if (search) qs.search = search;
 
-			// Assume response is either array or paginated { data, pagination }
-			if (Array.isArray(response)) {
-				returnData.push({ json: { data: response } });
-			} else if (response.data) {
-				returnData.push({ json: response });
+				// Map role: API accepts comma-separated string
+				if (rawFilters.role && Array.isArray(rawFilters.role)) {
+					if (rawFilters.role.length) qs.role = rawFilters.role.join(',');
+				} else if (typeof rawFilters.role === 'string' && rawFilters.role) {
+					qs.role = rawFilters.role;
+				}
+
+				// Optional saved filter
+				if (rawFilters.filterId) qs.filterId = rawFilters.filterId;
+
+				// Sorting: sort=field,ASC|DESC
+				if (sort.sortBy) {
+					const order = (sort.sortOrder || 'asc').toUpperCase();
+					qs.sort = `${sort.sortBy},${order}`;
+				}
+
+				return qs;
+			};
+
+			if (returnAll) {
+				const aggregated: any[] = [];
+				let page = 1;
+				const pageLimit = 100; // maximize throughput within API limits
+				// eslint-disable-next-line no-constant-condition
+				while (true) {
+					const response = await this.helpers.requestWithAuthentication.call(this, 'hipeApi', {
+						method: 'GET',
+						url: `${baseUrl}/api/users/pagination`,
+						qs: buildQs(page, pageLimit),
+						json: true,
+					});
+					const batch = Array.isArray(response?.data) ? response.data : [];
+					aggregated.push(...batch);
+					if (batch.length < pageLimit) break;
+					page += 1;
+				}
+				returnData.push({ json: { data: aggregated } });
 			} else {
-				returnData.push({ json: { data: response } });
+				const response = await this.helpers.requestWithAuthentication.call(this, 'hipeApi', {
+					method: 'GET',
+					url: `${baseUrl}/api/users/pagination`,
+					qs: buildQs(uiPage, uiLimit),
+					json: true,
+				});
+				returnData.push({ json: response });
 			}
 		} catch (error) {
 			if (this.continueOnFail()) {
-				returnData.push({ json: { error: error.message } });
+				returnData.push({ json: { error: (error as Error).message } });
 				continue;
 			}
 			throw error;

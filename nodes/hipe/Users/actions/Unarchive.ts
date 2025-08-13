@@ -1,7 +1,7 @@
 import { IExecuteFunctions } from 'n8n-workflow';
 import { INodeExecutionData, INodeProperties } from 'n8n-workflow';
 
-// Properties for the Get operation
+// Properties for the Unarchive operation
 export const properties: INodeProperties[] = [
 	{
 		displayName: 'User ID',
@@ -9,66 +9,43 @@ export const properties: INodeProperties[] = [
 		type: 'string',
 		required: true,
 		default: '',
-		description: 'ID of the user to retrieve',
+		description: 'ID of the user to unarchive',
 		displayOptions: {
 			show: {
 				resource: ['user'],
-				operation: ['get'],
+				operation: ['unarchive'],
 			},
 		},
-	},
-	{
-		displayName: 'Options',
-		name: 'options',
-		type: 'collection',
-		placeholder: 'Add Option',
-		default: {},
-		displayOptions: {
-			show: {
-				resource: ['user'],
-				operation: ['get'],
-			},
-		},
-		options: [
-			// Add any additional options for retrieving corrugated formats
-		],
 	},
 ];
 
-// Execute function for the Get operation
+// Execute function for the Unarchive operation
 export async function execute(
 	this: IExecuteFunctions,
 	items: INodeExecutionData[],
 ): Promise<INodeExecutionData[]> {
 	const returnData: INodeExecutionData[] = [];
 
-	// Get credentials
 	const credentials = await this.getCredentials('hipeApi');
-	let baseUrl = credentials.url;
+	let baseUrl = credentials.url as string;
 	if (!baseUrl || typeof baseUrl !== 'string' || !/^https?:\/\//.test(baseUrl)) {
 		throw new Error('HIPE base URL is not set or is invalid: ' + baseUrl);
 	}
 	baseUrl = baseUrl.replace(/\/$/, '');
 
-	// Process each item
 	for (let i = 0; i < items.length; i++) {
 		try {
-			// Get input data
 			const id = this.getNodeParameter('id', i) as string;
 			const encId = encodeURIComponent(id);
-			// const options = this.getNodeParameter('options', i, {}) as { includeDetails?: boolean };
-
-			// Make API call to get the corrugated format
 			const response = await this.helpers.requestWithAuthentication.call(this, 'hipeApi', {
 				method: 'GET',
-				url: `${baseUrl}/api/users/${encId}`,
+				url: `${baseUrl}/api/users/${encId}/unarchived`,
 				json: true,
 			});
-
-			returnData.push({ json: response });
+			returnData.push({ json: response ?? { success: true } });
 		} catch (error) {
 			if (this.continueOnFail()) {
-				returnData.push({ json: { error: error.message } });
+				returnData.push({ json: { error: (error as Error).message } });
 				continue;
 			}
 			throw error;

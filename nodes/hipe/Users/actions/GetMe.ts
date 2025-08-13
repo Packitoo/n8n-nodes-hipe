@@ -1,22 +1,8 @@
 import { IExecuteFunctions } from 'n8n-workflow';
 import { INodeExecutionData, INodeProperties } from 'n8n-workflow';
 
-// Properties for the Get operation
+// Properties for the Get Me operation
 export const properties: INodeProperties[] = [
-	{
-		displayName: 'User ID',
-		name: 'id',
-		type: 'string',
-		required: true,
-		default: '',
-		description: 'ID of the user to retrieve',
-		displayOptions: {
-			show: {
-				resource: ['user'],
-				operation: ['get'],
-			},
-		},
-	},
 	{
 		displayName: 'Options',
 		name: 'options',
@@ -26,16 +12,14 @@ export const properties: INodeProperties[] = [
 		displayOptions: {
 			show: {
 				resource: ['user'],
-				operation: ['get'],
+				operation: ['getMe'],
 			},
 		},
-		options: [
-			// Add any additional options for retrieving corrugated formats
-		],
+		options: [],
 	},
 ];
 
-// Execute function for the Get operation
+// Execute function for the Get Me operation
 export async function execute(
 	this: IExecuteFunctions,
 	items: INodeExecutionData[],
@@ -44,31 +28,23 @@ export async function execute(
 
 	// Get credentials
 	const credentials = await this.getCredentials('hipeApi');
-	let baseUrl = credentials.url;
+	let baseUrl = credentials.url as string;
 	if (!baseUrl || typeof baseUrl !== 'string' || !/^https?:\/\//.test(baseUrl)) {
 		throw new Error('HIPE base URL is not set or is invalid: ' + baseUrl);
 	}
 	baseUrl = baseUrl.replace(/\/$/, '');
 
-	// Process each item
 	for (let i = 0; i < items.length; i++) {
 		try {
-			// Get input data
-			const id = this.getNodeParameter('id', i) as string;
-			const encId = encodeURIComponent(id);
-			// const options = this.getNodeParameter('options', i, {}) as { includeDetails?: boolean };
-
-			// Make API call to get the corrugated format
 			const response = await this.helpers.requestWithAuthentication.call(this, 'hipeApi', {
 				method: 'GET',
-				url: `${baseUrl}/api/users/${encId}`,
+				url: `${baseUrl}/api/users/me`,
 				json: true,
 			});
-
 			returnData.push({ json: response });
 		} catch (error) {
 			if (this.continueOnFail()) {
-				returnData.push({ json: { error: error.message } });
+				returnData.push({ json: { error: (error as Error).message } });
 				continue;
 			}
 			throw error;

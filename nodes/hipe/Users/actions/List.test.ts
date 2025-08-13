@@ -6,7 +6,7 @@ describe('List action', () => {
 			getCredentials: async () => ({ url: 'https://fake.api' }),
 			helpers: {
 				requestWithAuthentication: {
-					call: jest.fn().mockResolvedValue([{ id: '1', name: 'John Doe' }]),
+					call: jest.fn().mockResolvedValue({ data: [{ id: '1', name: 'John Doe' }] }),
 				},
 			},
 			getNodeParameter: (name: string, i: number) => {
@@ -22,12 +22,12 @@ describe('List action', () => {
 		expect(mockThis.helpers.requestWithAuthentication.call).toHaveBeenCalledWith(
 			mockThis,
 			'hipeApi',
-			expect.objectContaining({
+			{
 				method: 'GET',
-				url: 'https://fake.api/api/users',
-				qs: {},
+				url: 'https://fake.api/api/users/pagination',
+				qs: { page: 1, limit: 100 },
 				json: true,
-			}),
+			},
 		);
 		expect(result[0].json).toEqual({ data: [{ id: '1', name: 'John Doe' }] });
 	});
@@ -52,7 +52,7 @@ describe('List action', () => {
 		} as any;
 		const items = [{ json: {} }];
 		const result = await execute.call(mockThis, items);
-		expect(result[0].json).toEqual({ data: [{ id: '2', name: 'Jane' }], pagination: { total: 1 } });
+		expect(result[0].json).toEqual({ data: [{ id: '2', name: 'Jane' }] });
 	});
 
 	it('should handle errors and push error object when continueOnFail is true (edge case)', async () => {

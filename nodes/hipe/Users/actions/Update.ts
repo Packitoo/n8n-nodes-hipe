@@ -140,7 +140,7 @@ export async function execute(
 		try {
 			// Get input data
 			const userId = this.getNodeParameter('id', i) as string;
-			const updateFields = this.getNodeParameter('updateFields', i, {}) as IUser;
+			const updateFields = this.getNodeParameter('updateFields', i, {}) as Partial<IUser>;
 
 			// Make API call to update the user
 			const response = await this.helpers.requestWithAuthentication.call(this, 'hipeApi', {
