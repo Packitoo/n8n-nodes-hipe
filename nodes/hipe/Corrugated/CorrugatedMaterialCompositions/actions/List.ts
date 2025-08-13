@@ -1,5 +1,6 @@
 import { IExecuteFunctions } from 'n8n-workflow';
 import { INodeExecutionData, INodeProperties } from 'n8n-workflow';
+import { listWithPagination } from '../../shared/pagination';
 
 // Properties for the List operation
 export const properties: INodeProperties[] = [
@@ -32,6 +33,23 @@ export const properties: INodeProperties[] = [
 		},
 		default: 50,
 		description: 'Max number of results to return',
+	},
+	{
+		displayName: 'Page',
+		name: 'page',
+		type: 'number',
+		displayOptions: {
+			show: {
+				resource: ['corrugatedMaterialComposition'],
+				operation: ['getMany'],
+				returnAll: [false],
+			},
+		},
+		typeOptions: {
+			minValue: 1,
+		},
+		default: 1,
+		description: 'Page number to fetch (starts at 1)',
 	},
 	{
 		displayName: 'Filters',
@@ -115,46 +133,29 @@ export async function execute(
 	items: INodeExecutionData[],
 ): Promise<INodeExecutionData[]> {
 	const returnData: INodeExecutionData[] = [];
-	const credentials = await this.getCredentials('hipeApi');
-	let baseUrl = credentials.url;
-	if (typeof baseUrl !== 'string') {
-		throw new Error('HIPE base URL is not a string');
-	}
-	baseUrl = baseUrl.replace(/\/$/, '');
 
 	for (let i = 0; i < items.length; i++) {
 		try {
 			const returnAll = this.getNodeParameter('returnAll', i) as boolean;
 			const limit = returnAll ? undefined : (this.getNodeParameter('limit', i, 50) as number);
-			const filters = this.getNodeParameter('filters', i, {}) as object;
+			const uiPageRaw = this.getNodeParameter('page', i, 1) as number;
+			const uiPage =
+				typeof uiPageRaw === 'number' && Number.isFinite(uiPageRaw) && uiPageRaw > 0
+					? uiPageRaw
+					: 1;
+			const filters = this.getNodeParameter('filters', i, {}) as Record<string, any>;
 			const sort = this.getNodeParameter('sort', i, {}) as {
 				sortBy?: string;
 				sortOrder?: 'asc' | 'desc';
 			};
-
-			// Build query params
-			const qs: any = { ...filters };
-			if (!returnAll && limit) qs.limit = limit;
-			if (sort.sortBy) {
-				qs.orderBy = sort.sortBy;
-				qs.order = sort.sortOrder || 'asc';
-			}
-
-			const response = await this.helpers.requestWithAuthentication.call(this, 'hipeApi', {
-				method: 'GET',
-				url: `${baseUrl}/api/corrugated-material-compositions`,
-				qs,
-				json: true,
+			const result = await listWithPagination(this, '/api/corrugated-material-compositions', {
+				returnAll,
+				limit,
+				page: uiPage,
+				filters,
+				sort,
 			});
-
-			// Assume response is either array or paginated { data, pagination }
-			if (Array.isArray(response)) {
-				returnData.push({ json: { data: response } });
-			} else if (response.data) {
-				returnData.push({ json: response });
-			} else {
-				returnData.push({ json: { data: response } });
-			}
+			returnData.push({ json: result });
 		} catch (error) {
 			if (this.continueOnFail()) {
 				returnData.push({ json: { error: error.message } });

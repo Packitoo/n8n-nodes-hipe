@@ -1,6 +1,6 @@
 import { IExecuteFunctions } from 'n8n-workflow';
 import { INodeExecutionData, INodeProperties } from 'n8n-workflow';
-import { IHIPEPaginationOptions } from '../../../interfaces';
+import { listWithPagination } from '../../shared/pagination';
 
 // Properties for the List operation
 export const properties: INodeProperties[] = [
@@ -33,6 +33,23 @@ export const properties: INodeProperties[] = [
 		},
 		default: 50,
 		description: 'Max number of results to return',
+	},
+	{
+		displayName: 'Page',
+		name: 'page',
+		type: 'number',
+		displayOptions: {
+			show: {
+				resource: ['corrugatedFlute'],
+				operation: ['getMany'],
+				returnAll: [false],
+			},
+		},
+		typeOptions: {
+			minValue: 1,
+		},
+		default: 1,
+		description: 'Page number to fetch (starts at 1)',
 	},
 	{
 		displayName: 'Filters',
@@ -117,55 +134,30 @@ export async function execute(
 	// Process each item
 	for (let i = 0; i < items.length; i++) {
 		try {
-			// Get input data
 			const returnAll = this.getNodeParameter('returnAll', i) as boolean;
-			const limit = returnAll ? 0 : (this.getNodeParameter('limit', i, 50) as number);
-			const filters = this.getNodeParameter('filters', i, {}) as object;
+			const limit = returnAll ? undefined : (this.getNodeParameter('limit', i, 50) as number);
+			const uiPageRaw = this.getNodeParameter('page', i, 1) as number;
+			const uiPage =
+				typeof uiPageRaw === 'number' && Number.isFinite(uiPageRaw) && uiPageRaw > 0
+					? uiPageRaw
+					: 1;
+			const filters = this.getNodeParameter('filters', i, {}) as Record<string, any>;
 			const sort = this.getNodeParameter('sort', i, {}) as {
 				sortBy?: string;
 				sortOrder?: 'asc' | 'desc';
 			};
 
-			// Get credentials
-			const credentials = await this.getCredentials('hipeApi');
-			let baseUrl = credentials.url;
-			if (typeof baseUrl !== 'string') {
-				throw new Error('HIPE base URL is not a string');
-			}
-			baseUrl = baseUrl.replace(/\/$/, '');
-
-			// Prepare pagination options
-			const paginationOptions: IHIPEPaginationOptions = {
-				page: 1,
-				itemsPerPage: limit || 100,
+			const result = await listWithPagination(this, '/api/corrugated-flutes', {
+				returnAll,
+				limit,
+				page: uiPage,
 				filters,
-			};
-
-			// Add sorting if specified
-			if (sort.sortBy) {
-				paginationOptions.order = {
-					[sort.sortBy]: sort.sortOrder || 'asc',
-				};
-			}
-
-			let hasNextPage = true;
-
-			while (hasNextPage) {
-				const response = await this.helpers.requestWithAuthentication.call(this, 'hipeApi', {
-					method: 'GET',
-					url: `${baseUrl}/api/corrugated-flutes`,
-					qs: paginationOptions,
-					json: true,
-				});
-
-				paginationOptions.page = (paginationOptions.page ?? 1) + 1;
-				hasNextPage = response.pageCount >= paginationOptions.page;
-				returnData.push({ json: response });
-			}
-
+				sort,
+			});
+			returnData.push({ json: result });
 		} catch (error) {
 			if (this.continueOnFail()) {
-				returnData.push({ json: { error: error.message } });
+				returnData.push({ json: { error: (error as any).message } });
 				continue;
 			}
 			throw error;

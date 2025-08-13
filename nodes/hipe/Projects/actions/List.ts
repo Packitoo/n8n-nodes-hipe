@@ -1,5 +1,6 @@
 import { IExecuteFunctions } from 'n8n-workflow';
 import { INodeExecutionData, INodeProperties } from 'n8n-workflow';
+import { listWithPaginationFlat } from '../../Corrugated/shared/pagination';
 
 // Properties for the List operation
 export const properties: INodeProperties[] = [
@@ -34,11 +35,29 @@ export const properties: INodeProperties[] = [
 		description: 'Max number of results to return',
 	},
 	{
+		displayName: 'Page',
+		name: 'page',
+		type: 'number',
+		displayOptions: {
+			show: {
+				resource: ['project'],
+				operation: ['getMany'],
+				returnAll: [false],
+			},
+		},
+		typeOptions: {
+			minValue: 1,
+		},
+		default: 1,
+		description: 'Page number to fetch (starts at 1)',
+	},
+	{
 		displayName: 'Filters',
 		name: 'filters',
 		type: 'collection',
 		placeholder: 'Add Filter',
 		default: {},
+		description: 'Flat filter keys per OpenAPI (e.g. status, search, contact, filterId, date, start, end, pipeline, step, manager, createdBy)',
 		displayOptions: {
 			show: {
 				resource: ['project'],
@@ -46,42 +65,28 @@ export const properties: INodeProperties[] = [
 			},
 		},
 		options: [
+			{ displayName: 'Status', name: 'status', type: 'string', default: '' },
+			{ displayName: 'Search', name: 'search', type: 'string', default: '' },
+			{ displayName: 'Contact', name: 'contact', type: 'string', default: '' },
+			{ displayName: 'Filter ID', name: 'filterId', type: 'string', default: '' },
 			{
-				displayName: 'Name',
-				name: 'name',
-				type: 'string',
-				default: '',
-				description: 'Filter by name',
-			},
-			{
-				displayName: 'Client ID',
-				name: 'clientId',
-				type: 'string',
-				default: '',
-				description: 'Filter by client ID',
-			},
-			{
-				displayName: 'Status',
-				name: 'status',
+				displayName: 'Date',
+				name: 'date',
 				type: 'options',
 				options: [
-					{
-						name: 'Draft',
-						value: 'draft',
-					},
-					{
-						name: 'In Progress',
-						value: 'in_progress',
-					},
-					{
-						name: 'Completed',
-						value: 'completed',
-					},
+					{ name: 'Overdue', value: 'Overdue' },
+					{ name: 'Upcoming', value: 'Upcoming' },
+					{ name: 'Today', value: 'Today' },
+					{ name: 'Specific', value: 'Specific' },
 				],
-				default: 'draft',
-				description: 'Filter by status',
+				default: '',
 			},
-			// Add any additional filters for listing projects
+			{ displayName: 'Start (ms)', name: 'start', type: 'string', default: '' },
+			{ displayName: 'End (ms)', name: 'end', type: 'string', default: '' },
+			{ displayName: 'Pipeline', name: 'pipeline', type: 'string', default: '' },
+			{ displayName: 'Step', name: 'step', type: 'string', default: '' },
+			{ displayName: 'Manager', name: 'manager', type: 'string', default: '' },
+			{ displayName: 'Created By', name: 'createdBy', type: 'string', default: '' },
 		],
 	},
 	{
@@ -90,6 +95,8 @@ export const properties: INodeProperties[] = [
 		type: 'collection',
 		placeholder: 'Add Sort Option',
 		default: {},
+		description:
+			'Sort is converted to a single "sort" query parameter in the format "field,ASC|DESC"',
 		displayOptions: {
 			show: {
 				resource: ['project'],
@@ -102,23 +109,9 @@ export const properties: INodeProperties[] = [
 				name: 'sortBy',
 				type: 'options',
 				options: [
-					{
-						name: 'Name',
-						value: 'name',
-					},
-					{
-						name: 'Created At',
-						value: 'createdAt',
-					},
-					{
-						name: 'Updated At',
-						value: 'updatedAt',
-					},
-					{
-						name: 'Status',
-						value: 'status',
-					},
-					// Add any additional sort options
+					{ name: 'Name', value: 'name' },
+					{ name: 'Created At', value: 'createdAt' },
+					{ name: 'Updated At', value: 'updatedAt' },
 				],
 				default: 'createdAt',
 			},
@@ -147,48 +140,31 @@ export async function execute(
 	this: IExecuteFunctions,
 	items: INodeExecutionData[],
 ): Promise<INodeExecutionData[]> {
-	// This is just a scaffold, implementation will be added later
 	const returnData: INodeExecutionData[] = [];
-	const credentials = await this.getCredentials('hipeApi');
-	let baseUrl = credentials.url;
-	if (typeof baseUrl !== 'string') {
-		throw new Error('HIPE base URL is not a string');
-	}
-	baseUrl = baseUrl.replace(/\/$/, '');
 
 	for (let i = 0; i < items.length; i++) {
 		try {
 			const returnAll = this.getNodeParameter('returnAll', i) as boolean;
 			const limit = returnAll ? undefined : (this.getNodeParameter('limit', i, 50) as number);
+			const uiPageRaw = this.getNodeParameter('page', i, 1) as number;
+			const uiPage =
+				typeof uiPageRaw === 'number' && Number.isFinite(uiPageRaw) && uiPageRaw > 0
+					? uiPageRaw
+					: 1;
 			const filters = this.getNodeParameter('filters', i, {}) as object;
 			const sort = this.getNodeParameter('sort', i, {}) as {
 				sortBy?: string;
 				sortOrder?: 'asc' | 'desc';
 			};
 
-			// Build query params
-			const qs: any = { ...filters };
-			if (!returnAll && limit) qs.limit = limit;
-			if (sort.sortBy) {
-				qs.orderBy = sort.sortBy;
-				qs.order = sort.sortOrder || 'asc';
-			}
-
-			const response = await this.helpers.requestWithAuthentication.call(this, 'hipeApi', {
-				method: 'GET',
-				url: `${baseUrl}/api/projects/pagination`,
-				qs,
-				json: true,
+			const response = await listWithPaginationFlat(this, '/api/projects/pagination', {
+				returnAll,
+				limit,
+				page: uiPage,
+				filters: filters as Record<string, any>,
+				sort: sort as { sortBy?: string; sortOrder?: 'asc' | 'desc' },
 			});
-
-			// Assume response is either array or paginated { data, pagination }
-			if (Array.isArray(response)) {
-				returnData.push({ json: { data: response } });
-			} else if (response.data) {
-				returnData.push({ json: response });
-			} else {
-				returnData.push({ json: { data: response } });
-			}
+			returnData.push({ json: response });
 		} catch (error) {
 			if (this.continueOnFail()) {
 				returnData.push({ json: { error: error.message } });

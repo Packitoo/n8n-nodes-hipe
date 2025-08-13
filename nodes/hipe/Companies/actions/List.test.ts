@@ -24,8 +24,8 @@ describe('List action', () => {
 			'hipeApi',
 			expect.objectContaining({
 				method: 'GET',
-				url: 'https://fake.api/api/companies',
-				qs: {},
+				url: 'https://fake.api/api/companies/pagination',
+				qs: { page: 1, limit: 100 },
 				json: true,
 			}),
 		);
@@ -52,7 +52,7 @@ describe('List action', () => {
 		} as any;
 		const items = [{ json: {} }];
 		const result = await execute.call(mockThis, items);
-		expect(result[0].json).toEqual({ data: [{ id: '2', name: 'Beta' }], pagination: { total: 1 } });
+		expect(result[0].json).toEqual({ data: [{ id: '2', name: 'Beta' }] });
 	});
 
 	it('should handle errors and push error object when continueOnFail is true (edge case)', async () => {
@@ -75,5 +75,73 @@ describe('List action', () => {
 		const items = [{ json: {} }];
 		const result = await execute.call(mockThis, items);
 		expect(result[0].json).toEqual({ error: 'fail!' });
+	});
+
+	it('should pass page/limit/filters and sort to flat qs (non-returnAll)', async () => {
+		const mockThis = {
+			getCredentials: async () => ({ url: 'https://fake.api' }),
+			helpers: {
+				requestWithAuthentication: {
+					call: jest.fn().mockResolvedValue({ data: [{ id: '3' }] }),
+				},
+			},
+			getNodeParameter: (name: string) => {
+				if (name === 'returnAll') return false;
+				if (name === 'limit') return 25;
+				if (name === 'page') return 2;
+				if (name === 'filters') return { status: 'active', search: 'ac' };
+				if (name === 'sort') return { sortBy: 'name', sortOrder: 'asc' };
+				return undefined;
+			},
+			continueOnFail: () => false,
+		} as any;
+		const items = [{ json: {} }];
+		await execute.call(mockThis, items);
+		expect(mockThis.helpers.requestWithAuthentication.call).toHaveBeenCalledWith(
+			mockThis,
+			'hipeApi',
+			expect.objectContaining({
+				method: 'GET',
+				url: 'https://fake.api/api/companies/pagination',
+				qs: expect.objectContaining({
+					page: 2,
+					limit: 25,
+					status: 'active',
+					search: 'ac',
+					sort: 'name,ASC',
+				}),
+				json: true,
+			}),
+		);
+	});
+
+	it('should iterate all pages when returnAll is true using pageCount', async () => {
+		const page1 = Array.from({ length: 100 }, (_, i) => ({ id: `c${i + 1}` }));
+		const page2 = [{ id: 'c101' }];
+		const mockThis = {
+			getCredentials: async () => ({ url: 'https://fake.api' }),
+			helpers: {
+				requestWithAuthentication: {
+					call: jest
+						.fn()
+						.mockResolvedValueOnce({ data: page1, pagination: { pageCount: 2 } })
+						.mockResolvedValueOnce({ data: page2, pagination: { pageCount: 2 } }),
+				},
+			},
+			getNodeParameter: (name: string) => {
+				if (name === 'returnAll') return true;
+				if (name === 'filters') return {};
+				if (name === 'sort') return {};
+				return undefined;
+			},
+			continueOnFail: () => false,
+		} as any;
+		const items = [{ json: {} }];
+		const result = await execute.call(mockThis, items);
+		const calls = (mockThis.helpers.requestWithAuthentication.call as jest.Mock).mock.calls;
+		expect(calls.length).toBe(2);
+		expect(calls[0][2].qs.page).toBe(1);
+		expect(calls[1][2].qs.page).toBe(2);
+		expect(result[0].json).toEqual({ data: [...page1, ...page2] });
 	});
 });
