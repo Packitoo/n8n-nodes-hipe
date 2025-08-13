@@ -106,8 +106,15 @@ export async function execute(
 	this: IExecuteFunctions,
 	items: INodeExecutionData[],
 ): Promise<INodeExecutionData[]> {
-	// This is just a scaffold, implementation will be added later
 	const returnData: INodeExecutionData[] = [];
+
+	// Get credentials and normalize base URL
+	const credentials = await this.getCredentials('hipeApi');
+	let baseUrl = credentials.url;
+	if (typeof baseUrl !== 'string') {
+		throw new Error('HIPE base URL is not a string');
+	}
+	baseUrl = baseUrl.replace(/\/$/, '');
 
 	// Process each item
 	for (let i = 0; i < items.length; i++) {
@@ -120,20 +127,17 @@ export async function execute(
 				{},
 			) as ICorrugatedMaterialCompositionPrice;
 
-			// In the actual implementation, this would make an API call to update the corrugated material composition price
-			// For now, we just return placeholder data
-			returnData.push({
-				json: {
-					success: true,
-					data: {
-						id: priceId,
-						...updateFields,
-					},
-				},
+			const response = await this.helpers.requestWithAuthentication.call(this, 'hipeApi', {
+				method: 'PATCH',
+				url: `${baseUrl}/api/corrugated-material-composition-prices/${encodeURIComponent(priceId)}`,
+				body: updateFields,
+				json: true,
 			});
+
+			returnData.push({ json: response });
 		} catch (error) {
 			if (this.continueOnFail()) {
-				returnData.push({ json: { error: error.message } });
+				returnData.push({ json: { error: (error as Error).message } });
 				continue;
 			}
 			throw error;

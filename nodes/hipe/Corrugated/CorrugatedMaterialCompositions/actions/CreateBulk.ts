@@ -46,16 +46,20 @@ export async function execute(
 	this: IExecuteFunctions,
 	items: INodeExecutionData[],
 ): Promise<INodeExecutionData[]> {
-	// This is just a scaffold, implementation will be added later
 	const returnData: INodeExecutionData[] = [];
 
-	// Process each item
-	for (let i = 0; i < items.length; i++) {
-		try {
-			// Get input data
-			const inputDataField = this.getNodeParameter('inputDataField', i) as string;
+	// Get credentials and normalize base URL
+	const credentials = await this.getCredentials('hipeApi');
+	let baseUrl = credentials.url;
+	if (typeof baseUrl !== 'string') {
+		throw new Error('HIPE base URL is not a string');
+	}
+	baseUrl = baseUrl.replace(/\/$/, '');
 
-			// Get the array of compositions from the input data field
+	// Process each input item
+	for (let i = 0; i <items.length; i++) {
+		try {
+			const inputDataField = this.getNodeParameter('inputDataField', i) as string;
 			const inputData = items[i].json[inputDataField];
 
 			if (!Array.isArray(inputData)) {
@@ -64,23 +68,21 @@ export async function execute(
 				);
 			}
 
-			// In the actual implementation, this would make an API call to create multiple corrugated material compositions
-			// For now, we just return the input data as a placeholder
-			returnData.push({
-				json: {
-					success: true,
-					data: (inputData as any[]).map((item, index) => ({
-						id: `bulk-${index + 1}`,
-						...item,
-					})),
-				},
+			// Single bulk POST to backend
+			const response = await this.helpers.requestWithAuthentication.call(this, 'hipeApi', {
+				method: 'POST',
+				url: `${baseUrl}/api/corrugated-material-compositions/bulk`,
+				body: inputData,
+				json: true,
 			});
+
+			returnData.push({ json: response });
 		} catch (error) {
 			if (
 				this.continueOnFail() ||
 				(this.getNodeParameter('options', i, {}) as { continueOnError?: boolean }).continueOnError
 			) {
-				returnData.push({ json: { error: error.message } });
+				returnData.push({ json: { error: (error as Error).message } });
 				continue;
 			}
 			throw error;

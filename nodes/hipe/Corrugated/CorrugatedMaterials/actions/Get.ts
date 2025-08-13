@@ -41,8 +41,7 @@ export async function execute(
 	this: IExecuteFunctions,
 	items: INodeExecutionData[],
 ): Promise<INodeExecutionData[]> {
-	// This is just a scaffold, implementation will be added later
-	const returnData: INodeExecutionData[] = [];
+    const returnData: INodeExecutionData[] = [];
 
 	// Get credentials and baseUrl
 	const credentials = await this.getCredentials('hipeApi');

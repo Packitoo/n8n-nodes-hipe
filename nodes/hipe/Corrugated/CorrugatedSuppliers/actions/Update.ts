@@ -67,8 +67,15 @@ export async function execute(
 	this: IExecuteFunctions,
 	items: INodeExecutionData[],
 ): Promise<INodeExecutionData[]> {
-	// This is just a scaffold, implementation will be added later
-	const returnData: INodeExecutionData[] = [];
+    const returnData: INodeExecutionData[] = [];
+
+    // Get credentials and baseUrl
+    const credentials = await this.getCredentials('hipeApi');
+    let baseUrl = credentials.url;
+    if (typeof baseUrl !== 'string') {
+        throw new Error('HIPE base URL is not a string');
+    }
+    baseUrl = baseUrl.replace(/\/$/, '');
 
 	// Process each item
 	for (let i = 0; i < items.length; i++) {
@@ -77,25 +84,22 @@ export async function execute(
 			const supplierId = this.getNodeParameter('supplierId', i) as string;
 			const updateFields = this.getNodeParameter('updateFields', i, {}) as ICorrugatedSupplier;
 
-			// In the actual implementation, this would make an API call to update the corrugated supplier
-			// For now, we just return placeholder data
-			returnData.push({
-				json: {
-					success: true,
-					data: {
-						id: supplierId,
-						...updateFields,
-					},
-				},
-			});
-		} catch (error) {
-			if (this.continueOnFail()) {
-				returnData.push({ json: { error: error.message } });
-				continue;
-			}
-			throw error;
-		}
-	}
+            const response = await this.helpers.requestWithAuthentication.call(this, 'hipeApi', {
+                method: 'PATCH',
+                url: `${baseUrl}/api/corrugated-suppliers/${supplierId}`,
+                body: updateFields,
+                json: true,
+            });
+
+            returnData.push({ json: response as ICorrugatedSupplier });
+        } catch (error) {
+            if (this.continueOnFail()) {
+                returnData.push({ json: { error: (error as Error).message } });
+                continue;
+            }
+            throw error;
+        }
+    }
 
 	return returnData;
 }

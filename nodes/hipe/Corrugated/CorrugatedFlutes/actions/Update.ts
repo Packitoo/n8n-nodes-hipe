@@ -68,7 +68,6 @@ export async function execute(
 	this: IExecuteFunctions,
 	items: INodeExecutionData[],
 ): Promise<INodeExecutionData[]> {
-	// This is just a scaffold, implementation will be added later
 	const returnData: INodeExecutionData[] = [];
 
 	// Get credentials
@@ -87,7 +86,7 @@ export async function execute(
 			const updateFields = this.getNodeParameter('updateFields', i, {}) as ICorrugatedFlute;
 
 			// Make API call to update the corrugated flute
-			const response = await this.helpers.request!({
+			const response = await this.helpers.requestWithAuthentication.call(this, 'hipeApi', {
 				method: 'PATCH',
 				url: `${baseUrl}/api/corrugated-flutes/${encodeURIComponent(fluteId)}`,
 				body: updateFields,
@@ -95,10 +94,6 @@ export async function execute(
 			});
 
 			returnData.push({ json: response });
-			// returnData.push({
-			//   json: {
-			//     success: true,
-			//     data: {
 			//       id: fluteId,
 			//       ...updateFields,
 			//     },

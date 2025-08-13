@@ -112,7 +112,6 @@ export async function execute(
 	this: IExecuteFunctions,
 	items: INodeExecutionData[],
 ): Promise<INodeExecutionData[]> {
-	// This is just a scaffold, implementation will be added later
 	const returnData: INodeExecutionData[] = [];
 
 	// Process each item
@@ -164,35 +163,6 @@ export async function execute(
 				returnData.push({ json: response });
 			}
 
-			// In the actual implementation, this would make an API call to list corrugated flutes
-			// For now, we just return placeholder data
-			// returnData.push({
-			//   json: {
-			//     success: true,
-			//     data: [
-			//       {
-			//         id: '1',
-			//         name: 'A Flute',
-			//         height: 4.8,
-			//       },
-			//       {
-			//         id: '2',
-			//         name: 'B Flute',
-			//         height: 2.4,
-			//       },
-			//       {
-			//         id: '3',
-			//         name: 'C Flute',
-			//         height: 3.6,
-			//       },
-			//     ],
-			//     pagination: {
-			//       total: 3,
-			//       page: 1,
-			//       itemsPerPage: limit || 100,
-			//     },
-			//   },
-			// });
 		} catch (error) {
 			if (this.continueOnFail()) {
 				returnData.push({ json: { error: error.message } });
