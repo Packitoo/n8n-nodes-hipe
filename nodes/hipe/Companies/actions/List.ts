@@ -201,7 +201,6 @@ export const properties: INodeProperties[] = [
 				name: 'sortBy',
 				type: 'options',
 				options: [
-					{ name: 'Code', value: 'code' },
 					{ name: 'Name', value: 'name' },
 					{ name: 'Created At', value: 'createdAt' },
 					{ name: 'Updated At', value: 'updatedAt' },

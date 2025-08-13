@@ -144,4 +144,79 @@ describe('List action', () => {
 		expect(calls[1][2].qs.page).toBe(2);
 		expect(result[0].json).toEqual({ data: [...page1, ...page2] });
 	});
+
+	it('should include type filter in flat qs', async () => {
+		const mockThis = {
+			getCredentials: async () => ({ url: 'https://fake.api' }),
+			helpers: {
+				requestWithAuthentication: {
+					call: jest.fn().mockResolvedValue({ data: [{ id: '4' }] }),
+				},
+			},
+			getNodeParameter: (name: string) => {
+				if (name === 'returnAll') return false;
+				if (name === 'limit') return 10;
+				if (name === 'page') return 1;
+				if (name === 'filters') return { type: 'CALL' };
+				if (name === 'sort') return {};
+				return undefined;
+			},
+			continueOnFail: () => false,
+		} as any;
+		const items = [{ json: {} }];
+		await execute.call(mockThis, items);
+		expect(mockThis.helpers.requestWithAuthentication.call).toHaveBeenCalledWith(
+			mockThis,
+			'hipeApi',
+			expect.objectContaining({
+				method: 'GET',
+				url: 'https://fake.api/api/companies/pagination',
+				qs: expect.objectContaining({
+					page: 1,
+					limit: 10,
+					type: 'CALL',
+				}),
+				json: true,
+			}),
+		);
+	});
+
+	it('should include date Specific with start/end in flat qs', async () => {
+		const mockThis = {
+			getCredentials: async () => ({ url: 'https://fake.api' }),
+			helpers: {
+				requestWithAuthentication: {
+					call: jest.fn().mockResolvedValue({ data: [{ id: '5' }] }),
+				},
+			},
+			getNodeParameter: (name: string) => {
+				if (name === 'returnAll') return false;
+				if (name === 'limit') return 25;
+				if (name === 'page') return 3;
+				if (name === 'filters') return { date: 'Specific', start: '1735686000000', end: '1738450800000' };
+				if (name === 'sort') return { sortBy: 'updatedAt', sortOrder: 'desc' };
+				return undefined;
+			},
+			continueOnFail: () => false,
+		} as any;
+		const items = [{ json: {} }];
+		await execute.call(mockThis, items);
+		expect(mockThis.helpers.requestWithAuthentication.call).toHaveBeenCalledWith(
+			mockThis,
+			'hipeApi',
+			expect.objectContaining({
+				method: 'GET',
+				url: 'https://fake.api/api/companies/pagination',
+				qs: expect.objectContaining({
+					page: 3,
+					limit: 25,
+					date: 'Specific',
+					start: '1735686000000',
+					end: '1738450800000',
+					sort: 'updatedAt,DESC',
+				}),
+				json: true,
+			}),
+		);
+	});
 });
