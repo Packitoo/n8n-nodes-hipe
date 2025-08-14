@@ -87,7 +87,7 @@ export const properties: INodeProperties[] = [
 				displayName: 'Custom Fields',
 				name: 'customFields',
 				type: 'json',
-				default: {},
+				default: "",
 				description: 'Custom fields of the company',
 			},
 			{

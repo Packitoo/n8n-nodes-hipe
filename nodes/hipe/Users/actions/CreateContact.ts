@@ -108,7 +108,7 @@ export const properties: INodeProperties[] = [
 				displayName: 'Custom Fields',
 				name: 'customFields',
 				type: 'json',
-				default: {},
+				default: "",
 				description: 'Custom fields of the contact',
 			},
 			// Add any additional fields specific to creating projects
