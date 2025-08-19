@@ -116,7 +116,7 @@ export class Hipe implements INodeType {
 			});
 			properties.push(...resourceProperties);
 		}
-		properties.push(resource);
+		properties.unshift(resource);
 		return properties;
 	}
 

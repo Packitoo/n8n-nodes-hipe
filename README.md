@@ -1,6 +1,9 @@
 # n8n-nodes-hipe
 
-<!-- TODO: Add npm version badge, CI status, Packitoo logo, and other relevant badges here -->
+[![npm version](https://img.shields.io/npm/v/%40packitoo%2Fn8n-nodes-hipe?label=npm%20version)](https://www.npmjs.com/package/@packitoo/n8n-nodes-hipe)
+[![CI](https://github.com/packitoo/n8n-nodes-hipe/actions/workflows/ci.yml/badge.svg)](https://github.com/packitoo/n8n-nodes-hipe/actions/workflows/ci.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE.md)
+[![Node >= 20.15](https://img.shields.io/badge/node-%3E%3D20.15-brightgreen)](#compatibility)
 
 ![Packitoo Logo](docs/logo.svg)
 
@@ -17,6 +20,7 @@ Easily connect your n8n workflows to the HIPE SaaS API to automate business proc
 - [Getting Started](#getting-started)
 - [Usage](#usage)
 - [Authentication](#authentication)
+- [Compatibility](#compatibility)
 - [Contributing](#contributing)
 - [Support](#support)
 - [License](#license)
@@ -66,6 +70,8 @@ To use this node, you need an API token from HIPE.
 - Follow the guide here: [Create Access Token](https://developers.packitoo.com/guides/create-access-token/)
 - Enter your token in the HIPE credentials section when configuring the node in n8n.
 
+You can click the "Test" button in the HIPE credentials to validate your token and base URL. The test performs a safe GET request to verify access.
+
 ## Usage
 
 Basic usage involves adding the HIPE node to your workflow and selecting the desired module and operation. For detailed usage and examples, see the [examples directory](./examples) or the inline documentation in n8n.
@@ -80,6 +86,18 @@ Companies and Projects List actions use flat pagination and sorting:
 - Sorting: single `sort` parameter as "field,ASC|DESC"
 
 See the full guide: [docs/pagination.md](./docs/pagination.md)
+
+### Performance & Rate Limits
+
+- Using "Return All" may trigger many requests. Prefer `limit` for large datasets.
+- Consider backoff/retry in your workflows if your HIPE instance enforces rate limits.
+
+## Compatibility
+
+- Node.js: >= 20.15 (CI runs Node 20)
+- n8n Nodes API: v1 (`n8n.n8nNodesApiVersion: 1`)
+
+If you encounter any compatibility issues, please open an issue with details about your environment.
 
 ## Contributing
 

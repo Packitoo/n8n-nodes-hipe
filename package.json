@@ -22,7 +22,6 @@
     "url": "https://github.com/Packitoo"
   },
   "type": "commonjs",
-  "main": "index.js",
   "directories": {
     "doc": "docs",
     "example": "examples"
@@ -68,7 +67,7 @@
   "n8n": {
     "n8nNodesApiVersion": 1,
     "credentials": [
-      "dist/credentials/hipeApi.credentials.js"
+      "dist/credentials/HipeApi.credentials.js"
     ],
     "nodes": [
       "dist/nodes/Hipe/Hipe.node.js"

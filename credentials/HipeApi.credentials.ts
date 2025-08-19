@@ -1,6 +1,6 @@
 import { IAuthenticateGeneric, ICredentialType, INodeProperties } from 'n8n-workflow';
 
-export class hipeApi implements ICredentialType {
+export class HipeApi implements ICredentialType {
 	name = 'hipeApi';
 	displayName = 'Hipe API';
 	// Uses the link to this tutorial as an example
@@ -29,12 +29,15 @@ export class hipeApi implements ICredentialType {
 				'X-ACCESS-TOKEN': '={{$credentials.accessToken}}',
 			},
 		},
-		// test: {
-		// 	request: {
-		// 		baseURL: '={{$credentials?.url}}',
-		// 		url: '/api/users/me',
-		// 		method: 'GET',
-		// 	},
-		// },
+	};
+
+	// Enable "Test Credentials" button in n8n credential UI
+	test = {
+		request: {
+			baseURL: '={{$credentials?.url}}',
+			url: '/api/users/me',
+			method: 'GET' as const,
+		},
 	};
 }
+
