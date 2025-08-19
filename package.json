@@ -1,5 +1,5 @@
 {
-  "name": "n8n-nodes-hipe",
+  "name": "@packitoo/n8n-nodes-hipe",
   "version": "0.1.0",
   "description": "Official N8N Nodes for HIPE by Packitoo",
   "keywords": [
@@ -7,20 +7,25 @@
     "hipe",
     "packitoo"
   ],
-  "license": "MIT",
   "homepage": "https://hipe.packitoo.com",
-  "author": {
-    "name": "Packitoo",
-    "email": "cto@packitoo.com"
+  "bugs": {
+    "url": "https://github.com/packitoo/n8n-nodes-hipe/issues"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/packitoo/n8n-nodes-hipe.git"
+    "url": "git+https://github.com/packitoo/n8n-nodes-hipe.git"
   },
-  "engines": {
-    "node": ">=20.15"
-  },
+  "license": "MIT",
+  "author": "Packitoo <cto@packitoo.com>",
+  "type": "commonjs",
   "main": "index.js",
+  "directories": {
+    "doc": "docs",
+    "example": "examples"
+  },
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "workspace:clean": "rm -rf dist node_modules",
     "workspace:rebuild": "npm install && npm run build",
@@ -36,17 +41,8 @@
     "lintfix": "eslint nodes credentials package.json --fix",
     "prepublishOnly": "npm run build && npm run lint -c .eslintrc.prepublish.js nodes credentials package.json"
   },
-  "files": [
-    "dist"
-  ],
-  "n8n": {
-    "n8nNodesApiVersion": 1,
-    "credentials": [
-      "dist/credentials/hipeApi.credentials.js"
-    ],
-    "nodes": [
-      "dist/nodes/Hipe/Hipe.node.js"
-    ]
+  "dependencies": {
+    "form-data": "^4.0.4"
   },
   "devDependencies": {
     "@types/jest": "^29.5.11",
@@ -62,7 +58,16 @@
   "peerDependencies": {
     "n8n-workflow": "*"
   },
-  "dependencies": {
-    "form-data": "^4.0.4"
+  "engines": {
+    "node": ">=20.15"
+  },
+  "n8n": {
+    "n8nNodesApiVersion": 1,
+    "credentials": [
+      "dist/credentials/hipeApi.credentials.js"
+    ],
+    "nodes": [
+      "dist/nodes/Hipe/Hipe.node.js"
+    ]
   }
 }
