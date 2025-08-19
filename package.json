@@ -16,7 +16,11 @@
     "url": "git+https://github.com/packitoo/n8n-nodes-hipe.git"
   },
   "license": "MIT",
-  "author": "Packitoo <cto@packitoo.com>",
+  "author": {
+    "name": "Packitoo",
+    "email": "cto@packitoo.com",
+    "url": "https://github.com/Packitoo"
+  },
   "type": "commonjs",
   "main": "index.js",
   "directories": {
