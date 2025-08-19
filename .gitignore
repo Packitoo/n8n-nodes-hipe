@@ -11,3 +11,8 @@ coverage
 # Local OpenAPI extractor artifacts
 out.json
 p.py
+
+# Local n8n
+.env
+docker-compose.yml
+init-data.sh
