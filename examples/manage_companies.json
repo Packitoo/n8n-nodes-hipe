@@ -1,5 +1,5 @@
 {
-  "name": "contact manager",
+  "name": "company manager",
   "nodes": [
     {
       "parameters": {
@@ -11,7 +11,7 @@
       "type": "n8n-nodes-base.localFileTrigger",
       "typeVersion": 1,
       "position": [0, 40],
-      "id": "f02be3de-e2c9-444b-82ec-891a8b701016",
+      "id": "b9b1ef47-3f5a-4d3c-9e47-7a0b5a2c6f9e",
       "name": "Local File Trigger"
     },
     {
@@ -22,7 +22,7 @@
       "type": "n8n-nodes-base.readWriteFile",
       "typeVersion": 1,
       "position": [220, 40],
-      "id": "edb3aa0b-f34b-4e34-9100-2117f472b95c",
+      "id": "a7d5c3b2-9e8f-4a6b-8c7d-1e2f3a4b5c6d",
       "name": "Read/Write Files from Disk"
     },
     {
@@ -32,7 +32,7 @@
       "type": "n8n-nodes-base.extractFromFile",
       "typeVersion": 1,
       "position": [440, 40],
-      "id": "50cbd045-c129-436d-81a9-2770f372efe5",
+      "id": "d1c2b3a4-5e6f-7081-92a3-b4c5d6e7f809",
       "name": "Extract from File",
       "alwaysOutputData": true
     },
@@ -50,8 +50,8 @@
                 },
                 "conditions": [
                   {
-                    "id": "a74db505-4121-48fd-9907-64378ffd108c",
-                    "leftValue": "={{ $json['﻿id'] }}",
+                    "id": "0a1b2c3d-4e5f-6071-8293-a4b5c6d7e8f9",
+                    "leftValue": "={{ $json.id || $json['﻿id'] }}",
                     "rightValue": "",
                     "operator": {
                       "type": "string",
@@ -75,7 +75,7 @@
                 },
                 "conditions": [
                   {
-                    "id": "fd1f454d-f086-4aa7-9261-406e15422fb2",
+                    "id": "1b2c3d4e-5f60-7182-93a4-b5c6d7e8f901",
                     "leftValue": "={{ $json.externalId }}",
                     "rightValue": "",
                     "operator": {
@@ -97,41 +97,43 @@
       "type": "n8n-nodes-base.switch",
       "typeVersion": 3.2,
       "position": [660, 40],
-      "id": "6b66a6c0-284d-46b4-bc86-c09d206124ec",
+      "id": "2c3d4e5f-6071-7283-94a5-b6c7d8e9f012",
       "name": "Switch"
     },
     {
       "parameters": {
         "operation": "update",
-        "id": "={{ $json['﻿id'] }}",
+        "id": "={{ $json.id || $json['﻿id'] }}",
         "updateFields": {
-          "email": "={{ $json.email }}",
-          "externalId": "={{ $json.externalId }}",
-          "firstName": "={{ $json.first_name || \"\"}}",
-          "lastName": "={{ $json.last_name || \"\" }}",
-          "mobilePhone": "={{ $json.mobile_phone || \"\" }}",
-          "phoneNumber": "={{ $json.phone_number || \"\" }}"
+          "name": "={{ $json.name }}",
+          "email": "={{ $json.email || '' }}",
+          "managedById": "={{ $json.managedById || '' }}",
+          "externalId": "={{ $json.externalId || '' }}",
+          "parentId": "={{ $json.parentId || '' }}",
+          "phone": "={{ $json.phone || '' }}",
+          "vat": "={{ $json.vat || '' }}",
+          "website": "={{ $json.website || '' }}"
         },
-        "resource": "user"
+        "resource": "company"
       },
       "type": "CUSTOM.hipe",
       "typeVersion": 1,
       "position": [880, -60],
-      "id": "c4be2ef2-ce69-4928-a78a-1e593ed7dfc9",
+      "id": "3d4e5f60-7172-8394-a5b6-c7d8e9f0123a",
       "name": "Update"
     },
     {
       "parameters": {
         "filters": {
-          "externalId": "={{ $json.externalId }}"
+          "search": "={{ $json.externalId }}"
         },
         "sort": {},
-        "resource": "user"
+        "resource": "company"
       },
       "type": "CUSTOM.hipe",
       "typeVersion": 1,
       "position": [880, 140],
-      "id": "4ca8a036-5ae6-4dab-8f86-ebcba9725c45",
+      "id": "4e5f6071-7283-8495-a6b7-c8d9e0f1a2b3",
       "name": "Get many",
       "alwaysOutputData": true
     },
@@ -156,7 +158,7 @@
                       "operation": "empty",
                       "singleValue": true
                     },
-                    "id": "d5336c09-31fc-4b17-8e4a-7d550505a379"
+                    "id": "5f607172-8384-95a6-b7c8-d9e0f1a2b3c4"
                   }
                 ],
                 "combinator": "and"
@@ -174,7 +176,7 @@
                 },
                 "conditions": [
                   {
-                    "id": "0e534d7b-22f6-41f6-93e1-66b7a5174424",
+                    "id": "60717283-8495-a6b7-c8d9-e0f1a2b3c4d5",
                     "leftValue": "={{ $json.data }}",
                     "rightValue": "",
                     "operator": {
@@ -191,150 +193,80 @@
             }
           ]
         },
-        "options": {
-          "allMatchingOutputs": true
-        }
+        "options": {"allMatchingOutputs": true}
       },
       "type": "n8n-nodes-base.switch",
       "typeVersion": 3.2,
       "position": [1100, 140],
-      "id": "2c2a30c2-99ad-4113-83b9-981613c01431",
+      "id": "71828394-95a6-b7c8-d9e0-f1a2b3c4d5e6",
       "name": "Switch1"
     },
     {
       "parameters": {
-        "operation": "createContact",
-        "firstName": "={{ $('Switch').item.json.first_name }}",
-        "lastName": "={{ $('Switch').item.json.last_name }}",
-        "email": "={{ $('Switch').item.json.email }}",
-        "externalId": "={{ $('Switch').item.json.externalId }}",
-        "phoneNumber": "={{ $('Switch').item.json.phone_number }}",
-        "mobilePhone": "={{ $('Switch').item.json?.mobile_number}}",
+        "operation": "create",
+        "name": "={{ $('Switch').item.json.name }}",
+        "managedById": "={{ $('Switch').item.json.managedById || '' }}",
+        "externalId": "={{ $('Switch').item.json.externalId || '' }}",
         "additionalFields": {
-          "customFields": "={\n\"test_text\": {{ $('Switch').item.json.email.extractDomain() }}\n}"
+          "email": "={{ $('Switch').item.json.email || '' }}",
+          "parentId": "={{ $('Switch').item.json.parentId || '' }}",
+          "phone": "={{ $('Switch').item.json.phone || '' }}",
+          "vat": "={{ $('Switch').item.json.vat || '' }}",
+          "website": "={{ $('Switch').item.json.website || '' }}",
+          "customFields": "={\n\"source\": {{ $('Switch').item.json.externalId }}\n}"
         },
-        "resource": "user"
+        "resource": "company"
       },
       "type": "CUSTOM.hipe",
       "typeVersion": 1,
       "position": [1320, 40],
-      "id": "9d1224be-a598-4312-ad7a-d40e8dbad058",
-      "name": "Create contact"
+      "id": "829395a6-b7c8-d9e0-f1a2-b3c4d5e6f708",
+      "name": "Create company"
     },
     {
       "parameters": {
         "operation": "update",
         "id": "={{ $json.data[0].id }}",
         "updateFields": {
-          "customFields": "={\n  \"test_text\": {{ $json.data[0].email.extractDomain() }}\n} ",
-          "email": "={{ $json.data[0].email }}",
-          "firstName": "={{ $json.data[0].firstName }}",
-          "lastName": "={{ $json.data[0].lastName }}"
+          "name": "={{ $json.data[0].name }}",
+          "email": "={{ $json.data[0].email || '' }}",
+          "managedById": "={{ $json.data[0].managedById || '' }}",
+          "externalId": "={{ $json.data[0].externalId || '' }}",
+          "parentId": "={{ $json.data[0].parentId || '' }}",
+          "phone": "={{ $json.data[0].phone || '' }}",
+          "vat": "={{ $json.data[0].vat || '' }}",
+          "website": "={{ $json.data[0].website || '' }}",
+          "customFields": "={\n  \"source\": {{ $json.data[0].externalId }}\n} "
         },
-        "resource": "user"
+        "resource": "company"
       },
       "type": "CUSTOM.hipe",
       "typeVersion": 1,
       "position": [1320, 240],
-      "id": "60ef7533-a0a9-4144-9603-30178c45ada0",
+      "id": "9395a6b7-c8d9-e0f1-a2b3-c4d5e6f70819",
       "name": "Update1"
     }
   ],
   "pinData": {},
   "connections": {
-    "Local File Trigger": {
-      "main": [
-        [
-          {
-            "node": "Read/Write Files from Disk",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Read/Write Files from Disk": {
-      "main": [
-        [
-          {
-            "node": "Extract from File",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Extract from File": {
-      "main": [
-        [
-          {
-            "node": "Switch",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Switch": {
-      "main": [
-        [
-          {
-            "node": "Update",
-            "type": "main",
-            "index": 0
-          }
-        ],
-        [
-          {
-            "node": "Get many",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Get many": {
-      "main": [
-        [
-          {
-            "node": "Switch1",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Switch1": {
-      "main": [
-        [
-          {
-            "node": "Create contact",
-            "type": "main",
-            "index": 0
-          }
-        ],
-        [
-          {
-            "node": "Update1",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Create contact": {
-      "main": [[]]
-    }
+    "Local File Trigger": {"main": [[{"node": "Read/Write Files from Disk", "type": "main", "index": 0}]]},
+    "Read/Write Files from Disk": {"main": [[{"node": "Extract from File", "type": "main", "index": 0}]]},
+    "Extract from File": {"main": [[{"node": "Switch", "type": "main", "index": 0}]]},
+    "Switch": {"main": [
+      [[{"node": "Update", "type": "main", "index": 0}]],
+      [[{"node": "Get many", "type": "main", "index": 0}]]
+    ]},
+    "Get many": {"main": [[{"node": "Switch1", "type": "main", "index": 0}]]},
+    "Switch1": {"main": [
+      [[{"node": "Create company", "type": "main", "index": 0}]],
+      [[{"node": "Update1", "type": "main", "index": 0}]]
+    ]},
+    "Create company": {"main": [[]]}
   },
   "active": true,
-  "settings": {
-    "executionOrder": "v1"
-  },
-  "versionId": "1d7d15da-3d3f-4ce3-9ff3-b30cabd2f011",
-  "meta": {
-    "templateCredsSetupCompleted": true,
-    "instanceId": "644d8b89e4ed4144c3acff7f241bb9325c186cbbe6fecf46363639e8a01a4c9e"
-  },
-  "id": "FqhYORuePgv7RGyy",
+  "settings": {"executionOrder": "v1"},
+  "versionId": "a6b7c8d9-e0f1-a2b3-c4d5-e6f708192a3b",
+  "meta": {"templateCredsSetupCompleted": true},
+  "id": "CmpMngrFlow001",
   "tags": []
 }

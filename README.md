@@ -72,6 +72,15 @@ Basic usage involves adding the HIPE node to your workflow and selecting the des
 
 > **Tip:** Hover over each parameter in the node UI for helpful descriptions.
 
+### Pagination & Sorting
+
+Companies and Projects List actions use flat pagination and sorting:
+
+- Query params: `page`, `limit`, flat filters (e.g. `status`, `search`)
+- Sorting: single `sort` parameter as "field,ASC|DESC"
+
+See the full guide: [docs/pagination.md](./docs/pagination.md)
+
 ## Contributing
 
 Contributions are welcome! Please see [CONTRIBUTING.md](./CONTRIBUTING.md) for guidelines.

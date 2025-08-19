@@ -1,5 +1,6 @@
 import { IExecuteFunctions } from 'n8n-workflow';
 import { INodeExecutionData, INodeProperties } from 'n8n-workflow';
+import { listWithPagination } from '../../shared/pagination';
 
 // Properties for the List operation
 export const properties: INodeProperties[] = [
@@ -32,6 +33,23 @@ export const properties: INodeProperties[] = [
 		},
 		default: 50,
 		description: 'Max number of results to return',
+	},
+	{
+		displayName: 'Page',
+		name: 'page',
+		type: 'number',
+		displayOptions: {
+			show: {
+				resource: ['corrugatedFormat'],
+				operation: ['getMany'],
+				returnAll: [false],
+			},
+		},
+		typeOptions: {
+			minValue: 1,
+		},
+		default: 1,
+		description: 'Page number to fetch (starts at 1)',
 	},
 	{
 		displayName: 'Filters',
@@ -120,47 +138,29 @@ export async function execute(
 ): Promise<INodeExecutionData[]> {
 	const returnData: INodeExecutionData[] = [];
 
-	// Get credentials
-	const credentials = await this.getCredentials('hipeApi');
-	let baseUrl = credentials.url;
-	if (typeof baseUrl !== 'string') {
-		throw new Error('HIPE base URL is not a string');
-	}
-
 	for (let i = 0; i < items.length; i++) {
 		try {
 			// Get input data
 			const returnAll = this.getNodeParameter('returnAll', i) as boolean;
 			const limit = returnAll ? undefined : (this.getNodeParameter('limit', i, 50) as number);
+			const uiPageRaw = this.getNodeParameter('page', i, 1) as number;
+			const uiPage =
+				typeof uiPageRaw === 'number' && Number.isFinite(uiPageRaw) && uiPageRaw > 0
+					? uiPageRaw
+					: 1;
 			const filters = this.getNodeParameter('filters', i, {}) as Record<string, any>;
 			const sort = this.getNodeParameter('sort', i, {}) as {
 				sortBy?: string;
 				sortOrder?: 'asc' | 'desc';
 			};
-
-			// Build query string
-			const qs: Record<string, any> = {};
-			if (limit !== undefined) qs.itemsPerPage = limit;
-			if (filters) {
-				for (const [key, value] of Object.entries(filters)) {
-					if (value !== undefined && value !== '') {
-						qs[`filters[${key}]`] = value;
-					}
-				}
-			}
-			if (sort && sort.sortBy) {
-				qs[`order[${sort.sortBy}]`] = sort.sortOrder || 'asc';
-			}
-
-			// Make API call to list corrugated formats
-			const response = await this.helpers.requestWithAuthentication.call(this, 'hipeApi', {
-				method: 'GET',
-				url: `${baseUrl}/api/corrugated-formats`,
-				qs,
-				json: true,
+			const result = await listWithPagination(this, '/api/corrugated-formats', {
+				returnAll,
+				limit,
+				page: uiPage,
+				filters,
+				sort,
 			});
-
-			returnData.push({ json: response });
+			returnData.push({ json: result });
 		} catch (error: any) {
 			if (this.continueOnFail()) {
 				returnData.push({ json: { error: error.message } });
