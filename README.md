@@ -1,48 +1,120 @@
-![Banner image](https://user-images.githubusercontent.com/10284570/173569848-c624317f-42b1-45a6-ab09-f0ea3c247648.png)
+# n8n-nodes-hipe
 
-# n8n-nodes-starter
+[![npm version](https://img.shields.io/npm/v/%40packitoo%2Fn8n-nodes-hipe?label=npm%20version)](https://www.npmjs.com/package/@packitoo/n8n-nodes-hipe)
+[![CI](https://github.com/packitoo/n8n-nodes-hipe/actions/workflows/ci.yml/badge.svg)](https://github.com/packitoo/n8n-nodes-hipe/actions/workflows/ci.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE.md)
+[![Node >= 20.15](https://img.shields.io/badge/node-%3E%3D20.15-brightgreen)](#compatibility)
 
-This repo contains example nodes to help you get started building your own custom integrations for [n8n](https://n8n.io). It includes the node linter and other dependencies.
+![Packitoo Logo](docs/logo.svg)
 
-To make your custom node available to the community, you must create it as an npm package, and [submit it to the npm registry](https://docs.npmjs.com/packages-and-modules/contributing-packages-to-the-registry).
 
-If you would like your node to be available on n8n cloud you can also [submit your node for verification](https://docs.n8n.io/integrations/creating-nodes/deploy/submit-community-nodes/).
+Official n8n integration node for [HIPE](https://hipe.packitoo.com) by Packitoo.
 
-## Prerequisites
+Easily connect your n8n workflows to the HIPE SaaS API to automate business processes, manage users, companies, projects, and more.
 
-You need the following installed on your development machine:
+---
 
-* [git](https://git-scm.com/downloads)
-* Node.js and npm. Minimum version Node 20. You can find instructions on how to install both using nvm (Node Version Manager) for Linux, Mac, and WSL [here](https://github.com/nvm-sh/nvm). For Windows users, refer to Microsoft's guide to [Install NodeJS on Windows](https://docs.microsoft.com/en-us/windows/dev-environment/javascript/nodejs-on-windows).
-* Install n8n with:
-  ```
-  npm install n8n -g
-  ```
-* Recommended: follow n8n's guide to [set up your development environment](https://docs.n8n.io/integrations/creating-nodes/build/node-development-environment/).
+## Table of Contents
+- [Module Readiness](#module-readiness)
+- [Installation](#installation)
+- [Getting Started](#getting-started)
+- [Usage](#usage)
+- [Authentication](#authentication)
+- [Compatibility](#compatibility)
+- [Contributing](#contributing)
+- [Support](#support)
+- [License](#license)
 
-## Using this starter
+---
 
-These are the basic steps for working with the starter. For detailed guidance on creating and publishing nodes, refer to the [documentation](https://docs.n8n.io/integrations/creating-nodes/).
 
-1. [Generate a new repository](https://github.com/n8n-io/n8n-nodes-starter/generate) from this template repository.
-2. Clone your new repo:
-   ```
-   git clone https://github.com/<your organization>/<your-repo-name>.git
-   ```
-3. Run `npm i` to install dependencies.
-4. Open the project in your editor.
-5. Browse the examples in `/nodes` and `/credentials`. Modify the examples, or replace them with your own nodes.
-6. Update the `package.json` to match your details.
-7. Run `npm run lint` to check for errors or `npm run lintfix` to automatically fix errors when possible.
-8. Test your node locally. Refer to [Run your node locally](https://docs.n8n.io/integrations/creating-nodes/test/run-node-locally/) for guidance.
-9. Replace this README with documentation for your node. Use the [README_TEMPLATE](README_TEMPLATE.md) to get started.
-10. Update the LICENSE file to use your details.
-11. [Publish](https://docs.npmjs.com/packages-and-modules/contributing-packages-to-the-registry) your package to npm.
+## Module Readiness
 
-## More information
+| Module       | Status   | Notes                                      |
+| ------------ | -------- | ------------------------------------------ |
+| Users        | ✅ Ready | Full CRUD                                  |
+| Companies    | ✅ Ready | Full CRUD                                  |
+| Projects     | ✅ Ready | Full CRUD                                  |
+| Pipelines    | ✅ Ready |                                            |
+| Statuses     | ✅ Ready |                                            |
+| Addresses    | ✅ Ready |                                            |
+| Corrugated   | 🟡 Partial | Some submodules in progress                |
+| Articles     | 🚧 Planned |                                            |
+| Orders       | 🚧 Planned |                                            |
+| Quotes       | 🚧 Planned |                                            |
 
-Refer to our [documentation on creating nodes](https://docs.n8n.io/integrations/creating-nodes/) for detailed information on building your own nodes.
+<!-- Update this table as modules mature -->
+
+## Installation
+
+### From npm (recommended)
+```bash
+npm install n8n-nodes-hipe
+```
+
+### From GitHub (latest/dev)
+```bash
+npm install github:packitoo/n8n-nodes-hipe
+```
+
+## Getting Started
+1. Install the node as above.
+2. Restart n8n if running locally.
+3. Add the "HIPE" node to your workflow from the n8n node palette.
+4. Configure authentication (see below).
+
+## Authentication
+
+To use this node, you need an API token from HIPE.
+
+- Follow the guide here: [Create Access Token](https://developers.packitoo.com/guides/create-access-token/)
+- Enter your token in the HIPE credentials section when configuring the node in n8n.
+
+You can click the "Test" button in the HIPE credentials to validate your token and base URL. The test performs a safe GET request to verify access.
+
+## Usage
+
+Basic usage involves adding the HIPE node to your workflow and selecting the desired module and operation. For detailed usage and examples, see the [examples directory](./examples) or the inline documentation in n8n.
+
+> **Tip:** Hover over each parameter in the node UI for helpful descriptions.
+
+### Pagination & Sorting
+
+Companies and Projects List actions use flat pagination and sorting:
+
+- Query params: `page`, `limit`, flat filters (e.g. `status`, `search`)
+- Sorting: single `sort` parameter as "field,ASC|DESC"
+
+See the full guide: [docs/pagination.md](./docs/pagination.md)
+
+### Performance & Rate Limits
+
+- Using "Return All" may trigger many requests. Prefer `limit` for large datasets.
+- Consider backoff/retry in your workflows if your HIPE instance enforces rate limits.
+
+## Compatibility
+
+- Node.js: >= 20.15 (CI runs Node 20)
+- n8n Nodes API: v1 (`n8n.n8nNodesApiVersion: 1`)
+
+If you encounter any compatibility issues, please open an issue with details about your environment.
+
+## Contributing
+
+Contributions are welcome! Please see [CONTRIBUTING.md](./CONTRIBUTING.md) for guidelines.
+
+- Open issues for bugs or feature requests
+- Submit pull requests for improvements
+
+## Support
+
+- For common issues and questions, please use [GitHub Issues](https://github.com/packitoo/n8n-nodes-hipe/issues).
+- For integration help or custom pipeline requests, please contact your assigned Customer Success Manager.
 
 ## License
 
-[MIT](https://github.com/n8n-io/n8n-nodes-starter/blob/master/LICENSE.md)
+MIT © [Packitoo](https://packitoo.com)
+
+---
+
+<!-- TODO: Add links to documentation, and other resources as needed -->

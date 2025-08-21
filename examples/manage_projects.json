@@ -1,0 +1,281 @@
+{
+  "name": "project manager",
+  "nodes": [
+    {
+      "parameters": {
+        "triggerOn": "folder",
+        "path": "<YOUR_PATH>",
+        "events": ["change", "add", "unlink"],
+        "options": {}
+      },
+      "type": "n8n-nodes-base.localFileTrigger",
+      "typeVersion": 1,
+      "position": [0, 40],
+      "id": "30b5b5c5-7491-4e3b-bb4d-1f3f5cc2a0a1",
+      "name": "Local File Trigger"
+    },
+    {
+      "parameters": {
+        "fileSelector": "={{ $json.path }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.readWriteFile",
+      "typeVersion": 1,
+      "position": [220, 40],
+      "id": "9b3b7d1e-9a8e-4f76-9f5a-3c23a7b8a2d4",
+      "name": "Read/Write Files from Disk"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.extractFromFile",
+      "typeVersion": 1,
+      "position": [440, 40],
+      "id": "f4a24b3a-8a7b-4e1c-8be7-6a2b7f3a1c5d",
+      "name": "Extract from File",
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "a1e2b3c4-d5f6-4a7b-8c9d-0e1f2a3b4c5d",
+                    "leftValue": "={{ $json.id || $json['﻿id'] }}",
+                    "rightValue": "",
+                    "operator": {
+                      "type": "string",
+                      "operation": "notEmpty",
+                      "singleValue": true
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "hipe_id"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "b2c3d4e5-f6a7-4b8c-9d0e-1f2a3b4c5d6e",
+                    "leftValue": "={{ $json.externalId }}",
+                    "rightValue": "",
+                    "operator": {
+                      "type": "string",
+                      "operation": "notEmpty",
+                      "singleValue": true
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "externalId"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.2,
+      "position": [660, 40],
+      "id": "c2d3e4f5-a6b7-4c8d-9e0f-1a2b3c4d5e6f",
+      "name": "Switch"
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "id": "={{ $json.id || $json['﻿id'] }}",
+        "updateFields": {
+          "name": "={{ $json.name }}",
+          "companyId": "={{ $json.companyId }}",
+          "managerId": "={{ $json.managerId }}",
+          "dueDate": "={{ $json.dueDate || '' }}",
+          "estimatedValues": "={{ $json.estimatedValues || 0 }}"
+        },
+        "resource": "project"
+      },
+      "type": "CUSTOM.hipe",
+      "typeVersion": 1,
+      "position": [880, -60],
+      "id": "e7f8a9b0-1c2d-3e4f-5a6b-7c8d9e0f1a2b",
+      "name": "Update"
+    },
+    {
+      "parameters": {
+        "filters": {
+          "search": "={{ $json.externalId }}"
+        },
+        "sort": {},
+        "resource": "project"
+      },
+      "type": "CUSTOM.hipe",
+      "typeVersion": 1,
+      "position": [880, 140],
+      "id": "0a1b2c3d-4e5f-6071-8293-a4b5c6d7e8f9",
+      "name": "Get many",
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.data }}",
+                    "rightValue": "",
+                    "operator": {
+                      "type": "array",
+                      "operation": "empty",
+                      "singleValue": true
+                    },
+                    "id": "1a2b3c4d-5e6f-7081-92a3-b4c5d6e7f809"
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "need_creation"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "2b3c4d5e-6f70-8192-a3b4-c5d6e7f8091a",
+                    "leftValue": "={{ $json.data }}",
+                    "rightValue": "",
+                    "operator": {
+                      "type": "array",
+                      "operation": "notEmpty",
+                      "singleValue": true
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "update"
+            }
+          ]
+        },
+        "options": {"allMatchingOutputs": true}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.2,
+      "position": [1100, 140],
+      "id": "1b2c3d4e-5f60-7182-93a4-b5c6d7e8f901",
+      "name": "Switch1"
+    },
+    {
+      "parameters": {
+        "operation": "create",
+        "name": "={{ $('Switch').item.json.name }}",
+        "externalId": "={{ $('Switch').item.json.externalId }}",
+        "companyId": "={{ $('Switch').item.json.companyId }}",
+        "managerId": "={{ $('Switch').item.json.managerId }}",
+        "additionalFields": {
+          "dueDate": "={{ $('Switch').item.json.dueDate || '' }}",
+          "estimatedValues": "={{ $('Switch').item.json.estimatedValues || 0 }}",
+          "customFields": "={\n\"source\": {{ $('Switch').item.json.externalId }}\n}"
+        },
+        "resource": "project"
+      },
+      "type": "CUSTOM.hipe",
+      "typeVersion": 1,
+      "position": [1320, 40],
+      "id": "2c3d4e5f-6071-7283-94a5-b6c7d8e9f012",
+      "name": "Create project"
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "id": "={{ $json.data[0].id }}",
+        "updateFields": {
+          "name": "={{ $json.data[0].name }}",
+          "managerId": "={{ $json.data[0].managerId || '' }}",
+          "companyId": "={{ $json.data[0].companyId || '' }}",
+          "customFields": "={\n  \"source\": {{ $json.data[0].externalId }}\n} ",
+          "dueDate": "={{ $json.data[0].dueDate || '' }}",
+          "estimatedValues": "={{ $json.data[0].estimatedValues || 0 }}"
+        },
+        "resource": "project"
+      },
+      "type": "CUSTOM.hipe",
+      "typeVersion": 1,
+      "position": [1320, 240],
+      "id": "3d4e5f60-7172-8394-a5b6-c7d8e9f0123a",
+      "name": "Update1"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Local File Trigger": {
+      "main": [
+        [
+          {"node": "Read/Write Files from Disk", "type": "main", "index": 0}
+        ]
+      ]
+    },
+    "Read/Write Files from Disk": {
+      "main": [
+        [
+          {"node": "Extract from File", "type": "main", "index": 0}
+        ]]
+    },
+    "Extract from File": {
+      "main": [[{"node": "Switch", "type": "main", "index": 0}]]
+    },
+    "Switch": {
+      "main": [
+        [[{"node": "Update", "type": "main", "index": 0}]],
+        [[{"node": "Get many", "type": "main", "index": 0}]]
+      ]
+    },
+    "Get many": {"main": [[{"node": "Switch1", "type": "main", "index": 0}]]},
+    "Switch1": {
+      "main": [
+        [[{"node": "Create project", "type": "main", "index": 0}]],
+        [[{"node": "Update1", "type": "main", "index": 0}]]
+      ]
+    },
+    "Create project": {"main": [[]]}
+  },
+  "active": true,
+  "settings": {"executionOrder": "v1"},
+  "versionId": "93a2b1c0-d9e8-7f6a-5b4c-3d2e1f0a9b8c",
+  "meta": {"templateCredsSetupCompleted": true},
+  "id": "PrjMngrFlow001",
+  "tags": []
+}

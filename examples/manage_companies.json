@@ -1,0 +1,272 @@
+{
+  "name": "company manager",
+  "nodes": [
+    {
+      "parameters": {
+        "triggerOn": "folder",
+        "path": "<YOUR_PATH>",
+        "events": ["change", "add", "unlink"],
+        "options": {}
+      },
+      "type": "n8n-nodes-base.localFileTrigger",
+      "typeVersion": 1,
+      "position": [0, 40],
+      "id": "b9b1ef47-3f5a-4d3c-9e47-7a0b5a2c6f9e",
+      "name": "Local File Trigger"
+    },
+    {
+      "parameters": {
+        "fileSelector": "={{ $json.path }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.readWriteFile",
+      "typeVersion": 1,
+      "position": [220, 40],
+      "id": "a7d5c3b2-9e8f-4a6b-8c7d-1e2f3a4b5c6d",
+      "name": "Read/Write Files from Disk"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.extractFromFile",
+      "typeVersion": 1,
+      "position": [440, 40],
+      "id": "d1c2b3a4-5e6f-7081-92a3-b4c5d6e7f809",
+      "name": "Extract from File",
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "0a1b2c3d-4e5f-6071-8293-a4b5c6d7e8f9",
+                    "leftValue": "={{ $json.id || $json['﻿id'] }}",
+                    "rightValue": "",
+                    "operator": {
+                      "type": "string",
+                      "operation": "notEmpty",
+                      "singleValue": true
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "hipe_id"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "1b2c3d4e-5f60-7182-93a4-b5c6d7e8f901",
+                    "leftValue": "={{ $json.externalId }}",
+                    "rightValue": "",
+                    "operator": {
+                      "type": "string",
+                      "operation": "notEmpty",
+                      "singleValue": true
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "externalId"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.2,
+      "position": [660, 40],
+      "id": "2c3d4e5f-6071-7283-94a5-b6c7d8e9f012",
+      "name": "Switch"
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "id": "={{ $json.id || $json['﻿id'] }}",
+        "updateFields": {
+          "name": "={{ $json.name }}",
+          "email": "={{ $json.email || '' }}",
+          "managedById": "={{ $json.managedById || '' }}",
+          "externalId": "={{ $json.externalId || '' }}",
+          "parentId": "={{ $json.parentId || '' }}",
+          "phone": "={{ $json.phone || '' }}",
+          "vat": "={{ $json.vat || '' }}",
+          "website": "={{ $json.website || '' }}"
+        },
+        "resource": "company"
+      },
+      "type": "CUSTOM.hipe",
+      "typeVersion": 1,
+      "position": [880, -60],
+      "id": "3d4e5f60-7172-8394-a5b6-c7d8e9f0123a",
+      "name": "Update"
+    },
+    {
+      "parameters": {
+        "filters": {
+          "search": "={{ $json.externalId }}"
+        },
+        "sort": {},
+        "resource": "company"
+      },
+      "type": "CUSTOM.hipe",
+      "typeVersion": 1,
+      "position": [880, 140],
+      "id": "4e5f6071-7283-8495-a6b7-c8d9e0f1a2b3",
+      "name": "Get many",
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.data }}",
+                    "rightValue": "",
+                    "operator": {
+                      "type": "array",
+                      "operation": "empty",
+                      "singleValue": true
+                    },
+                    "id": "5f607172-8384-95a6-b7c8-d9e0f1a2b3c4"
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "need_creation"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "60717283-8495-a6b7-c8d9-e0f1a2b3c4d5",
+                    "leftValue": "={{ $json.data }}",
+                    "rightValue": "",
+                    "operator": {
+                      "type": "array",
+                      "operation": "notEmpty",
+                      "singleValue": true
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "update"
+            }
+          ]
+        },
+        "options": {"allMatchingOutputs": true}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.2,
+      "position": [1100, 140],
+      "id": "71828394-95a6-b7c8-d9e0-f1a2b3c4d5e6",
+      "name": "Switch1"
+    },
+    {
+      "parameters": {
+        "operation": "create",
+        "name": "={{ $('Switch').item.json.name }}",
+        "managedById": "={{ $('Switch').item.json.managedById || '' }}",
+        "externalId": "={{ $('Switch').item.json.externalId || '' }}",
+        "additionalFields": {
+          "email": "={{ $('Switch').item.json.email || '' }}",
+          "parentId": "={{ $('Switch').item.json.parentId || '' }}",
+          "phone": "={{ $('Switch').item.json.phone || '' }}",
+          "vat": "={{ $('Switch').item.json.vat || '' }}",
+          "website": "={{ $('Switch').item.json.website || '' }}",
+          "customFields": "={\n\"source\": {{ $('Switch').item.json.externalId }}\n}"
+        },
+        "resource": "company"
+      },
+      "type": "CUSTOM.hipe",
+      "typeVersion": 1,
+      "position": [1320, 40],
+      "id": "829395a6-b7c8-d9e0-f1a2-b3c4d5e6f708",
+      "name": "Create company"
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "id": "={{ $json.data[0].id }}",
+        "updateFields": {
+          "name": "={{ $json.data[0].name }}",
+          "email": "={{ $json.data[0].email || '' }}",
+          "managedById": "={{ $json.data[0].managedById || '' }}",
+          "externalId": "={{ $json.data[0].externalId || '' }}",
+          "parentId": "={{ $json.data[0].parentId || '' }}",
+          "phone": "={{ $json.data[0].phone || '' }}",
+          "vat": "={{ $json.data[0].vat || '' }}",
+          "website": "={{ $json.data[0].website || '' }}",
+          "customFields": "={\n  \"source\": {{ $json.data[0].externalId }}\n} "
+        },
+        "resource": "company"
+      },
+      "type": "CUSTOM.hipe",
+      "typeVersion": 1,
+      "position": [1320, 240],
+      "id": "9395a6b7-c8d9-e0f1-a2b3-c4d5e6f70819",
+      "name": "Update1"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Local File Trigger": {"main": [[{"node": "Read/Write Files from Disk", "type": "main", "index": 0}]]},
+    "Read/Write Files from Disk": {"main": [[{"node": "Extract from File", "type": "main", "index": 0}]]},
+    "Extract from File": {"main": [[{"node": "Switch", "type": "main", "index": 0}]]},
+    "Switch": {"main": [
+      [[{"node": "Update", "type": "main", "index": 0}]],
+      [[{"node": "Get many", "type": "main", "index": 0}]]
+    ]},
+    "Get many": {"main": [[{"node": "Switch1", "type": "main", "index": 0}]]},
+    "Switch1": {"main": [
+      [[{"node": "Create company", "type": "main", "index": 0}]],
+      [[{"node": "Update1", "type": "main", "index": 0}]]
+    ]},
+    "Create company": {"main": [[]]}
+  },
+  "active": true,
+  "settings": {"executionOrder": "v1"},
+  "versionId": "a6b7c8d9-e0f1-a2b3-c4d5-e6f708192a3b",
+  "meta": {"templateCredsSetupCompleted": true},
+  "id": "CmpMngrFlow001",
+  "tags": []
+}

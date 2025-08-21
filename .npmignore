@@ -1,0 +1,12 @@
+.DS_Store
+*.tsbuildinfo
+.vscode
+.github
+coverage
+docs
+examples
+node_modules
+.env
+init-data.sh
+docker-compose.yml
+README_TEMPLATE.md
