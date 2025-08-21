@@ -1,76 +1,73 @@
 {
-  "name": "@packitoo/n8n-nodes-hipe",
-  "version": "0.1.4-beta.0",
-  "description": "Official N8N Nodes for HIPE by Packitoo",
-  "keywords": [
-    "n8n-community-node-package",
-    "hipe",
-    "packitoo"
-  ],
-  "homepage": "https://hipe.packitoo.com",
-  "bugs": {
-    "url": "https://github.com/packitoo/n8n-nodes-hipe/issues"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/packitoo/n8n-nodes-hipe.git"
-  },
-  "license": "MIT",
-  "author": {
-    "name": "Packitoo",
-    "email": "cto@packitoo.com",
-    "url": "https://github.com/Packitoo"
-  },
-  "type": "commonjs",
-  "directories": {
-    "doc": "docs",
-    "example": "examples"
-  },
-  "files": [
-    "dist"
-  ],
-  "scripts": {
-    "workspace:clean": "rm -rf dist node_modules",
-    "workspace:rebuild": "npm install && npm run build",
-    "workspace:link": "npm link",
-    "workspace:reload-n8n": "npm test && npm run workspace:clean && npm run workspace:rebuild && npm run workspace:link && cd ~/.n8n/custom && rm -rf node_modules && npm link n8n-nodes-hipe && N8N_LOG_LEVEL=debug n8n start",
-    "test": "rm -rf dist && jest --coverage",
-    "test:coverage": "rm -rf dist && jest --coverage",
-    "test:watch": "rm -rf dist && jest --watch",
-    "build": "npx rimraf dist && tsc && gulp build:icons",
-    "dev": "tsc --watch",
-    "format": "prettier nodes credentials --write",
-    "lint": "eslint nodes credentials package.json",
-    "lintfix": "eslint nodes credentials package.json --fix",
-    "prepublishOnly": "npm run build && npm run lint -c .eslintrc.prepublish.js nodes credentials package.json"
-  },
-  "dependencies": {
-    "form-data": "^4.0.4"
-  },
-  "devDependencies": {
-    "@types/jest": "^29.5.11",
-    "@typescript-eslint/parser": "~8.32.0",
-    "eslint": "^8.57.0",
-    "eslint-plugin-n8n-nodes-base": "^1.16.3",
-    "gulp": "^5.0.0",
-    "jest": "^29.7.0",
-    "prettier": "^3.5.3",
-    "ts-jest": "^29.1.1",
-    "typescript": "^5.8.2"
-  },
-  "peerDependencies": {
-    "n8n-workflow": "*"
-  },
-  "engines": {
-    "node": ">=20.15"
-  },
-  "n8n": {
-    "n8nNodesApiVersion": 1,
-    "credentials": [
-      "dist/credentials/HipeApi.credentials.js"
-    ],
-    "nodes": [
-      "dist/nodes/Hipe/Hipe.node.js"
-    ]
-  }
+	"name": "@packitoo/n8n-nodes-hipe",
+	"version": "0.1.4-beta.0",
+	"description": "Official N8N Nodes for HIPE by Packitoo",
+	"keywords": [
+		"n8n-community-node-package",
+		"hipe",
+		"packitoo"
+	],
+	"homepage": "https://hipe.packitoo.com",
+	"bugs": {
+		"url": "https://github.com/packitoo/n8n-nodes-hipe/issues"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/packitoo/n8n-nodes-hipe.git"
+	},
+	"license": "MIT",
+	"author": {
+		"name": "Packitoo",
+		"email": "cto@packitoo.com",
+		"url": "https://github.com/Packitoo"
+	},
+	"type": "commonjs",
+	"directories": {
+		"doc": "docs",
+		"example": "examples"
+	},
+	"files": [
+		"dist"
+	],
+	"scripts": {
+		"workspace:clean": "rm -rf dist node_modules",
+		"workspace:rebuild": "npm install && npm run build",
+		"workspace:link": "npm link",
+		"workspace:reload-n8n": "npm test && npm run workspace:clean && npm run workspace:rebuild && npm run workspace:link && cd ~/.n8n/custom && rm -rf node_modules && npm link n8n-nodes-hipe && N8N_LOG_LEVEL=debug n8n start",
+		"test": "rm -rf dist && jest --coverage",
+		"test:coverage": "rm -rf dist && jest --coverage",
+		"test:watch": "rm -rf dist && jest --watch",
+		"build": "npx rimraf dist && tsc && gulp build:icons",
+		"dev": "tsc --watch",
+		"format": "prettier nodes credentials --write",
+		"lint": "eslint nodes credentials package.json",
+		"lintfix": "eslint nodes credentials package.json --fix",
+		"prepublishOnly": "npm run build && npm run lint -c .eslintrc.prepublish.js nodes credentials package.json"
+	},
+	"devDependencies": {
+		"@types/jest": "^29.5.11",
+		"@typescript-eslint/parser": "~8.32.0",
+		"eslint": "^8.57.0",
+		"eslint-plugin-n8n-nodes-base": "^1.16.3",
+		"gulp": "^5.0.0",
+		"jest": "^29.7.0",
+		"prettier": "^3.5.3",
+		"ts-jest": "^29.1.1",
+		"typescript": "^5.8.2"
+	},
+	"peerDependencies": {
+		"n8n-workflow": "*"
+	},
+	"engines": {
+		"node": ">=20.15"
+	},
+	"n8n": {
+		"n8nNodesApiVersion": 1,
+		"credentials": [
+			"dist/credentials/HipeApi.credentials.js"
+		],
+		"nodes": [
+			"dist/nodes/Hipe/Hipe.node.js"
+		]
+	}
 }
