@@ -19,6 +19,7 @@ Easily connect your n8n workflows to the HIPE SaaS API to automate business proc
 - [Installation](#installation)
 - [Getting Started](#getting-started)
 - [Usage](#usage)
+- [Examples](#examples)
 - [Authentication](#authentication)
 - [Compatibility](#compatibility)
 - [Contributing](#contributing)
@@ -26,7 +27,6 @@ Easily connect your n8n workflows to the HIPE SaaS API to automate business proc
 - [License](#license)
 
 ---
-
 
 ## Module Readiness
 
@@ -63,15 +63,6 @@ npm install github:packitoo/n8n-nodes-hipe
 3. Add the "HIPE" node to your workflow from the n8n node palette.
 4. Configure authentication (see below).
 
-## Authentication
-
-To use this node, you need an API token from HIPE.
-
-- Follow the guide here: [Create Access Token](https://developers.packitoo.com/guides/create-access-token/)
-- Enter your token in the HIPE credentials section when configuring the node in n8n.
-
-You can click the "Test" button in the HIPE credentials to validate your token and base URL. The test performs a safe GET request to verify access.
-
 ## Usage
 
 Basic usage involves adding the HIPE node to your workflow and selecting the desired module and operation. For detailed usage and examples, see the [examples directory](./examples) or the inline documentation in n8n.
@@ -91,6 +82,25 @@ See the full guide: [docs/pagination.md](./docs/pagination.md)
 
 - Using "Return All" may trigger many requests. Prefer `limit` for large datasets.
 - Consider backoff/retry in your workflows if your HIPE instance enforces rate limits.
+
+## Examples
+
+The `examples/` directory contains ready-to-import workflows for common use-cases.
+
+- `examples/manage_companies.json` — Create/update companies from a file.
+- `examples/manage_contacts.json` — Manage contacts.
+- `examples/manage_projects.json` — Manage projects.
+- `examples/export_flat_file.json` — Export flat file from HIPE.
+- `examples/import_flat_file.json` — Import flat file to HIPE.
+
+## Authentication
+
+To use this node, you need an API token from HIPE.
+
+- Follow the guide here: [Create Access Token](https://developers.packitoo.com/guides/create-access-token/)
+- Enter your token in the HIPE credentials section when configuring the node in n8n.
+
+You can click the "Test" button in the HIPE credentials to validate your token and base URL. The test performs a safe GET request to verify access.
 
 ## Compatibility
 
