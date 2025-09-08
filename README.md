@@ -7,7 +7,6 @@
 
 ![Packitoo Logo](docs/logo.svg)
 
-
 Official n8n integration node for [HIPE](https://hipe.packitoo.com) by Packitoo.
 
 Easily connect your n8n workflows to the HIPE SaaS API to automate business processes, manage users, companies, projects, and more.
@@ -15,6 +14,7 @@ Easily connect your n8n workflows to the HIPE SaaS API to automate business proc
 ---
 
 ## Table of Contents
+
 - [Module Readiness](#module-readiness)
 - [Installation](#installation)
 - [Getting Started](#getting-started)
@@ -30,34 +30,39 @@ Easily connect your n8n workflows to the HIPE SaaS API to automate business proc
 
 ## Module Readiness
 
-| Module       | Status   | Notes                                      |
-| ------------ | -------- | ------------------------------------------ |
-| Users        | ✅ Ready | Full CRUD                                  |
-| Companies    | ✅ Ready | Full CRUD                                  |
-| Projects     | ✅ Ready | Full CRUD                                  |
-| Pipelines    | ✅ Ready |                                            |
-| Statuses     | ✅ Ready |                                            |
-| Addresses    | ✅ Ready |                                            |
-| Corrugated   | 🟡 Partial | Some submodules in progress                |
-| Articles     | 🚧 Planned |                                            |
-| Orders       | 🚧 Planned |                                            |
-| Quotes       | 🚧 Planned |                                            |
+| Module     | Status     | Notes                       |
+| ---------- | ---------- | --------------------------- |
+| Users      | ✅ Ready   | Full CRUD                   |
+| Companies  | ✅ Ready   | Full CRUD                   |
+| Projects   | ✅ Ready   | Full CRUD                   |
+| Pipelines  | ✅ Ready   |                             |
+| Statuses   | ✅ Ready   |                             |
+| Addresses  | ✅ Ready   |                             |
+| Imports    | ✅ Ready   |                             |
+| Exports    | ✅ Ready   |                             |
+| Corrugated | 🟡 Partial | Some submodules in progress |
+| Articles   | 🚧 Planned |                             |
+| Orders     | 🚧 Planned |                             |
+| Quotes     | 🚧 Planned |                             |
 
 <!-- Update this table as modules mature -->
 
 ## Installation
 
 ### From npm (recommended)
+
 ```bash
 npm install n8n-nodes-hipe
 ```
 
 ### From GitHub (latest/dev)
+
 ```bash
 npm install github:packitoo/n8n-nodes-hipe
 ```
 
 ## Getting Started
+
 1. Install the node as above.
 2. Restart n8n if running locally.
 3. Add the "HIPE" node to your workflow from the n8n node palette.
