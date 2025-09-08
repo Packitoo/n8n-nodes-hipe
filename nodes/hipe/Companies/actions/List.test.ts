@@ -193,7 +193,8 @@ describe('List action', () => {
 				if (name === 'returnAll') return false;
 				if (name === 'limit') return 25;
 				if (name === 'page') return 3;
-				if (name === 'filters') return { date: 'Specific', start: '1735686000000', end: '1738450800000' };
+				if (name === 'filters')
+					return { date: 'Specific', start: '1735686000000', end: '1738450800000' };
 				if (name === 'sort') return { sortBy: 'updatedAt', sortOrder: 'desc' };
 				return undefined;
 			},

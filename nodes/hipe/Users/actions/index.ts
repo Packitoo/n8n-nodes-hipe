@@ -43,7 +43,12 @@ export function buildProperties() {
 					description: 'Create a new contact',
 					action: 'Create a new contact',
 				},
-				{ name: 'Get', value: 'get', description: 'Get a specific user', action: 'Get a specific user' },
+				{
+					name: 'Get',
+					value: 'get',
+					description: 'Get a specific user',
+					action: 'Get a specific user',
+				},
 				{
 					name: 'Get Many',
 					value: 'getMany',

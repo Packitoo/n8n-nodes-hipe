@@ -74,7 +74,8 @@ export const properties: INodeProperties[] = [
 		type: 'collection',
 		placeholder: 'Add Filter',
 		default: {},
-		description: 'Flat filter keys per OpenAPI (e.g. status, type, company, product, taskType, search, comment, cursor, version, process, role, contact, lastupdate, tab, event, price, hierarchy, filterId, date/createdAt/updatedAt windows, start/end, updateStart/updateEnd, pipeline, category, step, manager, createdBy, user)',
+		description:
+			'Flat filter keys per OpenAPI (e.g. status, type, company, product, taskType, search, comment, cursor, version, process, role, contact, lastupdate, tab, event, price, hierarchy, filterId, date/createdAt/updatedAt windows, start/end, updateStart/updateEnd, pipeline, category, step, manager, createdBy, user)',
 		displayOptions: {
 			show: {
 				resource: ['company'],

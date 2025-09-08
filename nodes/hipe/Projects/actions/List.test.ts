@@ -27,12 +27,10 @@ describe('Projects List action', () => {
 			getCredentials: async () => ({ url: 'https://fake.api' }),
 			helpers: {
 				requestWithAuthentication: {
-					call: jest
-						.fn()
-						.mockResolvedValue({
-							data: [{ id: '2', name: 'Project Y' }],
-							pagination: { total: 1 },
-						}),
+					call: jest.fn().mockResolvedValue({
+						data: [{ id: '2', name: 'Project Y' }],
+						pagination: { total: 1 },
+					}),
 				},
 			},
 			getNodeParameter: (name: string) => {

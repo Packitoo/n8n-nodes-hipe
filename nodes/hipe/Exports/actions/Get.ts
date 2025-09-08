@@ -13,7 +13,10 @@ export const properties: INodeProperties[] = [
 	},
 ];
 
-export async function execute(this: IExecuteFunctions, items: INodeExecutionData[]): Promise<INodeExecutionData[]> {
+export async function execute(
+	this: IExecuteFunctions,
+	items: INodeExecutionData[],
+): Promise<INodeExecutionData[]> {
 	const returnData: INodeExecutionData[] = [];
 
 	const credentials = await this.getCredentials('hipeApi');

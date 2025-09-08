@@ -15,7 +15,6 @@ export const properties: INodeProperties[] = [
 		displayName: 'Start Date',
 		name: 'startDate',
 		type: 'string',
-		required: false,
 		default: '',
 		description: 'Start date (ISO string)',
 		displayOptions: { show: { resource: ['export'], operation: ['create'] } },
@@ -24,7 +23,6 @@ export const properties: INodeProperties[] = [
 		displayName: 'End Date',
 		name: 'endDate',
 		type: 'string',
-		required: false,
 		default: '',
 		description: 'End date (ISO string)',
 		displayOptions: { show: { resource: ['export'], operation: ['create'] } },
@@ -41,15 +39,16 @@ export const properties: INodeProperties[] = [
 			{
 				name: 'userIdFields',
 				displayName: 'User Id',
-				values: [
-					{ displayName: 'ID', name: 'id', type: 'string', default: '' },
-				],
+				values: [{ displayName: 'ID', name: 'id', type: 'string', default: '' }],
 			},
 		],
 	},
 ];
 
-export async function execute(this: IExecuteFunctions, items: INodeExecutionData[]): Promise<INodeExecutionData[]> {
+export async function execute(
+	this: IExecuteFunctions,
+	items: INodeExecutionData[],
+): Promise<INodeExecutionData[]> {
 	const returnData: INodeExecutionData[] = [];
 
 	const credentials = await this.getCredentials('hipeApi');
@@ -66,7 +65,12 @@ export async function execute(this: IExecuteFunctions, items: INodeExecutionData
 			const endDate = this.getNodeParameter('endDate', i, '') as string;
 			const userIdsGroup = this.getNodeParameter('userIds', i, {}) as any;
 			let user_ids: string[] = [];
-			if (userIdsGroup && typeof userIdsGroup === 'object' && 'userIdFields' in userIdsGroup && Array.isArray(userIdsGroup.userIdFields)) {
+			if (
+				userIdsGroup &&
+				typeof userIdsGroup === 'object' &&
+				'userIdFields' in userIdsGroup &&
+				Array.isArray(userIdsGroup.userIdFields)
+			) {
 				user_ids = userIdsGroup.userIdFields.map((f: any) => f.id).filter((v: string) => !!v);
 			}
 

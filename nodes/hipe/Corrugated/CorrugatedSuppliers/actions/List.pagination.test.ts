@@ -15,7 +15,12 @@ describe('CorrugatedSuppliers List uses shared pagination', () => {
 	}
 
 	it('returnAll true: passes undefined limit and correct endpoint', async () => {
-		const self = makeThis({ returnAll: true, filters: { name: 'ACME' }, sort: { sortBy: 'name', sortOrder: 'asc' }, page: 1 });
+		const self = makeThis({
+			returnAll: true,
+			filters: { name: 'ACME' },
+			sort: { sortBy: 'name', sortOrder: 'asc' },
+			page: 1,
+		});
 		const res = await (execute as any).call(self, [{ json: {} }]);
 		expect(pagination.listWithPagination).toHaveBeenCalledWith(self, '/api/corrugated-suppliers', {
 			returnAll: true,

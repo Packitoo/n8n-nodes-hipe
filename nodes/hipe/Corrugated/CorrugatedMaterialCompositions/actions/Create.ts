@@ -83,7 +83,7 @@ export async function execute(
 	baseUrl = baseUrl.replace(/\/$/, '');
 
 	// Process each item
-	for (let i = 0; i <items.length; i++) {
+	for (let i = 0; i < items.length; i++) {
 		try {
 			// Get input data
 			const corrugatedMaterial = this.getNodeParameter('corrugatedMaterial', i) as string;
