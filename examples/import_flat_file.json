@@ -1,0 +1,252 @@
+{
+  "name": "Import flat file workflow",
+  "nodes": [
+    {
+      "parameters": {
+        "triggerOn": "folder",
+        "path": "<YOUR_PATH>",
+        "events": [
+          "change",
+          "add"
+        ],
+        "options": {}
+      },
+      "type": "n8n-nodes-base.localFileTrigger",
+      "typeVersion": 1,
+      "position": [
+        -1664,
+        80
+      ],
+      "id": "b4aa0b2a-d55a-4db1-b7ca-aeb18fa69333",
+      "name": "Local File Trigger"
+    },
+    {
+      "parameters": {
+        "fileSelector": "={{ $json.path }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.readWriteFile",
+      "typeVersion": 1,
+      "position": [
+        -1440,
+        80
+      ],
+      "id": "26d0fe8e-b241-49ac-a6df-817f5d8d651a",
+      "name": "Read/Write Files from Disk"
+    },
+    {
+      "parameters": {
+        "resource": "import",
+        "operation": "create",
+        "type": 3,
+        "delimiter": ";"
+      },
+      "type": "CUSTOM.hipe",
+      "typeVersion": 1,
+      "position": [
+        -1216,
+        80
+      ],
+      "id": "f9d8703f-4eeb-4d30-b6e9-2fb902ae961d",
+      "name": "Create a new import"
+    },
+    {
+      "parameters": {
+        "resource": "import",
+        "operation": "get",
+        "id": "={{ $json.id }}"
+      },
+      "type": "CUSTOM.hipe",
+      "typeVersion": 1,
+      "position": [
+        -992,
+        80
+      ],
+      "id": "cd0f6fdb-ec25-4a30-b932-c79113e124c4",
+      "name": "Get a specific import"
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.status }}",
+                    "rightValue": 2,
+                    "operator": {
+                      "type": "number",
+                      "operation": "lte"
+                    },
+                    "id": "45a82ec2-554e-4d0d-a4eb-adaf7b53970a"
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "in_progress"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "aed56ad7-0860-4106-908f-e0c4a288d853",
+                    "leftValue": "={{ $json.status }}",
+                    "rightValue": 8,
+                    "operator": {
+                      "type": "number",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "success"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "6ff3ca67-3db2-4e3c-903b-e1be4add0a57",
+                    "leftValue": "={{ $json.status }}",
+                    "rightValue": 7,
+                    "operator": {
+                      "type": "number",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "fail"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.2,
+      "position": [
+        -768,
+        -16
+      ],
+      "id": "e374ac44-6c04-498a-903a-cb7d6497bd0d",
+      "name": "Switch"
+    },
+    {
+      "parameters": {
+        "amount": 10
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        -544,
+        80
+      ],
+      "id": "b0660040-365e-447b-8fb9-5e47886e620b",
+      "name": "Wait",
+      "webhookId": "8e541473-f3ed-44a4-9748-392b50f8c3d4"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Local File Trigger": {
+      "main": [
+        [
+          {
+            "node": "Read/Write Files from Disk",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Read/Write Files from Disk": {
+      "main": [
+        [
+          {
+            "node": "Create a new import",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create a new import": {
+      "main": [
+        [
+          {
+            "node": "Get a specific import",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get a specific import": {
+      "main": [
+        [
+          {
+            "node": "Switch",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch": {
+      "main": [
+        [
+          {
+            "node": "Wait",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait": {
+      "main": [
+        [
+          {
+            "node": "Get a specific import",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "8fa60201-76b5-4364-9f29-f569213e8115",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "644d8b89e4ed4144c3acff7f241bb9325c186cbbe6fecf46363639e8a01a4c9e"
+  },
+  "id": "5oWFrQAyvBYYrjvh",
+  "tags": []
+}

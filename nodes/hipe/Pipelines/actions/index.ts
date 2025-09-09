@@ -25,7 +25,12 @@ export function buildProperties() {
 					description: 'Get pipelines for a given entity',
 					action: 'Get pipelines for a given entity',
 				},
-				{ name: 'Get', value: 'get', description: 'Get a specific pipeline', action: 'Get a specific pipeline' },
+				{
+					name: 'Get',
+					value: 'get',
+					description: 'Get a specific pipeline',
+					action: 'Get a specific pipeline',
+				},
 			],
 			default: 'getMany',
 			noDataExpression: true,

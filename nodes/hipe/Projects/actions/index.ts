@@ -27,8 +27,18 @@ export function buildProperties() {
 				show: { resource: [RESOURCE] },
 			},
 			options: [
-				{ name: 'Create', value: 'create', description: 'Create a new project', action: 'Create a new project' },
-				{ name: 'Get', value: 'get', description: 'Get a specific project', action: 'Get a specific project' },
+				{
+					name: 'Create',
+					value: 'create',
+					description: 'Create a new project',
+					action: 'Create a new project',
+				},
+				{
+					name: 'Get',
+					value: 'get',
+					description: 'Get a specific project',
+					action: 'Get a specific project',
+				},
 				{
 					name: 'Get Files',
 					value: 'getFiles',

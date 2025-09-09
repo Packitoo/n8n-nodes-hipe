@@ -15,7 +15,12 @@ describe('CorrugatedFormats List uses shared pagination', () => {
 	}
 
 	it('returnAll true: passes undefined limit and correct endpoint', async () => {
-		const self = makeThis({ returnAll: true, filters: { width: 100 }, sort: { sortBy: 'width', sortOrder: 'desc' }, page: 1 });
+		const self = makeThis({
+			returnAll: true,
+			filters: { width: 100 },
+			sort: { sortBy: 'width', sortOrder: 'desc' },
+			page: 1,
+		});
 		const items = [{ json: {} }];
 		const res = await (execute as any).call(self, items);
 		expect(pagination.listWithPagination).toHaveBeenCalledWith(self, '/api/corrugated-formats', {

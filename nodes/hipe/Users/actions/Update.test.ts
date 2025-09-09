@@ -18,13 +18,13 @@ describe('Update action', () => {
 		const items = [{ json: {} }];
 		const result = await execute.call(mockThis, items);
 		expect(mockThis.helpers.requestWithAuthentication).toHaveBeenCalledWith(
-				"hipeApi",
-				expect.objectContaining({
-					method: 'PATCH',
-					url: 'https://fake.api/api/users/1',
-					body: { firstName: 'Jane' },
-				}),
-			);
+			'hipeApi',
+			expect.objectContaining({
+				method: 'PATCH',
+				url: 'https://fake.api/api/users/1',
+				body: { firstName: 'Jane' },
+			}),
+		);
 		expect(result[0].json).toEqual({ updated: true });
 	});
 

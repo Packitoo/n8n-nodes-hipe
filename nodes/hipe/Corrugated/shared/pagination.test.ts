@@ -10,14 +10,12 @@ describe('Corrugated shared pagination', () => {
 			getCredentials: async () => ({ url: baseUrl }) as any,
 			helpers: {
 				requestWithAuthentication: {
-					call: jest
-						.fn()
-						.mockImplementation((_self: any, _credName: string, req: any) => {
-							qsCalls.push(req.qs);
-							const pageIndex = qsCalls.length - 1;
-							const resp = pages[Math.min(pageIndex, pages.length - 1)];
-							return Promise.resolve(resp);
-						}),
+					call: jest.fn().mockImplementation((_self: any, _credName: string, req: any) => {
+						qsCalls.push(req.qs);
+						const pageIndex = qsCalls.length - 1;
+						const resp = pages[Math.min(pageIndex, pages.length - 1)];
+						return Promise.resolve(resp);
+					}),
 				} as any,
 			} as any,
 		};
@@ -54,9 +52,7 @@ describe('Corrugated shared pagination', () => {
 	});
 
 	it('paged mode returns single page and preserves object response with data', async () => {
-		const pages = [
-			{ data: [{ id: 'a' }, { id: 'b' }], pagination: { pageCount: 10 } },
-		];
+		const pages = [{ data: [{ id: 'a' }, { id: 'b' }], pagination: { pageCount: 10 } }];
 		const { mockThis, getQsCalls } = makeMockExec(pages);
 
 		const result = await listWithPagination(mockThis, '/api/corrugated-formats', {

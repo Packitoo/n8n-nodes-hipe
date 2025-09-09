@@ -23,7 +23,12 @@ export function buildProperties() {
 				show: { resource: [RESOURCE] },
 			},
 			options: [
-				{ name: 'Create', value: 'create', description: 'Create a new status', action: 'Create a new status' },
+				{
+					name: 'Create',
+					value: 'create',
+					description: 'Create a new status',
+					action: 'Create a new status',
+				},
 				{
 					name: 'Get Many',
 					value: 'getMany',

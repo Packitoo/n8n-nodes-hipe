@@ -69,14 +69,14 @@ export async function execute(
 			}
 
 			// Single bulk POST to backend
-            const response = await this.helpers.requestWithAuthentication.call(this, 'hipeApi', {
-                method: 'POST',
-                url: `${baseUrl}/api/corrugated-material-composition-prices/bulk`,
-                body: inputData,
-                json: true,
-            });
+			const response = await this.helpers.requestWithAuthentication.call(this, 'hipeApi', {
+				method: 'POST',
+				url: `${baseUrl}/api/corrugated-material-composition-prices/bulk`,
+				body: inputData,
+				json: true,
+			});
 
-            returnData.push({ json: response });
+			returnData.push({ json: response });
 		} catch (error) {
 			if (
 				this.continueOnFail() ||

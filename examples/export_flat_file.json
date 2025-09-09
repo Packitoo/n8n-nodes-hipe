@@ -1,0 +1,265 @@
+{
+  "name": "Export flat file workflow",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -496,
+        96
+      ],
+      "id": "1117d2bf-37b0-4825-a4a4-6fc29363149b",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "resource": "export",
+        "operation": "get",
+        "id": "={{ $json.id }}"
+      },
+      "type": "CUSTOM.hipe",
+      "typeVersion": 1,
+      "position": [
+        -48,
+        96
+      ],
+      "id": "ad3d5f26-e891-42d8-b790-9f586e81d860",
+      "name": "Get a specific export"
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.status }}",
+                    "rightValue": 2,
+                    "operator": {
+                      "type": "number",
+                      "operation": "lte"
+                    },
+                    "id": "45a82ec2-554e-4d0d-a4eb-adaf7b53970a"
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "in_progress"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "aed56ad7-0860-4106-908f-e0c4a288d853",
+                    "leftValue": "={{ $json.status }}",
+                    "rightValue": 4,
+                    "operator": {
+                      "type": "number",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "success"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "6ff3ca67-3db2-4e3c-903b-e1be4add0a57",
+                    "leftValue": "={{ $json.status }}",
+                    "rightValue": 7,
+                    "operator": {
+                      "type": "number",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "fail"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.2,
+      "position": [
+        176,
+        0
+      ],
+      "id": "b5b26b93-1082-415f-9e0f-e6841a7543ac",
+      "name": "Switch1"
+    },
+    {
+      "parameters": {
+        "amount": 10
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        400,
+        192
+      ],
+      "id": "d5936f9e-7d61-439c-a86d-c89739b77383",
+      "name": "Wait1",
+      "webhookId": "8e541473-f3ed-44a4-9748-392b50f8c3d4"
+    },
+    {
+      "parameters": {
+        "resource": "export",
+        "operation": "download",
+        "id": "={{ $json.id }}"
+      },
+      "type": "CUSTOM.hipe",
+      "typeVersion": 1,
+      "position": [
+        400,
+        -32
+      ],
+      "id": "046c59ea-245c-48ee-b5fd-623c95197567",
+      "name": "Download file for a specific export"
+    },
+    {
+      "parameters": {
+        "resource": "export",
+        "operation": "create",
+        "type": 3
+      },
+      "type": "CUSTOM.hipe",
+      "typeVersion": 1,
+      "position": [
+        -272,
+        96
+      ],
+      "id": "5433bab6-060d-46aa-86f6-bb36383bb3c0",
+      "name": "Create a new export1"
+    },
+    {
+      "parameters": {
+        "operation": "write",
+        "fileName": "<YOUR_PATH>/filename.csv",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.readWriteFile",
+      "typeVersion": 1,
+      "position": [
+        624,
+        -32
+      ],
+      "id": "54f66809-d383-4638-a065-5680b2cb2d6e",
+      "name": "Read/Write Files from Disk1"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "Create a new export1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get a specific export": {
+      "main": [
+        [
+          {
+            "node": "Switch1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch1": {
+      "main": [
+        [
+          {
+            "node": "Wait1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Download file for a specific export",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait1": {
+      "main": [
+        [
+          {
+            "node": "Get a specific export",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Download file for a specific export": {
+      "main": [
+        [
+          {
+            "node": "Read/Write Files from Disk1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create a new export1": {
+      "main": [
+        [
+          {
+            "node": "Get a specific export",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "c8bc0dc9-baa3-440a-b2bd-fdf732c51c5a",
+  "meta": {
+    "instanceId": "644d8b89e4ed4144c3acff7f241bb9325c186cbbe6fecf46363639e8a01a4c9e"
+  },
+  "id": "XIKVbwTzvg1l9Bd0",
+  "tags": []
+}

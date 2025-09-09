@@ -23,6 +23,8 @@ import * as companies from './Companies/actions';
 import * as addresses from './Addresses/actions';
 import * as statuses from './Statuses/actions';
 import * as pipelines from './Pipelines/actions';
+import * as importsResource from './Imports/actions';
+import * as exportsResource from './Exports/actions';
 
 export const EMBEDDED_RESOURCES = [
 	companies,
@@ -31,6 +33,8 @@ export const EMBEDDED_RESOURCES = [
 	projects,
 	statuses,
 	pipelines,
+	importsResource,
+	exportsResource,
 	corrugatedMaterials,
 	corrugatedMaterialCompositions,
 	corrugatedMaterialCompositionPrices,

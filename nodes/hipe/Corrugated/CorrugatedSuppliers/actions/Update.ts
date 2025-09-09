@@ -67,15 +67,15 @@ export async function execute(
 	this: IExecuteFunctions,
 	items: INodeExecutionData[],
 ): Promise<INodeExecutionData[]> {
-    const returnData: INodeExecutionData[] = [];
+	const returnData: INodeExecutionData[] = [];
 
-    // Get credentials and baseUrl
-    const credentials = await this.getCredentials('hipeApi');
-    let baseUrl = credentials.url;
-    if (typeof baseUrl !== 'string') {
-        throw new Error('HIPE base URL is not a string');
-    }
-    baseUrl = baseUrl.replace(/\/$/, '');
+	// Get credentials and baseUrl
+	const credentials = await this.getCredentials('hipeApi');
+	let baseUrl = credentials.url;
+	if (typeof baseUrl !== 'string') {
+		throw new Error('HIPE base URL is not a string');
+	}
+	baseUrl = baseUrl.replace(/\/$/, '');
 
 	// Process each item
 	for (let i = 0; i < items.length; i++) {
@@ -84,22 +84,22 @@ export async function execute(
 			const supplierId = this.getNodeParameter('supplierId', i) as string;
 			const updateFields = this.getNodeParameter('updateFields', i, {}) as ICorrugatedSupplier;
 
-            const response = await this.helpers.requestWithAuthentication.call(this, 'hipeApi', {
-                method: 'PATCH',
-                url: `${baseUrl}/api/corrugated-suppliers/${supplierId}`,
-                body: updateFields,
-                json: true,
-            });
+			const response = await this.helpers.requestWithAuthentication.call(this, 'hipeApi', {
+				method: 'PATCH',
+				url: `${baseUrl}/api/corrugated-suppliers/${supplierId}`,
+				body: updateFields,
+				json: true,
+			});
 
-            returnData.push({ json: response as ICorrugatedSupplier });
-        } catch (error) {
-            if (this.continueOnFail()) {
-                returnData.push({ json: { error: (error as Error).message } });
-                continue;
-            }
-            throw error;
-        }
-    }
+			returnData.push({ json: response as ICorrugatedSupplier });
+		} catch (error) {
+			if (this.continueOnFail()) {
+				returnData.push({ json: { error: (error as Error).message } });
+				continue;
+			}
+			throw error;
+		}
+	}
 
 	return returnData;
 }

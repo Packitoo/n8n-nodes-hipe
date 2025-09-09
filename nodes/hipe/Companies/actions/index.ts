@@ -29,8 +29,18 @@ export function buildProperties() {
 				show: { resource: [RESOURCE] },
 			},
 			options: [
-				{ name: 'Create', value: 'create', description: 'Create a new company', action: 'Create a new company' },
-				{ name: 'Get', value: 'get', description: 'Get a specific company', action: 'Get a specific company' },
+				{
+					name: 'Create',
+					value: 'create',
+					description: 'Create a new company',
+					action: 'Create a new company',
+				},
+				{
+					name: 'Get',
+					value: 'get',
+					description: 'Get a specific company',
+					action: 'Get a specific company',
+				},
 				{
 					name: 'Get Addresses',
 					value: 'getAddresses',
