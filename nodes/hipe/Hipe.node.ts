@@ -25,6 +25,7 @@ import * as statuses from './Statuses/actions';
 import * as pipelines from './Pipelines/actions';
 import * as importsResource from './Imports/actions';
 import * as exportsResource from './Exports/actions';
+import * as articles from './Articles/actions';
 
 export const EMBEDDED_RESOURCES = [
 	companies,
@@ -42,6 +43,7 @@ export const EMBEDDED_RESOURCES = [
 	corrugatedSuppliers,
 	corrugatedFlutes,
 	corrugatedLiners,
+	articles,
 ];
 
 // Runtime check for resource registration
