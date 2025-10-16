@@ -57,7 +57,7 @@ export async function execute(
 	baseUrl = baseUrl.replace(/\/$/, '');
 
 	// Process each input item
-	for (let i = 0; i <items.length; i++) {
+	for (let i = 0; i < items.length; i++) {
 		try {
 			const inputDataField = this.getNodeParameter('inputDataField', i) as string;
 			const inputData = items[i].json[inputDataField];

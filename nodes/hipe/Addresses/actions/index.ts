@@ -24,8 +24,18 @@ export function buildProperties() {
 				show: { resource: [RESOURCE] },
 			},
 			options: [
-				{ name: 'Create', value: 'create', description: 'Create a new address', action: 'Create a new address' },
-				{ name: 'Get', value: 'get', description: 'Get a specific address', action: 'Get a specific address' },
+				{
+					name: 'Create',
+					value: 'create',
+					description: 'Create a new address',
+					action: 'Create a new address',
+				},
+				{
+					name: 'Get',
+					value: 'get',
+					description: 'Get a specific address',
+					action: 'Get a specific address',
+				},
 				// { name: 'Get Many', value: 'getMany', description: 'Get multiple addresses', action: 'Get many' }, // TODO: implement backend
 				{
 					name: 'Update',

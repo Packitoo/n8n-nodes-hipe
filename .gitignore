@@ -16,3 +16,5 @@ p.py
 .env
 docker-compose.yml
 init-data.sh
+
+openapi-extract

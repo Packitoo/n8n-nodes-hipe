@@ -15,7 +15,12 @@ describe('CorrugatedLiners List uses shared pagination', () => {
 	}
 
 	it('returnAll true: passes undefined limit and correct endpoint', async () => {
-		const self = makeThis({ returnAll: true, filters: { name: 'K', weight: 100 }, sort: { sortBy: 'name', sortOrder: 'desc' }, page: 1 });
+		const self = makeThis({
+			returnAll: true,
+			filters: { name: 'K', weight: 100 },
+			sort: { sortBy: 'name', sortOrder: 'desc' },
+			page: 1,
+		});
 		const res = await (execute as any).call(self, [{ json: {} }]);
 		expect(pagination.listWithPagination).toHaveBeenCalledWith(self, '/api/corrugated-liners', {
 			returnAll: true,

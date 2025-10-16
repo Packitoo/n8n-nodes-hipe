@@ -19,7 +19,8 @@ describe('Users Search action', () => {
 		};
 		const items = [{ json: {} }];
 		const result = await (execute as any).call(mockThis, items);
-		const call = ((mockThis.helpers as any).requestWithAuthentication.call as jest.Mock).mock.calls[0];
+		const call = ((mockThis.helpers as any).requestWithAuthentication.call as jest.Mock).mock
+			.calls[0];
 		expect(call[0]).toBe(mockThis);
 		expect(call[1]).toBe('hipeApi');
 		expect(call[2]).toMatchObject({
