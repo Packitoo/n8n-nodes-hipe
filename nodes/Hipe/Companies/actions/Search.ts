@@ -50,8 +50,7 @@ export async function execute(
 	baseUrl = baseUrl.replace(/\/$/, '');
 	for (let i = 0; i < items.length; i++) {
 		try {
-			const returnAll = this.getNodeParameter('returnAll', i) as boolean;
-			const limit = returnAll ? undefined : (this.getNodeParameter('limit', i, 50) as number);
+			const limit = this.getNodeParameter('limit', i, 50) as number;
 			const search = this.getNodeParameter('search', i, '') as string;
 
 			const response = await this.helpers.requestWithAuthentication.call(this, 'hipeApi', {
