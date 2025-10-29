@@ -62,6 +62,12 @@ export function buildProperties() {
 					action: 'Link an existing contact to a company',
 				},
 				{
+					name: 'Search',
+					value: 'search',
+					description: 'Search for companies',
+					action: 'Search for companies',
+				},
+				{
 					name: 'Unlink Contact',
 					value: 'unlinkContact',
 					description: 'Unlink a contact from a company',
@@ -72,12 +78,6 @@ export function buildProperties() {
 					value: 'update',
 					description: 'Update a specific company',
 					action: 'Update a specific company',
-				},
-				{
-					name: 'Search',
-					value: 'search',
-					description: 'Search for companies',
-					action: 'Search for companies',
 				},
 				// { name: 'Create Address', value: 'createAddress', description: 'Create a new address for a company', action: 'Create address' },
 			],
