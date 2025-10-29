@@ -5,6 +5,7 @@ import * as update from './Update';
 import * as linkContact from './linkContact';
 import * as unlinkContact from './unlinkContact';
 import * as getAddresses from './getAddresses';
+import * as search from './Search';
 
 export const RESOURCE = 'company';
 
@@ -16,6 +17,7 @@ export const ACTIONS = {
 	linkContact: linkContact,
 	unlinkContact: unlinkContact,
 	getAddresses: getAddresses,
+	search: search,
 };
 
 // Factory function to build all user properties for node usage
@@ -60,6 +62,12 @@ export function buildProperties() {
 					action: 'Link an existing contact to a company',
 				},
 				{
+					name: 'Search',
+					value: 'search',
+					description: 'Search for companies',
+					action: 'Search for companies',
+				},
+				{
 					name: 'Unlink Contact',
 					value: 'unlinkContact',
 					description: 'Unlink a contact from a company',
@@ -83,6 +91,7 @@ export function buildProperties() {
 		...linkContact.properties,
 		...unlinkContact.properties,
 		...getAddresses.properties,
+		...search.properties,
 	];
 	return [RESOURCE, properties];
 }
