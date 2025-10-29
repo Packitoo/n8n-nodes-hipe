@@ -63,12 +63,6 @@ export async function execute(
 					s: search,
 				}
 			});
-			
-			// const response = await listWithPaginationFlat(this, '/api/companies', {
-			// 	returnAll,
-			// 	limit,
-			// 	s: search,
-			// });
 			returnData.push({ json: response });
 		} catch (error) {
 			if (this.continueOnFail()) {
