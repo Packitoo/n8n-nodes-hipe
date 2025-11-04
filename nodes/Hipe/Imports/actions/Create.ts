@@ -1,4 +1,4 @@
-import { IDataObject, IExecuteFunctions } from 'n8n-workflow';
+import { IDataObject, IExecuteFunctions, sleep } from 'n8n-workflow';
 import { INodeExecutionData, INodeProperties } from 'n8n-workflow';
 
 // Properties for the Create Import
@@ -97,6 +97,7 @@ export async function execute(
 			});
 			const data = typeof response === 'string' ? JSON.parse(response) : (response as IDataObject);
 			returnData.push({ json: data });
+			sleep(500);
 		} catch (error: any) {
 			if (this.continueOnFail()) {
 				returnData.push({ json: { error: error.message } });
@@ -105,6 +106,5 @@ export async function execute(
 			throw error;
 		}
 	}
-
 	return returnData;
 }

@@ -1,4 +1,4 @@
-import { IExecuteFunctions } from 'n8n-workflow';
+import { IExecuteFunctions, sleep } from 'n8n-workflow';
 import { INodeExecutionData, INodeProperties } from 'n8n-workflow';
 import { listWithPagination } from '../../shared/pagination';
 
@@ -163,6 +163,7 @@ export async function execute(
 			}
 			throw error;
 		}
+		sleep(500);
 	}
 	return returnData;
 }

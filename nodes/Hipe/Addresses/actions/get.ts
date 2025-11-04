@@ -1,4 +1,4 @@
-import { IExecuteFunctions, INodeExecutionData, INodeProperties } from 'n8n-workflow';
+import { IExecuteFunctions, INodeExecutionData, INodeProperties, sleep } from 'n8n-workflow';
 
 export const properties: INodeProperties[] = [
 	{
@@ -66,6 +66,7 @@ export async function execute(
 			}
 			throw error;
 		}
+		sleep(500);
 	}
 	return returnData;
 }
