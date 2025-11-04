@@ -1,4 +1,4 @@
-import { IExecuteFunctions } from 'n8n-workflow';
+import { IExecuteFunctions, sleep } from 'n8n-workflow';
 import { INodeExecutionData, INodeProperties } from 'n8n-workflow';
 
 // Properties for the Delete operation
@@ -54,7 +54,7 @@ export async function execute(
 			}
 			throw error;
 		}
+		sleep(500);
 	}
-
 	return returnData;
 }
