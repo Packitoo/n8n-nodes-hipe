@@ -1,5 +1,5 @@
 import { IExecuteFunctions, sleep } from 'n8n-workflow';
-import { INodeExecutionData, INodeProperties } from 'n8n-workflow';
+import { INodeExecutionData, INodeProperties, IDataObject } from 'n8n-workflow';
 
 // Properties for the Create operation
 export const properties: INodeProperties[] = [
@@ -130,7 +130,13 @@ export async function execute(
 		try {
 			// Get input data
 			const billedAmount = this.getNodeParameter('billedAmount', i) as number;
-			const additionalFields = this.getNodeParameter('additionalFields', i, {}) as object;
+			const rawAdditionalFields = this.getNodeParameter('additionalFields', i, {}) as IDataObject;
+			const additionalFields: IDataObject = {};
+			for (const [key, value] of Object.entries(rawAdditionalFields)) {
+				if (value !== null) {
+					additionalFields[key] = value;
+				}
+			}
 
 			// Make API call to create the order
 			const response = await this.helpers.requestWithAuthentication.call(this, 'hipeApi', {
