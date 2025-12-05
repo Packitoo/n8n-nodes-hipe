@@ -1,6 +1,6 @@
 {
 	"name": "@packitoo/n8n-nodes-hipe",
-	"version": "0.3.2-beta.2",
+	"version": "0.3.2-beta.3",
 	"description": "Official N8N Nodes for HIPE by Packitoo",
 	"keywords": [
 		"n8n-community-node-package",
