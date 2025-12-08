@@ -98,6 +98,13 @@ export const properties: INodeProperties[] = [
 		},
 		options: [
 			{
+				displayName: 'Collaboration IDs',
+				name: 'collaborationIds',
+				type: 'json',
+				default: '',
+				description: 'Array of collaboration UUIDs to associate with the contact',
+			},
+			{
 				displayName: 'Job Title',
 				name: 'job',
 				type: 'string',
@@ -145,10 +152,14 @@ export async function execute(
 			const additionalFields = (
 				additionalFieldsRaw && typeof additionalFieldsRaw === 'object' ? additionalFieldsRaw : {}
 			) as {
+				collaborationIds?: string[];
 				job?: string;
 				customFields?: Record<string, any>;
 			};
 			// Fallback to possible top-level params if tests/mocks provide them
+			const collaborationIds = ((additionalFields.collaborationIds as string[]) ||
+				(this.getNodeParameter('collaborationIds', i, []) as string[]) ||
+				[]) as string[];
 			const job =
 				(additionalFields.job as string) || (this.getNodeParameter('job', i, '') as string) || '';
 			const customFields = ((additionalFields.customFields as object) ||
@@ -165,6 +176,7 @@ export async function execute(
 				mobilePhone,
 				job,
 				customFields,
+				...(collaborationIds.length > 0 && { collaborationIds }),
 			};
 			// Make API call to create the corrugated format
 			const response = await this.helpers.requestWithAuthentication.call(this, 'hipeApi', {
