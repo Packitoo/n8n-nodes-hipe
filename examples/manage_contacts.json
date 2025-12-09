@@ -114,7 +114,7 @@
         },
         "resource": "user"
       },
-      "type": "CUSTOM.hipe",
+      "type": "@packitoo/n8n-nodes-hipe.hipe",
       "typeVersion": 1,
       "position": [880, -60],
       "id": "c4be2ef2-ce69-4928-a78a-1e593ed7dfc9",
@@ -128,7 +128,7 @@
         "sort": {},
         "resource": "user"
       },
-      "type": "CUSTOM.hipe",
+      "type": "@packitoo/n8n-nodes-hipe.hipe",
       "typeVersion": 1,
       "position": [880, 140],
       "id": "4ca8a036-5ae6-4dab-8f86-ebcba9725c45",
@@ -215,7 +215,7 @@
         },
         "resource": "user"
       },
-      "type": "CUSTOM.hipe",
+      "type": "@packitoo/n8n-nodes-hipe.hipe",
       "typeVersion": 1,
       "position": [1320, 40],
       "id": "9d1224be-a598-4312-ad7a-d40e8dbad058",
@@ -233,7 +233,7 @@
         },
         "resource": "user"
       },
-      "type": "CUSTOM.hipe",
+      "type": "@packitoo/n8n-nodes-hipe.hipe",
       "typeVersion": 1,
       "position": [1320, 240],
       "id": "60ef7533-a0a9-4144-9603-30178c45ada0",

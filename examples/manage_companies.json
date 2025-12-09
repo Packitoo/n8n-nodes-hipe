@@ -116,7 +116,7 @@
         },
         "resource": "company"
       },
-      "type": "CUSTOM.hipe",
+      "type": "@packitoo/n8n-nodes-hipe.hipe",
       "typeVersion": 1,
       "position": [880, -60],
       "id": "3d4e5f60-7172-8394-a5b6-c7d8e9f0123a",
@@ -124,13 +124,12 @@
     },
     {
       "parameters": {
-        "filters": {
-          "search": "={{ $json.externalId }}"
-        },
-        "sort": {},
-        "resource": "company"
+        "resource": "company",
+        "operation": "search",
+        "search": "={{ JSON.stringify({ externalId: $json.externalId }) }}",
+        "limit": 10
       },
-      "type": "CUSTOM.hipe",
+      "type": "@packitoo/n8n-nodes-hipe.hipe",
       "typeVersion": 1,
       "position": [880, 140],
       "id": "4e5f6071-7283-8495-a6b7-c8d9e0f1a2b3",
@@ -217,7 +216,7 @@
         },
         "resource": "company"
       },
-      "type": "CUSTOM.hipe",
+      "type": "@packitoo/n8n-nodes-hipe.hipe",
       "typeVersion": 1,
       "position": [1320, 40],
       "id": "829395a6-b7c8-d9e0-f1a2-b3c4d5e6f708",
@@ -240,7 +239,7 @@
         },
         "resource": "company"
       },
-      "type": "CUSTOM.hipe",
+      "type": "@packitoo/n8n-nodes-hipe.hipe",
       "typeVersion": 1,
       "position": [1320, 240],
       "id": "9395a6b7-c8d9-e0f1-a2b3-c4d5e6f70819",

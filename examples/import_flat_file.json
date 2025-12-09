@@ -41,7 +41,7 @@
         "type": 3,
         "delimiter": ";"
       },
-      "type": "CUSTOM.hipe",
+      "type": "@packitoo/n8n-nodes-hipe.hipe",
       "typeVersion": 1,
       "position": [
         -1216,
@@ -56,7 +56,7 @@
         "operation": "get",
         "id": "={{ $json.id }}"
       },
-      "type": "CUSTOM.hipe",
+      "type": "@packitoo/n8n-nodes-hipe.hipe",
       "typeVersion": 1,
       "position": [
         -992,

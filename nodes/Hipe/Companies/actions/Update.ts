@@ -58,6 +58,13 @@ export const properties: INodeProperties[] = [
 				description: 'Add one or more Collaborator IDs',
 			},
 			{
+				displayName: 'Currency ID',
+				name: 'currencyId',
+				type: 'string',
+				default: '',
+				description: 'Currency ID of the company',
+			},
+			{
 				displayName: 'Custom Fields',
 				name: 'customFields',
 				type: 'json',

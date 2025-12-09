@@ -32,6 +32,13 @@ export const properties: INodeProperties[] = [
 		},
 		options: [
 			{
+				displayName: 'Collaboration IDs',
+				name: 'collaborationIds',
+				type: 'json',
+				default: '',
+				description: 'Array of collaboration UUIDs to associate with the user',
+			},
+			{
 				displayName: 'Custom Fields',
 				name: 'customFields',
 				type: 'json',

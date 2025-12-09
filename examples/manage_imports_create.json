@@ -20,7 +20,7 @@
         "binaryPropertyName": "data",
         "resource": "import"
       },
-      "type": "CUSTOM.hipe",
+      "type": "@packitoo/n8n-nodes-hipe.hipe",
       "typeVersion": 1,
       "position": [260, 40],
       "id": "22222222-2222-2222-2222-222222222222",
