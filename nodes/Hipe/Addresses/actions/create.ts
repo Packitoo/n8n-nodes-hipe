@@ -141,6 +141,19 @@ export const properties: INodeProperties[] = [
 		},
 	},
 	{
+		displayName: 'External ID',
+		name: 'externalId',
+		type: 'string',
+		default: '',
+		description: 'External ID of the address',
+		displayOptions: {
+			show: {
+				resource: ['address'],
+				operation: ['create'],
+			},
+		},
+	},
+	{
 		displayName: 'Options',
 		name: 'options',
 		type: 'collection',
@@ -187,6 +200,7 @@ export async function execute(
 		) as string;
 		const state = this.getNodeParameter('state', i) as string;
 		const zipCode = this.getNodeParameter('zipCode', i) as string;
+		const externalId = this.getNodeParameter('externalId', i) as string;
 		try {
 			// Get input data
 			// const options = this.getNodeParameter('options', i, {}) as { includeDetails?: boolean };
@@ -207,6 +221,7 @@ export async function execute(
 					secondComplementaryAddress,
 					state,
 					zipCode,
+					externalId
 				},
 			});
 
