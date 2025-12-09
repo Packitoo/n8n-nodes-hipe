@@ -95,4 +95,35 @@ describe('Address Search', () => {
 			}
 		);
 	});
+
+	it('should handle invalid base URL', async () => {
+		mockExecuteFunctions.getCredentials = jest.fn().mockResolvedValue({
+			url: 'invalid-url',
+		});
+
+		mockExecuteFunctions.getNodeParameter
+			.mockReturnValueOnce(50) // limit
+			.mockReturnValueOnce('test'); // search
+
+		await expect(
+			search.execute.call(mockExecuteFunctions, [{ json: {} }])
+		).rejects.toThrow('HIPE base URL is not set or is invalid');
+	});
+
+	it('should handle errors and push error object when continueOnFail is true', async () => {
+		mockExecuteFunctions.getNodeParameter
+			.mockReturnValueOnce(50) // limit
+			.mockReturnValueOnce('test'); // search
+
+		mockExecuteFunctions.continueOnFail = jest.fn().mockReturnValue(true);
+
+		(mockExecuteFunctions.helpers.requestWithAuthentication as jest.Mock).mockRejectedValue(
+			new Error('API Error')
+		);
+
+		const result = await search.execute.call(mockExecuteFunctions, [{ json: {} }]);
+
+		expect(result).toHaveLength(1);
+		expect(result[0].json).toEqual({ error: 'API Error' });
+	});
 });
