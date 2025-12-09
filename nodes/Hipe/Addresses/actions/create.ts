@@ -5,9 +5,8 @@ export const properties: INodeProperties[] = [
 		displayName: 'Company ID',
 		name: 'companyId',
 		type: 'string',
-		required: true,
 		default: '',
-		description: 'ID of the company to retrieve',
+		description: 'ID of the company (optional)',
 		displayOptions: {
 			show: {
 				resource: ['address'],
@@ -202,13 +201,10 @@ export async function execute(
 		const zipCode = this.getNodeParameter('zipCode', i) as string;
 		const externalId = this.getNodeParameter('externalId', i) as string;
 		try {
-			// Get input data
-			// const options = this.getNodeParameter('options', i, {}) as { includeDetails?: boolean };
-
-			// Make API call to get the corrugated format
+			// Make API call to create address
 			const response = await this.helpers.requestWithAuthentication.call(this, 'hipeApi', {
 				method: 'POST',
-				url: `${baseUrl}/api/companies/${companyId}/addresses`,
+				url: `${baseUrl}/api/addresses`,
 				json: true,
 				body: {
 					companyId,
