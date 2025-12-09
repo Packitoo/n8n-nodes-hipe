@@ -69,7 +69,7 @@ describe('Currencies create action', () => {
 		expect(mockThis.helpers.requestWithAuthentication.call).toHaveBeenCalledWith(
 			mockThis,
 			'hipeApi',
-			expect.objectContaining({
+			{
 				method: 'POST',
 				url: 'https://fake.api/api/currencies',
 				json: true,
@@ -77,10 +77,12 @@ describe('Currencies create action', () => {
 					name: 'EURO',
 					code: 'EUR',
 					symbol: '€',
+					countryCode: '',
+					externalId: '',
 					enable: true,
 					default: false,
 				},
-			}),
+			},
 		);
 		expect(result[0].json).toEqual({ created: true });
 	});
