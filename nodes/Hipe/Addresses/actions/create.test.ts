@@ -22,6 +22,7 @@ describe('Addresses create action', () => {
 					state: 'IDF',
 					zipCode: '75000',
 					externalId: '',
+					asyncMode: false,
 				};
 				return params[name] !== undefined ? params[name] : defaultValue;
 			},
@@ -49,6 +50,7 @@ describe('Addresses create action', () => {
 					zipCode: '75000',
 					externalId: '',
 				},
+				headers: {},
 			},
 		);
 		expect(result[0].json).toEqual({ id: 'addr-1', created: true });
@@ -73,6 +75,7 @@ describe('Addresses create action', () => {
 					state: 'IDF',
 					zipCode: '75000',
 					externalId: '',
+					asyncMode: false,
 				};
 				return params[name] !== undefined ? params[name] : defaultValue;
 			},
@@ -104,6 +107,7 @@ describe('Addresses create action', () => {
 					state: 'IDF',
 					zipCode: '75000',
 					externalId: 'ext-123',
+					asyncMode: false,
 				};
 				return params[name] !== undefined ? params[name] : defaultValue;
 			},
@@ -131,8 +135,104 @@ describe('Addresses create action', () => {
 					zipCode: '75000',
 					externalId: 'ext-123',
 				},
+				headers: {},
 			}),
 		);
 		expect(result[0].json).toEqual({ id: 'addr-1', externalId: 'ext-123' });
+	});
+
+	it('should add Prefer: respond-async header when asyncMode is true', async () => {
+		const mockThis = {
+			getCredentials: async () => ({ url: 'https://fake.api' }),
+			helpers: {
+				requestWithAuthentication: {
+					call: jest.fn().mockResolvedValue({ id: 'job-123', status: 'pending', entity: 'address' }),
+				},
+			},
+			getNodeParameter: (name: string, i: number, defaultValue?: any) => {
+				const params: { [key: string]: any } = {
+					companyId: 'company-1',
+					address: '123 Main St',
+					city: 'Paris',
+					country: 'France',
+					firstComplementaryAddress: 'Apt 1',
+					name: 'HQ',
+					position: 1,
+					secondComplementaryAddress: 'Building B',
+					state: 'IDF',
+					zipCode: '75000',
+					externalId: '',
+					asyncMode: true,
+				};
+				return params[name] !== undefined ? params[name] : defaultValue;
+			},
+			continueOnFail: () => false,
+		} as any;
+		const items = [{ json: {} }];
+		const result = await execute.call(mockThis, items);
+		expect(mockThis.helpers.requestWithAuthentication.call).toHaveBeenCalledWith(
+			mockThis,
+			'hipeApi',
+			expect.objectContaining({
+				headers: { 'Prefer': 'respond-async' },
+			}),
+		);
+		expect(result[0].json).toEqual({ id: 'job-123', status: 'pending', entity: 'address' });
+	});
+
+	it('should handle base URL with trailing slash', async () => {
+		const mockThis = {
+			getCredentials: async () => ({ url: 'https://fake.api/' }),
+			helpers: {
+				requestWithAuthentication: {
+					call: jest.fn().mockResolvedValue({ id: 'addr-1', created: true }),
+				},
+			},
+			getNodeParameter: (name: string, i: number, defaultValue?: any) => {
+				const params: { [key: string]: any } = {
+					companyId: 'company-1',
+					address: '123 Main St',
+					city: 'Paris',
+					country: 'France',
+					firstComplementaryAddress: 'Apt 1',
+					name: 'HQ',
+					position: 1,
+					secondComplementaryAddress: 'Building B',
+					state: 'IDF',
+					zipCode: '75000',
+					externalId: '',
+					asyncMode: false,
+				};
+				return params[name] !== undefined ? params[name] : defaultValue;
+			},
+			continueOnFail: () => false,
+		} as any;
+		const items = [{ json: {} }];
+		const result = await execute.call(mockThis, items);
+		expect(mockThis.helpers.requestWithAuthentication.call).toHaveBeenCalledWith(
+			mockThis,
+			'hipeApi',
+			expect.objectContaining({
+				url: 'https://fake.api/api/addresses',
+			}),
+		);
+		expect(result[0].json).toEqual({ id: 'addr-1', created: true });
+	});
+
+	it('should throw error when base URL is not a string', async () => {
+		const mockThis = {
+			getCredentials: async () => ({ url: 123 }),
+			helpers: {
+				requestWithAuthentication: {
+					call: jest.fn(),
+				},
+			},
+			getNodeParameter: (name: string, i: number, defaultValue?: any) => {
+				return defaultValue;
+			},
+			continueOnFail: () => false,
+		} as any;
+		const items = [{ json: {} }];
+		await expect(execute.call(mockThis, items)).rejects.toThrow('HIPE base URL is not a string');
 	});
 });
