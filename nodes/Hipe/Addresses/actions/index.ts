@@ -1,5 +1,4 @@
 import * as create from './create';
-import * as createBulk from './createBulk';
 import * as get from './get';
 import * as list from './list';
 import * as update from './update';
@@ -10,7 +9,6 @@ export const RESOURCE = 'address';
 
 export const ACTIONS = {
 	create: create,
-	createBulk: createBulk,
 	get: get,
 	getMany: list,
 	update: update,
@@ -33,12 +31,6 @@ export function buildProperties() {
 					value: 'create',
 					description: 'Create a new address',
 					action: 'Create a new address',
-				},
-				{
-					name: 'Create Bulk',
-					value: 'createBulk',
-					description: 'Create multiple addresses in bulk',
-					action: 'Create multiple addresses in bulk',
 				},
 				{
 					name: 'Delete',
@@ -70,7 +62,6 @@ export function buildProperties() {
 			noDataExpression: true,
 		},
 		...create.properties,
-		...createBulk.properties,
 		...get.properties,
 		...list.properties,
 		...search.properties,
