@@ -1,4 +1,5 @@
 import { IExecuteFunctions, INodeExecutionData, INodeProperties, sleep } from 'n8n-workflow';
+import { getAsyncHeaders } from '../../utils/asyncMode';
 
 export const properties: INodeProperties[] = [
 	{
@@ -9,6 +10,19 @@ export const properties: INodeProperties[] = [
 		required: true,
 		default: {},
 		description: 'ID of the address to delete',
+		displayOptions: {
+			show: {
+				resource: ['address'],
+				operation: ['delete'],
+			},
+		},
+	},
+	{
+		displayName: 'Async Mode',
+		name: 'asyncMode',
+		type: 'boolean',
+		default: false,
+		description: 'Whether to use asynchronous processing (returns a job ID instead of waiting for completion)',
 		displayOptions: {
 			show: {
 				resource: ['address'],
@@ -35,12 +49,14 @@ export async function execute(
 	for (let i = 0; i < items.length; i++) {
 		try {
 			const id = this.getNodeParameter('id', i) as string;
+			const asyncMode = this.getNodeParameter('asyncMode', i, false) as boolean;
 
 			// Make API call to get the corrugated format
 			const response = await this.helpers.requestWithAuthentication.call(this, 'hipeApi', {
 				method: 'DELETE',
 				url: `${baseUrl}/api/addresses/${id}`,
 				json: true,
+				headers: getAsyncHeaders(asyncMode),
 			});
 
 			returnData.push({ json: response });
