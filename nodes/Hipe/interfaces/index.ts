@@ -144,3 +144,20 @@ export interface IStatus {
 	additionalFields: object;
 	[key: string]: any;
 }
+
+// Async job interfaces
+export interface CreateJobData {
+	entity: string;
+	method: string;
+	args: any[];
+	userId?: string;
+	controller: string;
+}
+
+export interface JobResult {
+	id: string;
+	status: string;
+	entity?: string;
+	entityId?: string;
+	error?: string;
+}

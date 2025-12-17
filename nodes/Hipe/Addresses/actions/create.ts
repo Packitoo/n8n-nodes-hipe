@@ -1,4 +1,5 @@
 import { IExecuteFunctions, INodeExecutionData, INodeProperties, sleep } from 'n8n-workflow';
+import { getAsyncHeaders } from '../../utils/asyncMode';
 
 export const properties: INodeProperties[] = [
 	{
@@ -166,6 +167,19 @@ export const properties: INodeProperties[] = [
 			},
 		},
 	},
+	{
+		displayName: 'Async Mode',
+		name: 'asyncMode',
+		type: 'boolean',
+		default: false,
+		description: 'Whether to use asynchronous processing (returns a job ID instead of waiting for completion)',
+		displayOptions: {
+			show: {
+				resource: ['address'],
+				operation: ['create'],
+			},
+		},
+	},
 ];
 
 export async function execute(
@@ -200,6 +214,7 @@ export async function execute(
 		const state = this.getNodeParameter('state', i) as string;
 		const zipCode = this.getNodeParameter('zipCode', i) as string;
 		const externalId = this.getNodeParameter('externalId', i) as string;
+		const asyncMode = this.getNodeParameter('asyncMode', i, false) as boolean;
 		try {
 			// Make API call to create address
 			const response = await this.helpers.requestWithAuthentication.call(this, 'hipeApi', {
@@ -219,6 +234,7 @@ export async function execute(
 					zipCode,
 					externalId
 				},
+				headers: getAsyncHeaders(asyncMode),
 			});
 
 			returnData.push({ json: response });
