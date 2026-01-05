@@ -1,4 +1,5 @@
 import { IExecuteFunctions, INodeExecutionData, INodeProperties, sleep } from 'n8n-workflow';
+import { getAsyncHeaders } from '../../utils/asyncMode';
 
 export const properties: INodeProperties[] = [
 	{
@@ -145,12 +146,38 @@ export const properties: INodeProperties[] = [
 		},
 	},
 	{
+		displayName: 'External ID',
+		name: 'externalId',
+		type: 'string',
+		default: '',
+		description: 'External ID of the address',
+		displayOptions: {
+			show: {
+				resource: ['address'],
+				operation: ['update'],
+			},
+		},
+	},
+	{
 		displayName: 'Options',
 		name: 'options',
 		type: 'collection',
 		options: [],
 		placeholder: 'Add Option',
 		default: {},
+		displayOptions: {
+			show: {
+				resource: ['address'],
+				operation: ['update'],
+			},
+		},
+	},
+	{
+		displayName: 'Async Mode',
+		name: 'asyncMode',
+		type: 'boolean',
+		default: false,
+		description: 'Whether to use asynchronous processing (returns a job ID instead of waiting for completion)',
 		displayOptions: {
 			show: {
 				resource: ['address'],
@@ -193,6 +220,8 @@ export async function execute(
 		) as string;
 		const state = this.getNodeParameter('state', i) as string;
 		const zipCode = this.getNodeParameter('zipCode', i) as string;
+		const externalId = this.getNodeParameter('externalId', i) as string;
+		const asyncMode = this.getNodeParameter('asyncMode', i, false) as boolean;
 		try {
 			// Get input data
 			// const options = this.getNodeParameter('options', i, {}) as { includeDetails?: boolean };
@@ -213,7 +242,9 @@ export async function execute(
 					...(secondComplementaryAddress ? { secondComplementaryAddress } : {}),
 					...(state ? { state } : {}),
 					...(zipCode ? { zipCode } : {}),
+					...(externalId ? { externalId } : {}),
 				},
+				headers: getAsyncHeaders(asyncMode),
 			});
 
 			returnData.push({ json: response });

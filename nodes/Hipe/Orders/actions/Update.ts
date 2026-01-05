@@ -1,5 +1,5 @@
 import { IExecuteFunctions, sleep } from 'n8n-workflow';
-import { INodeExecutionData, INodeProperties } from 'n8n-workflow';
+import { INodeExecutionData, INodeProperties, IDataObject } from 'n8n-workflow';
 
 // Properties for the Update operation
 export const properties: INodeProperties[] = [
@@ -138,7 +138,13 @@ export async function execute(
 		try {
 			// Get input data
 			const orderId = this.getNodeParameter('id', i) as string;
-			const updateFields = this.getNodeParameter('updateFields', i, {}) as object;
+			const rawUpdateFields = this.getNodeParameter('updateFields', i, {}) as IDataObject;
+			const updateFields: IDataObject = {};
+			for (const [key, value] of Object.entries(rawUpdateFields)) {
+				if (value !== null) {
+					updateFields[key] = value;
+				}
+			}
 
 			// Make API call to update the order
 			const response = await this.helpers.requestWithAuthentication.call(this, 'hipeApi', {
