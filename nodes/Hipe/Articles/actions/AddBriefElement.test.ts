@@ -44,6 +44,7 @@ describe('Articles AddBriefElement action', () => {
 					lengthDimension: 100,
 					widthDimension: 50,
 					heightDimension: 30,
+					alias: { length: 100, width: 50, height: 30 },
 				},
 			}),
 		);
@@ -77,7 +78,7 @@ describe('Articles AddBriefElement action', () => {
 			mockThis,
 			'hipeApi',
 			expect.objectContaining({
-				body: { lengthDimension: 200 },
+				body: { lengthDimension: 200, alias: { length: 200 } },
 			}),
 		);
 	});
