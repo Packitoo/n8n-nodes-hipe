@@ -97,6 +97,10 @@ export async function execute(
 				alias.height = heightDimension;
 			}
 
+			if (Object.keys(alias).length > 0) {
+				body.alias = alias;
+			}
+
 			// Make API call to add a brief element to the article
 			const response = await this.helpers.requestWithAuthentication.call(this, 'hipeApi', {
 				method: 'POST',
