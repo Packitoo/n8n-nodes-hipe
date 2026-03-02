@@ -7,6 +7,7 @@ import * as uploadFile from './UploadFile';
 import * as deleteFile from './DeleteFile';
 import * as setPreview from './SetPreview';
 import * as deleteArticle from './Delete';
+import * as addBriefElement from './AddBriefElement';
 
 export const RESOURCE = 'article';
 
@@ -20,6 +21,7 @@ export const ACTIONS = {
 	deleteFile: deleteFile,
 	setPreview: setPreview,
 	delete: deleteArticle,
+	addBriefElement: addBriefElement,
 };
 
 // Factory function to build all article properties for node usage
@@ -33,6 +35,12 @@ export function buildProperties() {
 				show: { resource: [RESOURCE] },
 			},
 			options: [
+				{
+					name: 'Add Brief Element',
+					value: 'addBriefElement',
+					description: 'Add a brief element to an article',
+					action: 'Add a brief element to an article',
+				},
 				{
 					name: 'Create',
 					value: 'create',
@@ -100,6 +108,7 @@ export function buildProperties() {
 		...deleteFile.properties,
 		...setPreview.properties,
 		...deleteArticle.properties,
+		...addBriefElement.properties,
 	];
 	return [RESOURCE, properties];
 }
