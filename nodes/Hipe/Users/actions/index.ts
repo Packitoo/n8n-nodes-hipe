@@ -1,5 +1,6 @@
 import * as create from './CreateContact';
 import * as get from './Get';
+import * as hardDelete from './HardDelete';
 import * as list from './List';
 import * as update from './Update';
 import * as getMe from './GetMe';
@@ -12,6 +13,7 @@ export const RESOURCE = 'user';
 export const ACTIONS = {
 	createContact: create,
 	get: get,
+	hardDelete: hardDelete,
 	getMany: list,
 	update: update,
 	getMe: getMe,
@@ -62,6 +64,12 @@ export function buildProperties() {
 					action: 'Get current authenticated user',
 				},
 				{
+					name: 'Hard Delete',
+					value: 'hardDelete',
+					description: 'Permanently delete a contact user (users without roles only)',
+					action: 'Hard delete a contact user',
+				},
+				{
 					name: 'Search',
 					value: 'search',
 					description: 'Advanced search over users',
@@ -85,6 +93,7 @@ export function buildProperties() {
 		},
 		...create.properties,
 		...get.properties,
+		...hardDelete.properties,
 		...list.properties,
 		...update.properties,
 		...getMe.properties,
