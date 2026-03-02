@@ -36,6 +36,12 @@ export function buildProperties() {
 			},
 			options: [
 				{
+					name: 'Add Brief Element',
+					value: 'addBriefElement',
+					description: 'Add a brief element to an article',
+					action: 'Add a brief element to an article',
+				},
+				{
 					name: 'Create',
 					value: 'create',
 					description: 'Create a new article',
@@ -88,12 +94,6 @@ export function buildProperties() {
 					value: 'uploadFile',
 					description: 'Upload a file to an article',
 					action: 'Upload a file to an article',
-				},
-				{
-					name: 'Add Brief Element',
-					value: 'addBriefElement',
-					description: 'Add a brief element to an article',
-					action: 'Add a brief element to an article',
 				},
 			],
 			default: 'getMany',
