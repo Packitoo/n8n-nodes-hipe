@@ -1,5 +1,6 @@
 import * as create from './Create';
 import * as get from './Get';
+import * as hardDelete from './HardDelete';
 import * as list from './List';
 import * as update from './Update';
 import * as linkContact from './linkContact';
@@ -12,6 +13,7 @@ export const RESOURCE = 'company';
 export const ACTIONS = {
 	create: create,
 	get: get,
+	hardDelete: hardDelete,
 	getMany: list,
 	update: update,
 	linkContact: linkContact,
@@ -56,6 +58,12 @@ export function buildProperties() {
 					action: 'Get multiple companies',
 				},
 				{
+					name: 'Hard Delete',
+					value: 'hardDelete',
+					description: 'Permanently delete a company',
+					action: 'Hard delete a company',
+				},
+				{
 					name: 'Link Contact',
 					value: 'linkContact',
 					description: 'Link an existing contact to a company',
@@ -86,6 +94,7 @@ export function buildProperties() {
 		},
 		...create.properties,
 		...get.properties,
+		...hardDelete.properties,
 		...list.properties,
 		...update.properties,
 		...linkContact.properties,
