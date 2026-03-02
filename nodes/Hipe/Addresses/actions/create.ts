@@ -60,7 +60,6 @@ export const properties: INodeProperties[] = [
 		displayName: 'First Complementary Address',
 		name: 'firstComplementaryAddress',
 		type: 'string',
-		required: true,
 		default: '',
 		description: 'First complementary address of the company',
 		displayOptions: {
@@ -74,7 +73,6 @@ export const properties: INodeProperties[] = [
 		displayName: 'Second Complementary Address',
 		name: 'secondComplementaryAddress',
 		type: 'string',
-		required: true,
 		default: '',
 		description: 'Second complementary address of the company',
 		displayOptions: {
@@ -102,7 +100,6 @@ export const properties: INodeProperties[] = [
 		displayName: 'Position',
 		name: 'position',
 		type: 'number',
-		required: true,
 		default: 1,
 		description: 'Position of the address',
 		displayOptions: {
@@ -116,7 +113,6 @@ export const properties: INodeProperties[] = [
 		displayName: 'State',
 		name: 'state',
 		type: 'string',
-		required: true,
 		default: '',
 		description: 'State of the address',
 		displayOptions: {
@@ -172,7 +168,8 @@ export const properties: INodeProperties[] = [
 		name: 'asyncMode',
 		type: 'boolean',
 		default: false,
-		description: 'Whether to use asynchronous processing (returns a job ID instead of waiting for completion)',
+		description:
+			'Whether to use asynchronous processing (returns a job ID instead of waiting for completion)',
 		displayOptions: {
 			show: {
 				resource: ['address'],
@@ -232,7 +229,7 @@ export async function execute(
 					secondComplementaryAddress,
 					state,
 					zipCode,
-					externalId
+					externalId,
 				},
 				headers: getAsyncHeaders(asyncMode),
 			});
