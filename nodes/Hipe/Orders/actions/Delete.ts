@@ -17,6 +17,19 @@ export const properties: INodeProperties[] = [
 			},
 		},
 	},
+	{
+		displayName: 'Hard Delete',
+		name: 'hardDelete',
+		type: 'boolean',
+		default: false,
+		description: 'Whether to permanently delete the order instead of soft deleting it',
+		displayOptions: {
+			show: {
+				resource: ['order'],
+				operation: ['delete'],
+			},
+		},
+	},
 ];
 
 // Execute function for the Delete operation
@@ -39,14 +52,21 @@ export async function execute(
 		try {
 			// Get input data
 			const orderId = this.getNodeParameter('orderId', i) as string;
+			const hardDelete = this.getNodeParameter('hardDelete', i, false) as boolean;
+
+			const qs: Record<string, any> = {};
+			if (hardDelete) {
+				qs.hardDelete = true;
+			}
 
 			// Make API call to delete the order
 			const response = await this.helpers.requestWithAuthentication.call(this, 'hipeApi', {
 				method: 'DELETE',
 				url: `${baseUrl}/api/orders/${orderId}`,
 				json: true,
+				qs,
 			});
-			returnData.push({ json: response });
+			returnData.push({ json: response ?? { success: true } });
 		} catch (error) {
 			if (this.continueOnFail()) {
 				returnData.push({ json: { error: error.message } });

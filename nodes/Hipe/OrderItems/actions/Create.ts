@@ -4,15 +4,29 @@ import { INodeExecutionData, INodeProperties, IDataObject } from 'n8n-workflow';
 // Properties for the Create operation
 export const properties: INodeProperties[] = [
 	{
-		displayName: 'Billed Amount',
-		name: 'billedAmount',
-		type: 'number',
+		displayName: 'Order ID',
+		name: 'orderId',
+		type: 'string',
 		required: true,
-		default: 0,
-		description: 'Billed amount for the order (will be recalculated when items are added)',
+		default: '',
+		description: 'ID of the parent order',
 		displayOptions: {
 			show: {
-				resource: ['order'],
+				resource: ['orderItem'],
+				operation: ['create'],
+			},
+		},
+	},
+	{
+		displayName: 'Quantity',
+		name: 'quantity',
+		type: 'number',
+		required: true,
+		default: 1,
+		description: 'Quantity of the order item',
+		displayOptions: {
+			show: {
+				resource: ['orderItem'],
 				operation: ['create'],
 			},
 		},
@@ -25,94 +39,79 @@ export const properties: INodeProperties[] = [
 		default: {},
 		displayOptions: {
 			show: {
-				resource: ['order'],
+				resource: ['orderItem'],
 				operation: ['create'],
 			},
 		},
 		options: [
 			{
-				displayName: 'Actual Delivery Date',
-				name: 'actualDeliveryDate',
-				type: 'dateTime',
-				default: '',
-				description: 'Actual delivery date of the order',
-			},
-			{
-				displayName: 'Company ID',
-				name: 'companyId',
+				displayName: 'Article ID',
+				name: 'articleId',
 				type: 'string',
 				default: '',
-				description: 'ID of the company associated with this order',
+				description: 'ID of the article associated with this order item',
 			},
 			{
-				displayName: 'Created By ID',
-				name: 'createdById',
+				displayName: 'Comment ID',
+				name: 'commentId',
 				type: 'string',
 				default: '',
-				description: 'ID of the user who created this order',
-			},
-			{
-				displayName: 'Currency ID',
-				name: 'currencyId',
-				type: 'string',
-				default: '',
-				description: 'ID of the currency for the billed amount',
+				description: 'ID of the comment associated with this order item',
 			},
 			{
 				displayName: 'Custom Fields',
 				name: 'customFields',
 				type: 'json',
 				default: '',
-				description: 'Custom fields for the order (JSON object)',
-			},
-			{
-				displayName: 'Expected Delivery Date',
-				name: 'expectedDeliveryDate',
-				type: 'dateTime',
-				default: '',
-				description: 'Expected delivery date of the order',
+				description: 'Custom fields for the order item (JSON object)',
 			},
 			{
 				displayName: 'External ID',
 				name: 'externalId',
 				type: 'string',
 				default: '',
-				description: 'External ID of the order',
+				description: 'External ID of the order item',
 			},
 			{
-				displayName: 'Order Date',
-				name: 'orderDate',
-				type: 'dateTime',
-				default: '',
-				description: 'Date when the order was placed',
-			},
-			{
-				displayName: 'Project ID',
-				name: 'projectId',
+				displayName: 'Parent ID',
+				name: 'parentId',
 				type: 'string',
 				default: '',
-				description: 'ID of the project associated with this order',
+				description: 'ID of the parent order item (for nested items)',
 			},
 			{
-				displayName: 'Shipping Address ID',
-				name: 'shippingAddressId',
-				type: 'string',
-				default: '',
-				description: 'ID of the shipping address',
+				displayName: 'Position',
+				name: 'position',
+				type: 'number',
+				default: 1,
+				description: 'Position of the order item in the list',
 			},
 			{
-				displayName: 'Status ID',
-				name: 'statusId',
-				type: 'string',
-				default: '',
-				description: 'ID of the order status',
+				displayName: 'Total Price',
+				name: 'totalPrice',
+				type: 'number',
+				default: 0,
+				description: 'Total price of the order item',
 			},
 			{
-				displayName: 'Tracking ID',
-				name: 'trackingId',
+				displayName: 'Unit',
+				name: 'unit',
 				type: 'string',
 				default: '',
-				description: 'Tracking ID for the shipment',
+				description: 'Unit of measurement (e.g., kg, m, pcs)',
+			},
+			{
+				displayName: 'Unit Price',
+				name: 'unitPrice',
+				type: 'number',
+				default: 0,
+				description: 'Unit price of the order item',
+			},
+			{
+				displayName: 'Unit Price Per Thousand',
+				name: 'unitPricePerThousand',
+				type: 'number',
+				default: 0,
 			},
 		],
 	},
@@ -132,11 +131,13 @@ export async function execute(
 		throw new Error('HIPE base URL is not a string');
 	}
 	baseUrl = baseUrl.replace(/\/$/, '');
+
 	// Process each item
 	for (let i = 0; i < items.length; i++) {
 		try {
 			// Get input data
-			const billedAmount = this.getNodeParameter('billedAmount', i) as number;
+			const orderId = this.getNodeParameter('orderId', i) as string;
+			const quantity = this.getNodeParameter('quantity', i) as number;
 			const rawAdditionalFields = this.getNodeParameter('additionalFields', i, {}) as IDataObject;
 			const additionalFields: IDataObject = {};
 			for (const [key, value] of Object.entries(rawAdditionalFields)) {
@@ -147,10 +148,11 @@ export async function execute(
 			}
 			const response = await this.helpers.requestWithAuthentication.call(this, 'hipeApi', {
 				method: 'POST',
-				url: `${baseUrl}/api/orders`,
+				url: `${baseUrl}/api/order-items`,
 				json: true,
 				body: {
-					billedAmount,
+					orderId,
+					quantity,
 					...additionalFields,
 				},
 			});

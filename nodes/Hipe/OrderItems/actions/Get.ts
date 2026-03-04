@@ -1,38 +1,25 @@
 import { IExecuteFunctions, sleep } from 'n8n-workflow';
 import { INodeExecutionData, INodeProperties } from 'n8n-workflow';
 
-// Properties for the Delete operation
+// Properties for the Get operation
 export const properties: INodeProperties[] = [
 	{
-		displayName: 'Article ID',
-		name: 'articleId',
+		displayName: 'Order Item ID',
+		name: 'orderItemId',
 		type: 'string',
 		required: true,
 		default: '',
-		description: 'ID of the article to delete',
+		description: 'ID of the order item to retrieve',
 		displayOptions: {
 			show: {
-				resource: ['article'],
-				operation: ['delete'],
-			},
-		},
-	},
-	{
-		displayName: 'Hard Delete',
-		name: 'hardDelete',
-		type: 'boolean',
-		default: false,
-		description: 'Whether to permanently delete the article instead of soft deleting it',
-		displayOptions: {
-			show: {
-				resource: ['article'],
-				operation: ['delete'],
+				resource: ['orderItem'],
+				operation: ['get'],
 			},
 		},
 	},
 ];
 
-// Execute function for the Delete operation
+// Execute function for the Get operation
 export async function execute(
 	this: IExecuteFunctions,
 	items: INodeExecutionData[],
@@ -51,22 +38,14 @@ export async function execute(
 	for (let i = 0; i < items.length; i++) {
 		try {
 			// Get input data
-			const articleId = this.getNodeParameter('articleId', i) as string;
-			const hardDelete = this.getNodeParameter('hardDelete', i, false) as boolean;
+			const orderItemId = this.getNodeParameter('orderItemId', i) as string;
 
-			const qs: Record<string, any> = {};
-			if (hardDelete) {
-				qs.hardDelete = true;
-			}
-
-			// Make API call to delete the article
 			const response = await this.helpers.requestWithAuthentication.call(this, 'hipeApi', {
-				method: 'DELETE',
-				url: `${baseUrl}/api/articles/${articleId}`,
+				method: 'GET',
+				url: `${baseUrl}/api/order-items/${orderItemId}`,
 				json: true,
-				qs,
 			});
-			returnData.push({ json: response ?? { success: true } });
+			returnData.push({ json: response });
 		} catch (error) {
 			if (this.continueOnFail()) {
 				returnData.push({ json: { error: error.message } });

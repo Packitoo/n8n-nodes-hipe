@@ -66,6 +66,13 @@ export const properties: INodeProperties[] = [
 				description: 'ID of the currency for the price',
 			},
 			{
+				displayName: 'Custom Fields',
+				name: 'customFields',
+				type: 'json',
+				default: '',
+				description: 'Custom fields for the article (JSON object)',
+			},
+			{
 				displayName: 'Description',
 				name: 'description',
 				type: 'string',
@@ -153,6 +160,15 @@ export async function execute(
 			// Get input data
 			const articleId = this.getNodeParameter('id', i) as string;
 			const updateFields = this.getNodeParameter('updateFields', i, {}) as object;
+
+			// Parse customFields from string to object if needed
+			if (
+				updateFields &&
+				(updateFields as any).customFields &&
+				typeof (updateFields as any).customFields === 'string'
+			) {
+				(updateFields as any).customFields = JSON.parse((updateFields as any).customFields);
+			}
 
 			// Make API call to update the article
 			const response = await this.helpers.requestWithAuthentication.call(this, 'hipeApi', {

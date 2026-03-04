@@ -1,6 +1,6 @@
 import { execute } from './Delete';
 
-describe('Orders Delete action', () => {
+describe('OrderItems Delete action', () => {
 	it('should call helpers.requestWithAuthentication and return correct data (happy path, soft delete)', async () => {
 		const mockThis = {
 			getCredentials: async () => ({ url: 'https://fake.api' }),
@@ -10,7 +10,7 @@ describe('Orders Delete action', () => {
 				},
 			},
 			getNodeParameter: (name: string) => {
-				if (name === 'orderId') return 'order-123';
+				if (name === 'orderItemId') return 'item-123';
 				if (name === 'hardDelete') return false;
 				return undefined;
 			},
@@ -23,7 +23,7 @@ describe('Orders Delete action', () => {
 			'hipeApi',
 			expect.objectContaining({
 				method: 'DELETE',
-				url: 'https://fake.api/api/orders/order-123',
+				url: 'https://fake.api/api/order-items/item-123',
 				json: true,
 				qs: {},
 			}),
@@ -40,7 +40,7 @@ describe('Orders Delete action', () => {
 				},
 			},
 			getNodeParameter: (name: string) => {
-				if (name === 'orderId') return 'order-123';
+				if (name === 'orderItemId') return 'item-123';
 				if (name === 'hardDelete') return true;
 				return undefined;
 			},
@@ -53,7 +53,7 @@ describe('Orders Delete action', () => {
 			'hipeApi',
 			expect.objectContaining({
 				method: 'DELETE',
-				url: 'https://fake.api/api/orders/order-123',
+				url: 'https://fake.api/api/order-items/item-123',
 				json: true,
 				qs: { hardDelete: true },
 			}),
@@ -69,7 +69,7 @@ describe('Orders Delete action', () => {
 				},
 			},
 			getNodeParameter: (name: string) => {
-				if (name === 'orderId') return 'order-123';
+				if (name === 'orderItemId') return 'item-123';
 				if (name === 'hardDelete') return false;
 				return undefined;
 			},
@@ -85,11 +85,11 @@ describe('Orders Delete action', () => {
 			getCredentials: async () => ({ url: 'https://fake.api' }),
 			helpers: {
 				requestWithAuthentication: {
-					call: jest.fn().mockRejectedValue(new Error('fail!')),
+					call: jest.fn().mockRejectedValue(new Error('Not found')),
 				},
 			},
 			getNodeParameter: (name: string) => {
-				if (name === 'orderId') return 'order-123';
+				if (name === 'orderItemId') return 'invalid-id';
 				if (name === 'hardDelete') return false;
 				return undefined;
 			},
@@ -97,6 +97,30 @@ describe('Orders Delete action', () => {
 		} as any;
 		const items = [{ json: {} }];
 		const result = await execute.call(mockThis, items);
-		expect(result[0].json).toEqual({ error: 'fail!' });
+		expect(result[0].json).toEqual({ error: 'Not found' });
+	});
+
+	it('should handle multiple input items', async () => {
+		const mockThis = {
+			getCredentials: async () => ({ url: 'https://fake.api' }),
+			helpers: {
+				requestWithAuthentication: {
+					call: jest
+						.fn()
+						.mockResolvedValueOnce({ success: true })
+						.mockResolvedValueOnce({ success: true }),
+				},
+			},
+			getNodeParameter: jest.fn((name: string, i: number) => {
+				if (name === 'orderItemId') return i === 0 ? 'item-1' : 'item-2';
+				if (name === 'hardDelete') return false;
+				return undefined;
+			}),
+			continueOnFail: () => false,
+		} as any;
+		const items = [{ json: {} }, { json: {} }];
+		const result = await execute.call(mockThis, items);
+		expect(result).toHaveLength(2);
+		expect(mockThis.helpers.requestWithAuthentication.call).toHaveBeenCalledTimes(2);
 	});
 });

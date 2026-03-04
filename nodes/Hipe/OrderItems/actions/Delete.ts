@@ -4,15 +4,15 @@ import { INodeExecutionData, INodeProperties } from 'n8n-workflow';
 // Properties for the Delete operation
 export const properties: INodeProperties[] = [
 	{
-		displayName: 'Article ID',
-		name: 'articleId',
+		displayName: 'Order Item ID',
+		name: 'orderItemId',
 		type: 'string',
 		required: true,
 		default: '',
-		description: 'ID of the article to delete',
+		description: 'ID of the order item to delete',
 		displayOptions: {
 			show: {
-				resource: ['article'],
+				resource: ['orderItem'],
 				operation: ['delete'],
 			},
 		},
@@ -22,10 +22,10 @@ export const properties: INodeProperties[] = [
 		name: 'hardDelete',
 		type: 'boolean',
 		default: false,
-		description: 'Whether to permanently delete the article instead of soft deleting it',
+		description: 'Whether to permanently delete the order item instead of soft deleting it',
 		displayOptions: {
 			show: {
-				resource: ['article'],
+				resource: ['orderItem'],
 				operation: ['delete'],
 			},
 		},
@@ -51,7 +51,7 @@ export async function execute(
 	for (let i = 0; i < items.length; i++) {
 		try {
 			// Get input data
-			const articleId = this.getNodeParameter('articleId', i) as string;
+			const orderItemId = this.getNodeParameter('orderItemId', i) as string;
 			const hardDelete = this.getNodeParameter('hardDelete', i, false) as boolean;
 
 			const qs: Record<string, any> = {};
@@ -59,10 +59,10 @@ export async function execute(
 				qs.hardDelete = true;
 			}
 
-			// Make API call to delete the article
+			// Make API call to delete the order item
 			const response = await this.helpers.requestWithAuthentication.call(this, 'hipeApi', {
 				method: 'DELETE',
-				url: `${baseUrl}/api/articles/${articleId}`,
+				url: `${baseUrl}/api/order-items/${orderItemId}`,
 				json: true,
 				qs,
 			});
@@ -76,6 +76,5 @@ export async function execute(
 		}
 		sleep(500);
 	}
-
 	return returnData;
 }
