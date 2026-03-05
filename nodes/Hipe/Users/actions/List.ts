@@ -1,5 +1,6 @@
 import { IExecuteFunctions, sleep } from 'n8n-workflow';
 import { INodeExecutionData, INodeProperties } from 'n8n-workflow';
+import { RESOURCES, OPERATIONS } from '../../constants';
 
 // Properties for the List operation
 export const properties: INodeProperties[] = [
@@ -11,8 +12,8 @@ export const properties: INodeProperties[] = [
 		description: 'Whether to return all results or only up to a given limit',
 		displayOptions: {
 			show: {
-				resource: ['user'],
-				operation: ['getMany'],
+				resource: [RESOURCES.USER],
+				operation: [OPERATIONS.GET_MANY],
 			},
 		},
 	},
@@ -23,8 +24,8 @@ export const properties: INodeProperties[] = [
 		displayOptions: {
 			show: {
 				returnAll: [false],
-				resource: ['user'],
-				operation: ['getMany'],
+				resource: [RESOURCES.USER],
+				operation: [OPERATIONS.GET_MANY],
 			},
 		},
 		typeOptions: {
@@ -40,8 +41,8 @@ export const properties: INodeProperties[] = [
 		displayOptions: {
 			show: {
 				returnAll: [false],
-				resource: ['user'],
-				operation: ['getMany'],
+				resource: [RESOURCES.USER],
+				operation: [OPERATIONS.GET_MANY],
 			},
 		},
 		typeOptions: {
@@ -58,8 +59,8 @@ export const properties: INodeProperties[] = [
 		default: {},
 		displayOptions: {
 			show: {
-				resource: ['user'],
-				operation: ['getMany'],
+				resource: [RESOURCES.USER],
+				operation: [OPERATIONS.GET_MANY],
 			},
 		},
 		options: [
@@ -134,8 +135,8 @@ export const properties: INodeProperties[] = [
 		placeholder: 'Add Sort Option',
 		displayOptions: {
 			show: {
-				resource: ['user'],
-				operation: ['getMany'],
+				resource: [RESOURCES.USER],
+				operation: [OPERATIONS.GET_MANY],
 			},
 		},
 		default: {},

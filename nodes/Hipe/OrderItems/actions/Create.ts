@@ -1,5 +1,7 @@
 import { IExecuteFunctions, sleep } from 'n8n-workflow';
 import { INodeExecutionData, INodeProperties, IDataObject } from 'n8n-workflow';
+import { RESOURCES, OPERATIONS, CUSTOM_FIELDS } from '../../constants';
+import { sanitizeFields } from '../../utils/sanitizeFields';
 
 // Properties for the Create operation
 export const properties: INodeProperties[] = [
@@ -12,8 +14,8 @@ export const properties: INodeProperties[] = [
 		description: 'ID of the parent order',
 		displayOptions: {
 			show: {
-				resource: ['orderItem'],
-				operation: ['create'],
+				resource: [RESOURCES.ORDER_ITEM],
+				operation: [OPERATIONS.CREATE],
 			},
 		},
 	},
@@ -26,8 +28,8 @@ export const properties: INodeProperties[] = [
 		description: 'Quantity of the order item',
 		displayOptions: {
 			show: {
-				resource: ['orderItem'],
-				operation: ['create'],
+				resource: [RESOURCES.ORDER_ITEM],
+				operation: [OPERATIONS.CREATE],
 			},
 		},
 	},
@@ -39,8 +41,8 @@ export const properties: INodeProperties[] = [
 		default: {},
 		displayOptions: {
 			show: {
-				resource: ['orderItem'],
-				operation: ['create'],
+				resource: [RESOURCES.ORDER_ITEM],
+				operation: [OPERATIONS.CREATE],
 			},
 		},
 		options: [
@@ -59,8 +61,8 @@ export const properties: INodeProperties[] = [
 				description: 'ID of the comment associated with this order item',
 			},
 			{
-				displayName: 'Custom Fields',
-				name: 'customFields',
+				displayName: CUSTOM_FIELDS.displayName,
+				name: CUSTOM_FIELDS.name,
 				type: 'json',
 				default: '',
 				description: 'Custom fields for the order item (JSON object)',
@@ -139,13 +141,7 @@ export async function execute(
 			const orderId = this.getNodeParameter('orderId', i) as string;
 			const quantity = this.getNodeParameter('quantity', i) as number;
 			const rawAdditionalFields = this.getNodeParameter('additionalFields', i, {}) as IDataObject;
-			const additionalFields: IDataObject = {};
-			for (const [key, value] of Object.entries(rawAdditionalFields)) {
-				if (value !== null) {
-					additionalFields[key] =
-						key === 'customFields' && typeof value === 'string' ? JSON.parse(value) : value;
-				}
-			}
+			const additionalFields = sanitizeFields(rawAdditionalFields);
 			const response = await this.helpers.requestWithAuthentication.call(this, 'hipeApi', {
 				method: 'POST',
 				url: `${baseUrl}/api/order-items`,

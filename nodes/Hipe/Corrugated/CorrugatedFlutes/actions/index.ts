@@ -2,8 +2,9 @@ import * as create from './Create';
 import * as get from './Get';
 import * as list from './List';
 import * as update from './Update';
+import { RESOURCES, OPERATIONS } from '../../../constants';
 
-export const RESOURCE = 'corrugatedFlute';
+export const RESOURCE = RESOURCES.CORRUGATED_FLUTE;
 
 export const ACTIONS = {
 	create: create,
@@ -19,36 +20,37 @@ export function buildProperties() {
 			displayName: 'Operation',
 			name: 'operation',
 			type: 'options',
+			default: '',
 			displayOptions: {
 				show: { resource: [RESOURCE] },
 			},
 			options: [
 				{
 					name: 'Create',
-					value: 'create',
+					value: OPERATIONS.CREATE,
 					description: 'Create a new corrugated flute',
 					action: 'Create a new corrugated flute',
 				},
 				{
 					name: 'Get',
-					value: 'get',
+					value: OPERATIONS.GET,
 					description: 'Get a specific corrugated flute',
 					action: 'Get a specific corrugated flute',
 				},
 				{
 					name: 'Get Many',
-					value: 'getMany',
+					value: OPERATIONS.GET_MANY,
 					description: 'Get multiple corrugated flutes',
 					action: 'Get multiple corrugated flutes',
 				},
 				{
 					name: 'Update',
-					value: 'update',
+					value: OPERATIONS.UPDATE,
 					description: 'Update a specific corrugated flute',
 					action: 'Update a specific corrugated flute',
 				},
 			],
-			default: 'getMany',
+			default: OPERATIONS.GET_MANY,
 			noDataExpression: true,
 		},
 		...create.properties,

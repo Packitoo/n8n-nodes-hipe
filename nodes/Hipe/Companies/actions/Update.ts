@@ -1,6 +1,7 @@
 import { IExecuteFunctions, sleep } from 'n8n-workflow';
 import { INodeExecutionData, INodeProperties } from 'n8n-workflow';
 import { ICompany } from '../../interfaces';
+import { RESOURCES, OPERATIONS, CUSTOM_FIELDS } from '../../constants';
 
 // Properties for the Update operation
 export const properties: INodeProperties[] = [
@@ -13,8 +14,8 @@ export const properties: INodeProperties[] = [
 		description: 'ID of the company to update',
 		displayOptions: {
 			show: {
-				resource: ['company'],
-				operation: ['update'],
+				resource: [RESOURCES.COMPANY],
+				operation: [OPERATIONS.UPDATE],
 			},
 		},
 	},
@@ -26,8 +27,8 @@ export const properties: INodeProperties[] = [
 		default: {},
 		displayOptions: {
 			show: {
-				resource: ['company'],
-				operation: ['update'],
+				resource: [RESOURCES.COMPANY],
+				operation: [OPERATIONS.UPDATE],
 			},
 		},
 		options: [
@@ -65,8 +66,8 @@ export const properties: INodeProperties[] = [
 				description: 'Currency ID of the company',
 			},
 			{
-				displayName: 'Custom Fields',
-				name: 'customFields',
+				displayName: CUSTOM_FIELDS.displayName,
+				name: CUSTOM_FIELDS.name,
 				type: 'json',
 				default: '',
 				description: 'Custom fields of the company',

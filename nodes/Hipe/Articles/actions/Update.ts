@@ -1,5 +1,7 @@
 import { IExecuteFunctions, sleep } from 'n8n-workflow';
-import { INodeExecutionData, INodeProperties } from 'n8n-workflow';
+import { INodeExecutionData, INodeProperties, IDataObject } from 'n8n-workflow';
+import { RESOURCES, OPERATIONS, CUSTOM_FIELDS } from '../../constants';
+import { sanitizeFields } from '../../utils/sanitizeFields';
 
 // Properties for the Update operation
 export const properties: INodeProperties[] = [
@@ -12,8 +14,8 @@ export const properties: INodeProperties[] = [
 		description: 'ID of the article to update',
 		displayOptions: {
 			show: {
-				resource: ['article'],
-				operation: ['update'],
+				resource: [RESOURCES.ARTICLE],
+				operation: [OPERATIONS.UPDATE],
 			},
 		},
 	},
@@ -25,8 +27,8 @@ export const properties: INodeProperties[] = [
 		default: {},
 		displayOptions: {
 			show: {
-				resource: ['article'],
-				operation: ['update'],
+				resource: [RESOURCES.ARTICLE],
+				operation: [OPERATIONS.UPDATE],
 			},
 		},
 		options: [
@@ -66,8 +68,8 @@ export const properties: INodeProperties[] = [
 				description: 'ID of the currency for the price',
 			},
 			{
-				displayName: 'Custom Fields',
-				name: 'customFields',
+				displayName: CUSTOM_FIELDS.displayName,
+				name: CUSTOM_FIELDS.name,
 				type: 'json',
 				default: '',
 				description: 'Custom fields for the article (JSON object)',
@@ -159,16 +161,9 @@ export async function execute(
 		try {
 			// Get input data
 			const articleId = this.getNodeParameter('id', i) as string;
-			const updateFields = this.getNodeParameter('updateFields', i, {}) as object;
-
-			// Parse customFields from string to object if needed
-			if (
-				updateFields &&
-				(updateFields as any).customFields &&
-				typeof (updateFields as any).customFields === 'string'
-			) {
-				(updateFields as any).customFields = JSON.parse((updateFields as any).customFields);
-			}
+			const updateFields = sanitizeFields(
+				this.getNodeParameter('updateFields', i, {}) as IDataObject,
+			);
 
 			// Make API call to update the article
 			const response = await this.helpers.requestWithAuthentication.call(this, 'hipeApi', {

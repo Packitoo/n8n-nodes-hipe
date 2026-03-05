@@ -2,8 +2,9 @@ import * as create from './Create';
 import * as get from './Get';
 import * as list from './List';
 import * as update from './Update';
+import { RESOURCES, OPERATIONS } from '../../../constants';
 
-export const RESOURCE = 'corrugatedLiner';
+export const RESOURCE = RESOURCES.CORRUGATED_LINER;
 
 export const ACTIONS = {
 	create: create,
@@ -19,36 +20,37 @@ export function buildProperties() {
 			displayName: 'Operation',
 			name: 'operation',
 			type: 'options',
+			default: '',
 			displayOptions: {
 				show: { resource: [RESOURCE] },
 			},
 			options: [
 				{
 					name: 'Create',
-					value: 'create',
+					value: OPERATIONS.CREATE,
 					description: 'Create a new corrugated liner',
 					action: 'Create a new corrugated liner',
 				},
 				{
 					name: 'Get',
-					value: 'get',
+					value: OPERATIONS.GET,
 					description: 'Get a specific corrugated liner',
 					action: 'Get a specific corrugated liner',
 				},
 				{
 					name: 'Get Many',
-					value: 'getMany',
+					value: OPERATIONS.GET_MANY,
 					description: 'Get multiple corrugated liners',
 					action: 'Get multiple corrugated liners',
 				},
 				{
 					name: 'Update',
-					value: 'update',
+					value: OPERATIONS.UPDATE,
 					description: 'Update a specific corrugated liner',
 					action: 'Update a specific corrugated liner',
 				},
 			],
-			default: 'getMany',
+			default: OPERATIONS.GET_MANY,
 			noDataExpression: true,
 		},
 		...create.properties,

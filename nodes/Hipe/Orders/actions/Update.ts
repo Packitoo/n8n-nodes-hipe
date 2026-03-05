@@ -1,5 +1,7 @@
 import { IExecuteFunctions, sleep } from 'n8n-workflow';
 import { INodeExecutionData, INodeProperties, IDataObject } from 'n8n-workflow';
+import { RESOURCES, OPERATIONS, CUSTOM_FIELDS } from '../../constants';
+import { sanitizeFields } from '../../utils/sanitizeFields';
 
 // Properties for the Update operation
 export const properties: INodeProperties[] = [
@@ -12,8 +14,8 @@ export const properties: INodeProperties[] = [
 		description: 'ID of the order to update',
 		displayOptions: {
 			show: {
-				resource: ['order'],
-				operation: ['update'],
+				resource: [RESOURCES.ORDER],
+				operation: [OPERATIONS.UPDATE],
 			},
 		},
 	},
@@ -25,8 +27,8 @@ export const properties: INodeProperties[] = [
 		default: {},
 		displayOptions: {
 			show: {
-				resource: ['order'],
-				operation: ['update'],
+				resource: [RESOURCES.ORDER],
+				operation: [OPERATIONS.UPDATE],
 			},
 		},
 		options: [
@@ -66,8 +68,8 @@ export const properties: INodeProperties[] = [
 				description: 'ID of the currency for the billed amount',
 			},
 			{
-				displayName: 'Custom Fields',
-				name: 'customFields',
+				displayName: CUSTOM_FIELDS.displayName,
+				name: CUSTOM_FIELDS.name,
 				type: 'json',
 				default: '',
 				description: 'Custom fields for the order (JSON object)',
@@ -146,13 +148,7 @@ export async function execute(
 			// Get input data
 			const orderId = this.getNodeParameter('id', i) as string;
 			const rawUpdateFields = this.getNodeParameter('updateFields', i, {}) as IDataObject;
-			const updateFields: IDataObject = {};
-			for (const [key, value] of Object.entries(rawUpdateFields)) {
-				if (value !== null) {
-					updateFields[key] =
-						key === 'customFields' && typeof value === 'string' ? JSON.parse(value) : value;
-				}
-			}
+			const updateFields = sanitizeFields(rawUpdateFields);
 			const response = await this.helpers.requestWithAuthentication.call(this, 'hipeApi', {
 				method: 'PATCH',
 				url: `${baseUrl}/api/orders/${encodeURIComponent(orderId)}`,

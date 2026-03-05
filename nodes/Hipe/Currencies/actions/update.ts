@@ -1,4 +1,5 @@
 import { IExecuteFunctions, INodeExecutionData, INodeProperties, sleep } from 'n8n-workflow';
+import { RESOURCES, OPERATIONS } from '../../constants';
 
 export const properties: INodeProperties[] = [
 	{
@@ -10,8 +11,8 @@ export const properties: INodeProperties[] = [
 		description: 'ID of the currency to update',
 		displayOptions: {
 			show: {
-				resource: ['currency'],
-				operation: ['update'],
+				resource: [RESOURCES.CURRENCY],
+				operation: [OPERATIONS.UPDATE],
 			},
 		},
 	},
@@ -23,8 +24,8 @@ export const properties: INodeProperties[] = [
 		description: 'Name of the currency (e.g., EURO)',
 		displayOptions: {
 			show: {
-				resource: ['currency'],
-				operation: ['update'],
+				resource: [RESOURCES.CURRENCY],
+				operation: [OPERATIONS.UPDATE],
 			},
 		},
 	},
@@ -36,8 +37,8 @@ export const properties: INodeProperties[] = [
 		description: 'Currency code (e.g., EUR)',
 		displayOptions: {
 			show: {
-				resource: ['currency'],
-				operation: ['update'],
+				resource: [RESOURCES.CURRENCY],
+				operation: [OPERATIONS.UPDATE],
 			},
 		},
 	},
@@ -49,8 +50,8 @@ export const properties: INodeProperties[] = [
 		description: 'Currency symbol (e.g., €)',
 		displayOptions: {
 			show: {
-				resource: ['currency'],
-				operation: ['update'],
+				resource: [RESOURCES.CURRENCY],
+				operation: [OPERATIONS.UPDATE],
 			},
 		},
 	},
@@ -62,8 +63,8 @@ export const properties: INodeProperties[] = [
 		description: 'ISO 3166-1 alpha-2 country code (e.g., eu)',
 		displayOptions: {
 			show: {
-				resource: ['currency'],
-				operation: ['update'],
+				resource: [RESOURCES.CURRENCY],
+				operation: [OPERATIONS.UPDATE],
 			},
 		},
 	},
@@ -75,8 +76,8 @@ export const properties: INodeProperties[] = [
 		description: 'External ID from an external system',
 		displayOptions: {
 			show: {
-				resource: ['currency'],
-				operation: ['update'],
+				resource: [RESOURCES.CURRENCY],
+				operation: [OPERATIONS.UPDATE],
 			},
 		},
 	},
@@ -88,8 +89,8 @@ export const properties: INodeProperties[] = [
 		description: 'Whether the currency is enabled',
 		displayOptions: {
 			show: {
-				resource: ['currency'],
-				operation: ['update'],
+				resource: [RESOURCES.CURRENCY],
+				operation: [OPERATIONS.UPDATE],
 			},
 		},
 	},
@@ -101,8 +102,8 @@ export const properties: INodeProperties[] = [
 		description: 'Whether to set as default currency (only one default per environment)',
 		displayOptions: {
 			show: {
-				resource: ['currency'],
-				operation: ['update'],
+				resource: [RESOURCES.CURRENCY],
+				operation: [OPERATIONS.UPDATE],
 			},
 		},
 	},
@@ -115,8 +116,8 @@ export const properties: INodeProperties[] = [
 		default: {},
 		displayOptions: {
 			show: {
-				resource: ['currency'],
-				operation: ['update'],
+				resource: [RESOURCES.CURRENCY],
+				operation: [OPERATIONS.UPDATE],
 			},
 		},
 	},

@@ -1,5 +1,6 @@
 import { IExecuteFunctions, INodeExecutionData, INodeProperties, sleep } from 'n8n-workflow';
 import { getAsyncHeaders } from '../../utils/asyncMode';
+import { RESOURCES, OPERATIONS } from '../../constants';
 
 export const properties: INodeProperties[] = [
 	{
@@ -11,8 +12,8 @@ export const properties: INodeProperties[] = [
 		description: 'ID of the address to retrieve',
 		displayOptions: {
 			show: {
-				resource: ['address'],
-				operation: ['update'],
+				resource: [RESOURCES.ADDRESS],
+				operation: [OPERATIONS.UPDATE],
 			},
 		},
 	},
@@ -24,8 +25,8 @@ export const properties: INodeProperties[] = [
 		description: 'ID of the company to retrieve',
 		displayOptions: {
 			show: {
-				resource: ['address'],
-				operation: ['update'],
+				resource: [RESOURCES.ADDRESS],
+				operation: [OPERATIONS.UPDATE],
 			},
 		},
 	},
@@ -36,8 +37,8 @@ export const properties: INodeProperties[] = [
 		default: '',
 		displayOptions: {
 			show: {
-				resource: ['address'],
-				operation: ['update'],
+				resource: [RESOURCES.ADDRESS],
+				operation: [OPERATIONS.UPDATE],
 			},
 		},
 	},
@@ -49,8 +50,8 @@ export const properties: INodeProperties[] = [
 		description: 'City of the address',
 		displayOptions: {
 			show: {
-				resource: ['address'],
-				operation: ['update'],
+				resource: [RESOURCES.ADDRESS],
+				operation: [OPERATIONS.UPDATE],
 			},
 		},
 	},
@@ -62,8 +63,8 @@ export const properties: INodeProperties[] = [
 		description: 'Country of the address',
 		displayOptions: {
 			show: {
-				resource: ['address'],
-				operation: ['update'],
+				resource: [RESOURCES.ADDRESS],
+				operation: [OPERATIONS.UPDATE],
 			},
 		},
 	},
@@ -75,8 +76,8 @@ export const properties: INodeProperties[] = [
 		description: 'First complementary address of the company',
 		displayOptions: {
 			show: {
-				resource: ['address'],
-				operation: ['update'],
+				resource: [RESOURCES.ADDRESS],
+				operation: [OPERATIONS.UPDATE],
 			},
 		},
 	},
@@ -88,8 +89,8 @@ export const properties: INodeProperties[] = [
 		description: 'Second complementary address of the company',
 		displayOptions: {
 			show: {
-				resource: ['address'],
-				operation: ['update'],
+				resource: [RESOURCES.ADDRESS],
+				operation: [OPERATIONS.UPDATE],
 			},
 		},
 	},
@@ -101,8 +102,8 @@ export const properties: INodeProperties[] = [
 		description: 'Name of the address',
 		displayOptions: {
 			show: {
-				resource: ['address'],
-				operation: ['update'],
+				resource: [RESOURCES.ADDRESS],
+				operation: [OPERATIONS.UPDATE],
 			},
 		},
 	},
@@ -114,8 +115,8 @@ export const properties: INodeProperties[] = [
 		description: 'Position of the address',
 		displayOptions: {
 			show: {
-				resource: ['address'],
-				operation: ['update'],
+				resource: [RESOURCES.ADDRESS],
+				operation: [OPERATIONS.UPDATE],
 			},
 		},
 	},
@@ -127,8 +128,8 @@ export const properties: INodeProperties[] = [
 		description: 'State of the address',
 		displayOptions: {
 			show: {
-				resource: ['address'],
-				operation: ['update'],
+				resource: [RESOURCES.ADDRESS],
+				operation: [OPERATIONS.UPDATE],
 			},
 		},
 	},
@@ -140,8 +141,8 @@ export const properties: INodeProperties[] = [
 		description: 'Zip code of the address',
 		displayOptions: {
 			show: {
-				resource: ['address'],
-				operation: ['update'],
+				resource: [RESOURCES.ADDRESS],
+				operation: [OPERATIONS.UPDATE],
 			},
 		},
 	},
@@ -153,8 +154,8 @@ export const properties: INodeProperties[] = [
 		description: 'External ID of the address',
 		displayOptions: {
 			show: {
-				resource: ['address'],
-				operation: ['update'],
+				resource: [RESOURCES.ADDRESS],
+				operation: [OPERATIONS.UPDATE],
 			},
 		},
 	},
@@ -167,8 +168,8 @@ export const properties: INodeProperties[] = [
 		default: {},
 		displayOptions: {
 			show: {
-				resource: ['address'],
-				operation: ['update'],
+				resource: [RESOURCES.ADDRESS],
+				operation: [OPERATIONS.UPDATE],
 			},
 		},
 	},
@@ -177,11 +178,12 @@ export const properties: INodeProperties[] = [
 		name: 'asyncMode',
 		type: 'boolean',
 		default: false,
-		description: 'Whether to use asynchronous processing (returns a job ID instead of waiting for completion)',
+		description:
+			'Whether to use asynchronous processing (returns a job ID instead of waiting for completion)',
 		displayOptions: {
 			show: {
-				resource: ['address'],
-				operation: ['update'],
+				resource: [RESOURCES.ADDRESS],
+				operation: [OPERATIONS.UPDATE],
 			},
 		},
 	},

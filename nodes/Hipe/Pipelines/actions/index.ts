@@ -1,7 +1,8 @@
 import * as list from './List';
 import * as get from './Get';
+import { RESOURCES, OPERATIONS } from '../../constants';
 
-export const RESOURCE = 'pipelines';
+export const RESOURCE = RESOURCES.PIPELINES;
 
 export const ACTIONS = {
 	getMany: list,
@@ -15,24 +16,25 @@ export function buildProperties() {
 			displayName: 'Operation',
 			name: 'operation',
 			type: 'options',
+			default: '',
 			displayOptions: {
 				show: { resource: [RESOURCE] },
 			},
 			options: [
 				{
 					name: 'Get Many',
-					value: 'getMany',
+					value: OPERATIONS.GET_MANY,
 					description: 'Get pipelines for a given entity',
 					action: 'Get pipelines for a given entity',
 				},
 				{
 					name: 'Get',
-					value: 'get',
+					value: OPERATIONS.GET,
 					description: 'Get a specific pipeline',
 					action: 'Get a specific pipeline',
 				},
 			],
-			default: 'getMany',
+			default: OPERATIONS.GET_MANY,
 			noDataExpression: true,
 		},
 		...list.properties,

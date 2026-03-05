@@ -5,8 +5,9 @@ import * as archive from './Archive';
 import * as download from './Download';
 import * as getTypes from './GetTypes';
 import * as getStatus from './GetStatus';
+import { RESOURCES, OPERATIONS } from '../../constants';
 
-export const RESOURCE = 'export';
+export const RESOURCE = RESOURCES.EXPORT;
 
 export const ACTIONS = {
 	create: create,
@@ -24,37 +25,38 @@ export function buildProperties() {
 			displayName: 'Operation',
 			name: 'operation',
 			type: 'options',
+			default: 'getStatus',
 			displayOptions: {
 				show: { resource: [RESOURCE] },
 			},
 			options: [
 				{
 					name: 'Archive',
-					value: 'archive',
+					value: OPERATIONS.ARCHIVE,
 					description: 'Archive a specific export',
 					action: 'Archive a specific export',
 				},
 				{
 					name: 'Create',
-					value: 'create',
+					value: OPERATIONS.CREATE,
 					description: 'Create a new export',
 					action: 'Create a new export',
 				},
 				{
 					name: 'Download File',
-					value: 'download',
+					value: OPERATIONS.DOWNLOAD,
 					description: 'Download file for a specific export',
 					action: 'Download file for a specific export',
 				},
 				{
 					name: 'Get',
-					value: 'get',
+					value: OPERATIONS.GET,
 					description: 'Get a specific export',
 					action: 'Get a specific export',
 				},
 				{
 					name: 'Get Many',
-					value: 'getMany',
+					value: OPERATIONS.GET_MANY,
 					description: 'Get multiple exports',
 					action: 'Get multiple exports',
 				},
@@ -71,7 +73,7 @@ export function buildProperties() {
 					action: 'Get export types enum',
 				},
 			],
-			default: 'getMany',
+			default: OPERATIONS.GET_MANY,
 			noDataExpression: true,
 		},
 		...create.properties,

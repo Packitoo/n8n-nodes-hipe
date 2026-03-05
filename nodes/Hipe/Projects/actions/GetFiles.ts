@@ -1,5 +1,6 @@
 import { IExecuteFunctions, sleep } from 'n8n-workflow';
 import { INodeExecutionData, INodeProperties } from 'n8n-workflow';
+import { RESOURCES, OPERATIONS } from '../../constants';
 
 // Properties for the Get operation
 export const properties: INodeProperties[] = [
@@ -12,8 +13,8 @@ export const properties: INodeProperties[] = [
 		description: 'ID of the project to retrieve files',
 		displayOptions: {
 			show: {
-				resource: ['project'],
-				operation: ['getFiles'],
+				resource: [RESOURCES.PROJECT],
+				operation: [OPERATIONS.GET_FILES],
 			},
 		},
 	},
@@ -25,8 +26,8 @@ export const properties: INodeProperties[] = [
 		default: {},
 		displayOptions: {
 			show: {
-				resource: ['project'],
-				operation: ['getFiles'],
+				resource: [RESOURCES.PROJECT],
+				operation: [OPERATIONS.GET_FILES],
 			},
 		},
 		options: [

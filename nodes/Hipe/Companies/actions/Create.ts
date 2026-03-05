@@ -1,6 +1,7 @@
 import { IExecuteFunctions, sleep } from 'n8n-workflow';
 import { INodeExecutionData, INodeProperties } from 'n8n-workflow';
 import { ICompany } from '../../interfaces';
+import { RESOURCES, OPERATIONS, CUSTOM_FIELDS } from '../../constants';
 
 // Properties for the Create Company
 export const properties: INodeProperties[] = [
@@ -13,8 +14,8 @@ export const properties: INodeProperties[] = [
 		description: 'Name of the company',
 		displayOptions: {
 			show: {
-				resource: ['company'],
-				operation: ['create'],
+				resource: [RESOURCES.COMPANY],
+				operation: [OPERATIONS.CREATE],
 			},
 		},
 	},
@@ -26,8 +27,8 @@ export const properties: INodeProperties[] = [
 		description: 'ManagedById of the company',
 		displayOptions: {
 			show: {
-				resource: ['company'],
-				operation: ['create'],
+				resource: [RESOURCES.COMPANY],
+				operation: [OPERATIONS.CREATE],
 			},
 		},
 	},
@@ -39,8 +40,8 @@ export const properties: INodeProperties[] = [
 		description: 'External ID of the contact',
 		displayOptions: {
 			show: {
-				resource: ['company'],
-				operation: ['create'],
+				resource: [RESOURCES.COMPANY],
+				operation: [OPERATIONS.CREATE],
 			},
 		},
 	},
@@ -52,8 +53,8 @@ export const properties: INodeProperties[] = [
 		default: {},
 		displayOptions: {
 			show: {
-				resource: ['company'],
-				operation: ['create'],
+				resource: [RESOURCES.COMPANY],
+				operation: [OPERATIONS.CREATE],
 			},
 		},
 		options: [
@@ -91,8 +92,8 @@ export const properties: INodeProperties[] = [
 				description: 'Currency ID of the company',
 			},
 			{
-				displayName: 'Custom Fields',
-				name: 'customFields',
+				displayName: CUSTOM_FIELDS.displayName,
+				name: CUSTOM_FIELDS.name,
 				type: 'json',
 				default: '',
 				description: 'Custom fields of the company',

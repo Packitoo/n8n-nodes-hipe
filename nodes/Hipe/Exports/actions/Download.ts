@@ -1,5 +1,6 @@
 import { IExecuteFunctions, sleep } from 'n8n-workflow';
 import { INodeExecutionData, INodeProperties } from 'n8n-workflow';
+import { RESOURCES, OPERATIONS } from '../../constants';
 
 export const properties: INodeProperties[] = [
 	{
@@ -9,7 +10,7 @@ export const properties: INodeProperties[] = [
 		required: true,
 		default: '',
 		description: 'ID of the export to download the file for',
-		displayOptions: { show: { resource: ['export'], operation: ['download'] } },
+		displayOptions: { show: { resource: [RESOURCES.EXPORT], operation: [OPERATIONS.DOWNLOAD] } },
 	},
 	{
 		displayName: 'Binary Property',
@@ -18,7 +19,7 @@ export const properties: INodeProperties[] = [
 		default: 'data',
 		required: true,
 		description: 'Name of the binary property to store the downloaded file in',
-		displayOptions: { show: { resource: ['export'], operation: ['download'] } },
+		displayOptions: { show: { resource: [RESOURCES.EXPORT], operation: [OPERATIONS.DOWNLOAD] } },
 	},
 	{
 		displayName: 'File Name',
@@ -26,7 +27,7 @@ export const properties: INodeProperties[] = [
 		type: 'string',
 		default: '',
 		description: 'Optional file name for the downloaded file (e.g. export.csv)',
-		displayOptions: { show: { resource: ['export'], operation: ['download'] } },
+		displayOptions: { show: { resource: [RESOURCES.EXPORT], operation: [OPERATIONS.DOWNLOAD] } },
 	},
 ];
 

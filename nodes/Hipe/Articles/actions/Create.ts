@@ -1,5 +1,7 @@
 import { IExecuteFunctions, sleep } from 'n8n-workflow';
-import { INodeExecutionData, INodeProperties } from 'n8n-workflow';
+import { INodeExecutionData, INodeProperties, IDataObject } from 'n8n-workflow';
+import { RESOURCES, OPERATIONS, CUSTOM_FIELDS } from '../../constants';
+import { sanitizeFields } from '../../utils/sanitizeFields';
 
 // Properties for the Create operation
 export const properties: INodeProperties[] = [
@@ -12,8 +14,8 @@ export const properties: INodeProperties[] = [
 		description: 'Name of the article',
 		displayOptions: {
 			show: {
-				resource: ['article'],
-				operation: ['create'],
+				resource: [RESOURCES.ARTICLE],
+				operation: [OPERATIONS.CREATE],
 			},
 		},
 	},
@@ -26,8 +28,8 @@ export const properties: INodeProperties[] = [
 		description: 'Code of the article',
 		displayOptions: {
 			show: {
-				resource: ['article'],
-				operation: ['create'],
+				resource: [RESOURCES.ARTICLE],
+				operation: [OPERATIONS.CREATE],
 			},
 		},
 	},
@@ -39,8 +41,8 @@ export const properties: INodeProperties[] = [
 		default: {},
 		displayOptions: {
 			show: {
-				resource: ['article'],
-				operation: ['create'],
+				resource: [RESOURCES.ARTICLE],
+				operation: [OPERATIONS.CREATE],
 			},
 		},
 		options: [
@@ -73,8 +75,8 @@ export const properties: INodeProperties[] = [
 				description: 'ID of the currency for the price',
 			},
 			{
-				displayName: 'Custom Fields',
-				name: 'customFields',
+				displayName: CUSTOM_FIELDS.displayName,
+				name: CUSTOM_FIELDS.name,
 				type: 'json',
 				default: '',
 				description: 'Custom fields for the article (JSON object)',
@@ -159,16 +161,9 @@ export async function execute(
 			// Get input data
 			const name = this.getNodeParameter('name', i) as string;
 			const code = this.getNodeParameter('code', i) as string;
-			const additionalFields = this.getNodeParameter('additionalFields', i, {}) as object;
-
-			// Parse customFields from string to object if needed
-			if (
-				additionalFields &&
-				(additionalFields as any).customFields &&
-				typeof (additionalFields as any).customFields === 'string'
-			) {
-				(additionalFields as any).customFields = JSON.parse((additionalFields as any).customFields);
-			}
+			const additionalFields = sanitizeFields(
+				this.getNodeParameter('additionalFields', i, {}) as IDataObject,
+			);
 
 			// Make API call to create the article
 			const response = await this.helpers.requestWithAuthentication.call(this, 'hipeApi', {

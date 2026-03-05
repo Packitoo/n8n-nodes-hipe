@@ -1,5 +1,6 @@
 import { IExecuteFunctions, sleep } from 'n8n-workflow';
 import { INodeExecutionData, INodeProperties } from 'n8n-workflow';
+import { RESOURCES, OPERATIONS } from '../../../constants';
 import { ICorrugatedSupplier } from '../../../interfaces';
 
 // Properties for the Create operation
@@ -13,8 +14,8 @@ export const properties: INodeProperties[] = [
 		description: 'Name of the corrugated supplier',
 		displayOptions: {
 			show: {
-				resource: ['corrugatedSupplier'],
-				operation: ['create'],
+				resource: [RESOURCES.CORRUGATED_SUPPLIER],
+				operation: [OPERATIONS.CREATE],
 			},
 		},
 	},
@@ -26,8 +27,8 @@ export const properties: INodeProperties[] = [
 		default: {},
 		displayOptions: {
 			show: {
-				resource: ['corrugatedSupplier'],
-				operation: ['create'],
+				resource: [RESOURCES.CORRUGATED_SUPPLIER],
+				operation: [OPERATIONS.CREATE],
 			},
 		},
 		options: [
@@ -39,8 +40,8 @@ export const properties: INodeProperties[] = [
 				description: 'Contact information of the supplier',
 				displayOptions: {
 					show: {
-						resource: ['corrugatedSupplier'],
-						operation: ['create'],
+						resource: [RESOURCES.CORRUGATED_SUPPLIER],
+						operation: [OPERATIONS.CREATE],
 					},
 				},
 			},

@@ -2,8 +2,9 @@ import * as create from './Create';
 import * as list from './List';
 import * as update from './Update';
 import * as remove from './Delete';
+import { RESOURCES, OPERATIONS } from '../../constants';
 
-export const RESOURCE = 'statuses';
+export const RESOURCE = RESOURCES.STATUSES;
 
 export const ACTIONS = {
 	create: create,
@@ -19,36 +20,37 @@ export function buildProperties() {
 			displayName: 'Operation',
 			name: 'operation',
 			type: 'options',
+			default: '',
 			displayOptions: {
 				show: { resource: [RESOURCE] },
 			},
 			options: [
 				{
 					name: 'Create',
-					value: 'create',
+					value: OPERATIONS.CREATE,
 					description: 'Create a new status',
 					action: 'Create a new status',
 				},
 				{
 					name: 'Get Many',
-					value: 'getMany',
+					value: OPERATIONS.GET_MANY,
 					description: 'Get statuses for a given entity',
 					action: 'Get statuses for a given entity',
 				},
 				{
 					name: 'Update',
-					value: 'update',
+					value: OPERATIONS.UPDATE,
 					description: 'Update a specific status',
 					action: 'Update a specific status',
 				},
 				{
 					name: 'Delete',
-					value: 'delete',
+					value: OPERATIONS.DELETE,
 					description: 'Delete a specific status',
 					action: 'Delete a specific status',
 				},
 			],
-			default: 'getMany',
+			default: OPERATIONS.GET_MANY,
 			noDataExpression: true,
 		},
 		...create.properties,

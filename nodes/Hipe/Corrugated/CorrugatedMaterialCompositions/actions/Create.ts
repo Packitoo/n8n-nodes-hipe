@@ -1,5 +1,6 @@
 import { IExecuteFunctions, sleep } from 'n8n-workflow';
 import { INodeExecutionData, INodeProperties } from 'n8n-workflow';
+import { RESOURCES, OPERATIONS } from '../../../constants';
 import { ICorrugatedMaterialComposition } from '../../../interfaces';
 
 // Properties for the Create operation
@@ -13,8 +14,8 @@ export const properties: INodeProperties[] = [
 		description: 'ID of the corrugated material',
 		displayOptions: {
 			show: {
-				resource: ['corrugatedMaterialComposition'],
-				operation: ['create'],
+				resource: [RESOURCES.CORRUGATED_MATERIAL_COMPOSITION],
+				operation: [OPERATIONS.CREATE],
 			},
 		},
 	},
@@ -27,8 +28,8 @@ export const properties: INodeProperties[] = [
 		description: 'ID of the flute',
 		displayOptions: {
 			show: {
-				resource: ['corrugatedMaterialComposition'],
-				operation: ['create'],
+				resource: [RESOURCES.CORRUGATED_MATERIAL_COMPOSITION],
+				operation: [OPERATIONS.CREATE],
 			},
 		},
 	},
@@ -44,8 +45,8 @@ export const properties: INodeProperties[] = [
 		description: 'IDs of the liners',
 		displayOptions: {
 			show: {
-				resource: ['corrugatedMaterialComposition'],
-				operation: ['create'],
+				resource: [RESOURCES.CORRUGATED_MATERIAL_COMPOSITION],
+				operation: [OPERATIONS.CREATE],
 			},
 		},
 	},
@@ -57,8 +58,8 @@ export const properties: INodeProperties[] = [
 		default: {},
 		displayOptions: {
 			show: {
-				resource: ['corrugatedMaterialComposition'],
-				operation: ['create'],
+				resource: [RESOURCES.CORRUGATED_MATERIAL_COMPOSITION],
+				operation: [OPERATIONS.CREATE],
 			},
 		},
 		options: [

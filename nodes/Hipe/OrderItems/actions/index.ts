@@ -3,8 +3,9 @@ import * as get from './Get';
 import * as list from './List';
 import * as update from './Update';
 import * as deleteOrderItem from './Delete';
+import { RESOURCES, OPERATIONS } from '../../constants';
 
-export const RESOURCE = 'orderItem';
+export const RESOURCE = RESOURCES.ORDER_ITEM;
 
 export const ACTIONS = {
 	create: create,
@@ -21,42 +22,43 @@ export function buildProperties() {
 			displayName: 'Operation',
 			name: 'operation',
 			type: 'options',
+			default: '',
 			displayOptions: {
 				show: { resource: [RESOURCE] },
 			},
 			options: [
 				{
 					name: 'Create',
-					value: 'create',
+					value: OPERATIONS.CREATE,
 					description: 'Create a new order item',
 					action: 'Create a new order item',
 				},
 				{
 					name: 'Delete',
-					value: 'delete',
+					value: OPERATIONS.DELETE,
 					description: 'Delete an order item',
 					action: 'Delete an order item',
 				},
 				{
 					name: 'Get',
-					value: 'get',
+					value: OPERATIONS.GET,
 					description: 'Get a specific order item',
 					action: 'Get a specific order item',
 				},
 				{
 					name: 'Get Many',
-					value: 'getMany',
+					value: OPERATIONS.GET_MANY,
 					description: 'Get multiple order items',
 					action: 'Get multiple order items',
 				},
 				{
 					name: 'Update',
-					value: 'update',
+					value: OPERATIONS.UPDATE,
 					description: 'Update an order item',
 					action: 'Update an order item',
 				},
 			],
-			default: 'getMany',
+			default: OPERATIONS.GET_MANY,
 			noDataExpression: true,
 		},
 		...create.properties,

@@ -7,8 +7,9 @@ import * as linkContact from './linkContact';
 import * as unlinkContact from './unlinkContact';
 import * as getAddresses from './getAddresses';
 import * as search from './Search';
+import { RESOURCES, OPERATIONS } from '../../constants';
 
-export const RESOURCE = 'company';
+export const RESOURCE = RESOURCES.COMPANY;
 
 export const ACTIONS = {
 	create: create,
@@ -29,67 +30,68 @@ export function buildProperties() {
 			displayName: 'Operation',
 			name: 'operation',
 			type: 'options',
+			default: '',
 			displayOptions: {
 				show: { resource: [RESOURCE] },
 			},
 			options: [
 				{
 					name: 'Create',
-					value: 'create',
+					value: OPERATIONS.CREATE,
 					description: 'Create a new company',
 					action: 'Create a new company',
 				},
 				{
 					name: 'Get',
-					value: 'get',
+					value: OPERATIONS.GET,
 					description: 'Get a specific company',
 					action: 'Get a specific company',
 				},
 				{
 					name: 'Get Addresses',
-					value: 'getAddresses',
+					value: OPERATIONS.GET_ADDRESSES,
 					description: 'Get addresses of a company',
 					action: 'Get addresses of a company',
 				},
 				{
 					name: 'Get Many',
-					value: 'getMany',
+					value: OPERATIONS.GET_MANY,
 					description: 'Get multiple companies',
 					action: 'Get multiple companies',
 				},
 				{
 					name: 'Hard Delete',
-					value: 'hardDelete',
+					value: OPERATIONS.HARD_DELETE,
 					description: 'Permanently delete a company',
 					action: 'Hard delete a company',
 				},
 				{
 					name: 'Link Contact',
-					value: 'linkContact',
+					value: OPERATIONS.LINK_CONTACT,
 					description: 'Link an existing contact to a company',
 					action: 'Link an existing contact to a company',
 				},
 				{
 					name: 'Search',
-					value: 'search',
+					value: OPERATIONS.SEARCH,
 					description: 'Search for companies',
 					action: 'Search for companies',
 				},
 				{
 					name: 'Unlink Contact',
-					value: 'unlinkContact',
+					value: OPERATIONS.UNLINK_CONTACT,
 					description: 'Unlink a contact from a company',
 					action: 'Unlink a contact from a company',
 				},
 				{
 					name: 'Update',
-					value: 'update',
+					value: OPERATIONS.UPDATE,
 					description: 'Update a specific company',
 					action: 'Update a specific company',
 				},
 				// { name: 'Create Address', value: 'createAddress', description: 'Create a new address for a company', action: 'Create address' },
 			],
-			default: 'get',
+			default: OPERATIONS.GET,
 			noDataExpression: true,
 		},
 		...create.properties,

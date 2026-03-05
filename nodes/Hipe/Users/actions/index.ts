@@ -7,8 +7,9 @@ import * as getMe from './GetMe';
 import * as search from './Search';
 import * as archive from './Archive';
 import * as unarchive from './Unarchive';
+import { RESOURCES, OPERATIONS } from '../../constants';
 
-export const RESOURCE = 'user';
+export const RESOURCE = RESOURCES.USER;
 
 export const ACTIONS = {
 	createContact: create,
@@ -29,66 +30,67 @@ export function buildProperties() {
 			displayName: 'Operation',
 			name: 'operation',
 			type: 'options',
+			default: '',
 			displayOptions: {
 				show: { resource: [RESOURCE] },
 			},
 			options: [
 				{
 					name: 'Archive',
-					value: 'archive',
+					value: OPERATIONS.ARCHIVE,
 					description: 'Archive a user',
 					action: 'Archive a user',
 				},
 				{
 					name: 'Create Contact',
-					value: 'createContact',
+					value: OPERATIONS.CREATE_CONTACT,
 					description: 'Create a new contact',
 					action: 'Create a new contact',
 				},
 				{
 					name: 'Get',
-					value: 'get',
+					value: OPERATIONS.GET,
 					description: 'Get a specific user',
 					action: 'Get a specific user',
 				},
 				{
 					name: 'Get Many',
-					value: 'getMany',
+					value: OPERATIONS.GET_MANY,
 					description: 'Get multiple users',
 					action: 'Get multiple users',
 				},
 				{
 					name: 'Get Me',
-					value: 'getMe',
+					value: OPERATIONS.GET_ME,
 					description: 'Get current authenticated user',
 					action: 'Get current authenticated user',
 				},
 				{
 					name: 'Hard Delete',
-					value: 'hardDelete',
+					value: OPERATIONS.HARD_DELETE,
 					description: 'Permanently delete a contact user (users without roles only)',
 					action: 'Hard delete a contact user',
 				},
 				{
 					name: 'Search',
-					value: 'search',
+					value: OPERATIONS.SEARCH,
 					description: 'Advanced search over users',
 					action: 'Search users',
 				},
 				{
 					name: 'Unarchive',
-					value: 'unarchive',
+					value: OPERATIONS.UNARCHIVE,
 					description: 'Unarchive a user',
 					action: 'Unarchive a user',
 				},
 				{
 					name: 'Update',
-					value: 'update',
+					value: OPERATIONS.UPDATE,
 					description: 'Update a specific user',
 					action: 'Update a specific user',
 				},
 			],
-			default: 'getMany',
+			default: OPERATIONS.GET_MANY,
 			noDataExpression: true,
 		},
 		...create.properties,

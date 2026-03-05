@@ -1,3 +1,4 @@
+import { RESOURCES, OPERATIONS } from '../../constants';
 import * as create from './create';
 import * as get from './get';
 import * as list from './list';
@@ -5,7 +6,7 @@ import * as update from './update';
 import * as remove from './remove';
 import * as search from './search';
 
-export const RESOURCE = 'address';
+export const RESOURCE = RESOURCES.ADDRESS;
 
 export const ACTIONS = {
 	create: create,
@@ -22,43 +23,43 @@ export function buildProperties() {
 			displayName: 'Operation',
 			name: 'operation',
 			type: 'options',
+			default: `${OPERATIONS.GET}`,
 			displayOptions: {
 				show: { resource: [RESOURCE] },
 			},
 			options: [
 				{
 					name: 'Create',
-					value: 'create',
+					value: OPERATIONS.CREATE,
 					description: 'Create a new address',
 					action: 'Create a new address',
 				},
 				{
 					name: 'Delete',
-					value: 'delete',
+					value: OPERATIONS.DELETE,
 					description: 'Delete a specific address',
 					action: 'Delete a specific address',
 				},
 				{
 					name: 'Get',
-					value: 'get',
+					value: OPERATIONS.GET,
 					description: 'Get a specific address',
 					action: 'Get a specific address',
 				},
 				// { name: 'Get Many', value: 'getMany', description: 'Get multiple addresses', action: 'Get many' }, // TODO: implement backend
 				{
 					name: 'Search',
-					value: 'search',
+					value: OPERATIONS.SEARCH,
 					description: 'Search for addresses',
 					action: 'Search for addresses',
 				},
 				{
 					name: 'Update',
-					value: 'update',
+					value: OPERATIONS.UPDATE,
 					description: 'Update a specific address',
 					action: 'Update a specific address',
 				},
 			],
-			default: 'get',
 			noDataExpression: true,
 		},
 		...create.properties,

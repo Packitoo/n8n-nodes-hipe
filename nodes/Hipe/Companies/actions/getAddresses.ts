@@ -1,4 +1,5 @@
 import { IExecuteFunctions, sleep, INodeExecutionData, INodeProperties } from 'n8n-workflow';
+import { RESOURCES, OPERATIONS } from '../../constants';
 
 export const properties: INodeProperties[] = [
 	{
@@ -10,8 +11,8 @@ export const properties: INodeProperties[] = [
 		description: 'ID of the company to retrieve',
 		displayOptions: {
 			show: {
-				resource: ['company'],
-				operation: ['getAddresses'],
+				resource: [RESOURCES.COMPANY],
+				operation: [OPERATIONS.GET_ADDRESSES],
 			},
 		},
 	},
@@ -24,8 +25,8 @@ export const properties: INodeProperties[] = [
 		options: [],
 		displayOptions: {
 			show: {
-				resource: ['company'],
-				operation: ['getAddresses'],
+				resource: [RESOURCES.COMPANY],
+				operation: [OPERATIONS.GET_ADDRESSES],
 			},
 		},
 	},

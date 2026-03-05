@@ -1,5 +1,6 @@
 import { IExecuteFunctions, sleep } from 'n8n-workflow';
 import { INodeExecutionData, INodeProperties } from 'n8n-workflow';
+import { RESOURCES, OPERATIONS } from '../../../constants';
 import { ICorrugatedMaterial } from '../../../interfaces';
 
 // Properties for the Create operation
@@ -13,8 +14,8 @@ export const properties: INodeProperties[] = [
 		description: 'Name of the corrugated material',
 		displayOptions: {
 			show: {
-				resource: ['corrugatedMaterial'],
-				operation: ['create'],
+				resource: [RESOURCES.CORRUGATED_MATERIAL],
+				operation: [OPERATIONS.CREATE],
 			},
 		},
 	},
@@ -26,8 +27,8 @@ export const properties: INodeProperties[] = [
 		description: 'Description of the corrugated material',
 		displayOptions: {
 			show: {
-				resource: ['corrugatedMaterial'],
-				operation: ['create'],
+				resource: [RESOURCES.CORRUGATED_MATERIAL],
+				operation: [OPERATIONS.CREATE],
 			},
 		},
 	},
@@ -39,8 +40,8 @@ export const properties: INodeProperties[] = [
 		default: {},
 		displayOptions: {
 			show: {
-				resource: ['corrugatedMaterial'],
-				operation: ['create'],
+				resource: [RESOURCES.CORRUGATED_MATERIAL],
+				operation: [OPERATIONS.CREATE],
 			},
 		},
 		options: [

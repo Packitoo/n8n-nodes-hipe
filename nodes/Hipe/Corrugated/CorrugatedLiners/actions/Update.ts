@@ -1,6 +1,7 @@
 import { IExecuteFunctions, sleep } from 'n8n-workflow';
 import { INodeExecutionData, INodeProperties } from 'n8n-workflow';
 import { ICorrugatedLiner } from '../../../interfaces';
+import { RESOURCES, OPERATIONS } from '../../../constants';
 
 // Properties for the Update operation
 export const properties: INodeProperties[] = [
@@ -13,8 +14,8 @@ export const properties: INodeProperties[] = [
 		description: 'ID of the corrugated liner to update',
 		displayOptions: {
 			show: {
-				resource: ['corrugatedLiner'],
-				operation: ['update'],
+				resource: [RESOURCES.CORRUGATED_LINER],
+				operation: [OPERATIONS.UPDATE],
 			},
 		},
 	},
@@ -26,8 +27,8 @@ export const properties: INodeProperties[] = [
 		default: {},
 		displayOptions: {
 			show: {
-				resource: ['corrugatedLiner'],
-				operation: ['update'],
+				resource: [RESOURCES.CORRUGATED_LINER],
+				operation: [OPERATIONS.UPDATE],
 			},
 		},
 		options: [
@@ -53,8 +54,8 @@ export const properties: INodeProperties[] = [
 				description: 'Category of the corrugated liner',
 				displayOptions: {
 					show: {
-						resource: ['corrugatedLiner'],
-						operation: ['create'],
+						resource: [RESOURCES.CORRUGATED_LINER],
+						operation: [OPERATIONS.CREATE],
 					},
 				},
 			},
@@ -67,8 +68,8 @@ export const properties: INodeProperties[] = [
 				description: 'Ink porosity of the corrugated liner',
 				displayOptions: {
 					show: {
-						resource: ['corrugatedLiner'],
-						operation: ['create'],
+						resource: [RESOURCES.CORRUGATED_LINER],
+						operation: [OPERATIONS.CREATE],
 					},
 				},
 			},
@@ -83,8 +84,8 @@ export const properties: INodeProperties[] = [
 				description: 'Label of the corrugated liner',
 				displayOptions: {
 					show: {
-						resource: ['corrugatedLiner'],
-						operation: ['create'],
+						resource: [RESOURCES.CORRUGATED_LINER],
+						operation: [OPERATIONS.CREATE],
 					},
 				},
 			},
@@ -96,8 +97,8 @@ export const properties: INodeProperties[] = [
 				description: 'Name of the corrugated liner',
 				displayOptions: {
 					show: {
-						resource: ['corrugatedLiner'],
-						operation: ['create'],
+						resource: [RESOURCES.CORRUGATED_LINER],
+						operation: [OPERATIONS.CREATE],
 					},
 				},
 			},
@@ -110,8 +111,8 @@ export const properties: INodeProperties[] = [
 				description: 'Varnish porosity of the corrugated liner',
 				displayOptions: {
 					show: {
-						resource: ['corrugatedLiner'],
-						operation: ['create'],
+						resource: [RESOURCES.CORRUGATED_LINER],
+						operation: [OPERATIONS.CREATE],
 					},
 				},
 			},

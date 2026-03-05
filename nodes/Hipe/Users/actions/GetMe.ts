@@ -1,5 +1,6 @@
 import { IExecuteFunctions, sleep } from 'n8n-workflow';
 import { INodeExecutionData, INodeProperties } from 'n8n-workflow';
+import { RESOURCES, OPERATIONS } from '../../constants';
 
 // Properties for the Get Me operation
 export const properties: INodeProperties[] = [
@@ -11,8 +12,8 @@ export const properties: INodeProperties[] = [
 		default: {},
 		displayOptions: {
 			show: {
-				resource: ['user'],
-				operation: ['getMe'],
+				resource: [RESOURCES.USER],
+				operation: [OPERATIONS.GET_ME],
 			},
 		},
 		options: [],

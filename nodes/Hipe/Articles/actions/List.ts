@@ -1,6 +1,7 @@
 import { IExecuteFunctions, sleep } from 'n8n-workflow';
 import { INodeExecutionData, INodeProperties } from 'n8n-workflow';
 import { listWithPaginationFlat } from '../../Corrugated/shared/pagination';
+import { RESOURCES, OPERATIONS } from '../../constants';
 
 // Properties for the List operation
 export const properties: INodeProperties[] = [
@@ -12,8 +13,8 @@ export const properties: INodeProperties[] = [
 		description: 'Whether to return all results or only up to a given limit',
 		displayOptions: {
 			show: {
-				resource: ['article'],
-				operation: ['getMany'],
+				resource: [RESOURCES.ARTICLE],
+				operation: [OPERATIONS.GET_MANY],
 			},
 		},
 	},
@@ -23,8 +24,8 @@ export const properties: INodeProperties[] = [
 		type: 'number',
 		displayOptions: {
 			show: {
-				resource: ['article'],
-				operation: ['getMany'],
+				resource: [RESOURCES.ARTICLE],
+				operation: [OPERATIONS.GET_MANY],
 				returnAll: [false],
 			},
 		},
@@ -40,8 +41,8 @@ export const properties: INodeProperties[] = [
 		type: 'number',
 		displayOptions: {
 			show: {
-				resource: ['article'],
-				operation: ['getMany'],
+				resource: [RESOURCES.ARTICLE],
+				operation: [OPERATIONS.GET_MANY],
 				returnAll: [false],
 			},
 		},
@@ -60,8 +61,8 @@ export const properties: INodeProperties[] = [
 		description: 'Filter options for articles',
 		displayOptions: {
 			show: {
-				resource: ['article'],
-				operation: ['getMany'],
+				resource: [RESOURCES.ARTICLE],
+				operation: [OPERATIONS.GET_MANY],
 			},
 		},
 		options: [
@@ -84,8 +85,8 @@ export const properties: INodeProperties[] = [
 			'Sort is converted to a single "sort" query parameter in the format "field,ASC|DESC"',
 		displayOptions: {
 			show: {
-				resource: ['article'],
-				operation: ['getMany'],
+				resource: [RESOURCES.ARTICLE],
+				operation: [OPERATIONS.GET_MANY],
 			},
 		},
 		options: [

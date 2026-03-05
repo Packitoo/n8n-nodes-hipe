@@ -1,6 +1,7 @@
 import { IExecuteFunctions, sleep } from 'n8n-workflow';
 import { INodeExecutionData, INodeProperties } from 'n8n-workflow';
 import { ICorrugatedFormat } from '../../../interfaces';
+import { RESOURCES, OPERATIONS } from '../../../constants';
 
 // Properties for the Create operation
 export const properties: INodeProperties[] = [
@@ -13,8 +14,8 @@ export const properties: INodeProperties[] = [
 		description: 'Width of the corrugated format in mm',
 		displayOptions: {
 			show: {
-				resource: ['corrugatedFormat'],
-				operation: ['create'],
+				resource: [RESOURCES.CORRUGATED_FORMAT],
+				operation: [OPERATIONS.CREATE],
 			},
 		},
 	},
@@ -27,8 +28,8 @@ export const properties: INodeProperties[] = [
 		description: 'Length of the corrugated format in mm',
 		displayOptions: {
 			show: {
-				resource: ['corrugatedFormat'],
-				operation: ['create'],
+				resource: [RESOURCES.CORRUGATED_FORMAT],
+				operation: [OPERATIONS.CREATE],
 			},
 		},
 	},
@@ -40,8 +41,8 @@ export const properties: INodeProperties[] = [
 		default: {},
 		displayOptions: {
 			show: {
-				resource: ['corrugatedFormat'],
-				operation: ['create'],
+				resource: [RESOURCES.CORRUGATED_FORMAT],
+				operation: [OPERATIONS.CREATE],
 			},
 		},
 		options: [

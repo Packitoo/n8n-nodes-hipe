@@ -1,5 +1,6 @@
 import { IExecuteFunctions, sleep } from 'n8n-workflow';
 import { INodeExecutionData, INodeProperties } from 'n8n-workflow';
+import { RESOURCES, OPERATIONS } from '../../constants';
 
 // Properties for the Hard Delete operation
 export const properties: INodeProperties[] = [
@@ -12,8 +13,8 @@ export const properties: INodeProperties[] = [
 		description: 'ID of the company to permanently delete',
 		displayOptions: {
 			show: {
-				resource: ['company'],
-				operation: ['hardDelete'],
+				resource: [RESOURCES.COMPANY],
+				operation: [OPERATIONS.HARD_DELETE],
 			},
 		},
 	},

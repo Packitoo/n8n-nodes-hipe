@@ -1,5 +1,6 @@
 import { IExecuteFunctions, sleep } from 'n8n-workflow';
 import { INodeExecutionData, INodeProperties } from 'n8n-workflow';
+import { RESOURCES, OPERATIONS } from '../../constants';
 
 // Properties for the Remove Item operation
 export const properties: INodeProperties[] = [
@@ -12,8 +13,8 @@ export const properties: INodeProperties[] = [
 		description: 'ID of the order to remove item from',
 		displayOptions: {
 			show: {
-				resource: ['order'],
-				operation: ['removeItem'],
+				resource: [RESOURCES.ORDER],
+				operation: [OPERATIONS.REMOVE_ITEM],
 			},
 		},
 	},
@@ -26,8 +27,8 @@ export const properties: INodeProperties[] = [
 		description: 'ID of the order item to remove',
 		displayOptions: {
 			show: {
-				resource: ['order'],
-				operation: ['removeItem'],
+				resource: [RESOURCES.ORDER],
+				operation: [OPERATIONS.REMOVE_ITEM],
 			},
 		},
 	},

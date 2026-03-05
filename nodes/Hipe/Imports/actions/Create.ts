@@ -1,5 +1,6 @@
 import { IDataObject, IExecuteFunctions, sleep } from 'n8n-workflow';
 import { INodeExecutionData, INodeProperties } from 'n8n-workflow';
+import { RESOURCES, OPERATIONS } from '../../constants';
 
 // Properties for the Create Import
 export const properties: INodeProperties[] = [
@@ -12,8 +13,8 @@ export const properties: INodeProperties[] = [
 		description: 'Type of the import',
 		displayOptions: {
 			show: {
-				resource: ['import'],
-				operation: ['create'],
+				resource: [RESOURCES.IMPORT],
+				operation: [OPERATIONS.CREATE],
 			},
 		},
 	},
@@ -26,8 +27,8 @@ export const properties: INodeProperties[] = [
 		description: 'Delimiter used in the imported file',
 		displayOptions: {
 			show: {
-				resource: ['import'],
-				operation: ['create'],
+				resource: [RESOURCES.IMPORT],
+				operation: [OPERATIONS.CREATE],
 			},
 		},
 	},
@@ -41,8 +42,8 @@ export const properties: INodeProperties[] = [
 			'Name of the binary property that contains the CSV file to upload. Create Import always sends multipart/form-data with this file.',
 		displayOptions: {
 			show: {
-				resource: ['import'],
-				operation: ['create'],
+				resource: [RESOURCES.IMPORT],
+				operation: [OPERATIONS.CREATE],
 			},
 		},
 	},

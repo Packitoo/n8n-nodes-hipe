@@ -1,5 +1,6 @@
 import { IExecuteFunctions, sleep } from 'n8n-workflow';
 import { INodeExecutionData, INodeProperties } from 'n8n-workflow';
+import { RESOURCES, OPERATIONS } from '../../constants';
 
 // Properties for the Search operation (advanced search)
 export const properties: INodeProperties[] = [
@@ -14,8 +15,8 @@ export const properties: INodeProperties[] = [
 		default: '',
 		displayOptions: {
 			show: {
-				resource: ['user'],
-				operation: ['search'],
+				resource: [RESOURCES.USER],
+				operation: [OPERATIONS.SEARCH],
 			},
 		},
 	},
@@ -27,8 +28,8 @@ export const properties: INodeProperties[] = [
 		description: 'Max number of results to return',
 		displayOptions: {
 			show: {
-				resource: ['user'],
-				operation: ['search'],
+				resource: [RESOURCES.USER],
+				operation: [OPERATIONS.SEARCH],
 			},
 		},
 		typeOptions: {

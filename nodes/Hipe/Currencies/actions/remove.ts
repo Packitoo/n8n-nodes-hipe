@@ -1,4 +1,5 @@
 import { IExecuteFunctions, INodeExecutionData, INodeProperties, sleep } from 'n8n-workflow';
+import { RESOURCES, OPERATIONS } from '../../constants';
 
 export const properties: INodeProperties[] = [
 	{
@@ -10,8 +11,8 @@ export const properties: INodeProperties[] = [
 		description: 'ID of the currency to delete',
 		displayOptions: {
 			show: {
-				resource: ['currency'],
-				operation: ['delete'],
+				resource: [RESOURCES.CURRENCY],
+				operation: [OPERATIONS.DELETE],
 			},
 		},
 	},
@@ -24,8 +25,8 @@ export const properties: INodeProperties[] = [
 		default: {},
 		displayOptions: {
 			show: {
-				resource: ['currency'],
-				operation: ['delete'],
+				resource: [RESOURCES.CURRENCY],
+				operation: [OPERATIONS.DELETE],
 			},
 		},
 	},

@@ -1,5 +1,6 @@
 import { IExecuteFunctions, sleep } from 'n8n-workflow';
 import { INodeExecutionData, INodeProperties } from 'n8n-workflow';
+import { RESOURCES, OPERATIONS } from '../../constants';
 
 // Properties for the Add Items operation
 export const properties: INodeProperties[] = [
@@ -12,8 +13,8 @@ export const properties: INodeProperties[] = [
 		description: 'ID of the order to add items to',
 		displayOptions: {
 			show: {
-				resource: ['order'],
-				operation: ['addItems'],
+				resource: [RESOURCES.ORDER],
+				operation: [OPERATIONS.ADD_ITEMS],
 			},
 		},
 	},
@@ -30,8 +31,8 @@ export const properties: INodeProperties[] = [
 		description: 'Articles to add as order items (pricing and details auto-loaded from article)',
 		displayOptions: {
 			show: {
-				resource: ['order'],
-				operation: ['addItems'],
+				resource: [RESOURCES.ORDER],
+				operation: [OPERATIONS.ADD_ITEMS],
 			},
 		},
 		options: [
@@ -43,15 +44,16 @@ export const properties: INodeProperties[] = [
 						displayName: 'Article ID',
 						name: 'articleId',
 						type: 'string',
-							required:	true,
+						required: true,
 						default: '',
-						description: 'ID of the article to add (pricing, unit, and quantity auto-generated from article data)',
+						description:
+							'ID of the article to add (pricing, unit, and quantity auto-generated from article data)',
 					},
 					{
 						displayName: 'Quantity',
 						name: 'quantity',
 						type: 'number',
-							required:	true,
+						required: true,
 						default: 1,
 						description: 'Quantity of the article',
 					},

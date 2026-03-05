@@ -1,6 +1,7 @@
 import { IExecuteFunctions, sleep } from 'n8n-workflow';
 import { INodeExecutionData, INodeProperties } from 'n8n-workflow';
 import { listWithPaginationFlat } from '../../Corrugated/shared/pagination';
+import { RESOURCES, OPERATIONS } from '../../constants';
 
 // Properties for the List operation
 export const properties: INodeProperties[] = [
@@ -12,8 +13,8 @@ export const properties: INodeProperties[] = [
 		description: 'Whether to return all results or only up to a given limit',
 		displayOptions: {
 			show: {
-				resource: ['company'],
-				operation: ['getMany'],
+				resource: [RESOURCES.COMPANY],
+				operation: [OPERATIONS.GET_MANY],
 			},
 		},
 	},
@@ -41,8 +42,8 @@ export const properties: INodeProperties[] = [
 		displayOptions: {
 			show: {
 				returnAll: [false],
-				resource: ['company'],
-				operation: ['getMany'],
+				resource: [RESOURCES.COMPANY],
+				operation: [OPERATIONS.GET_MANY],
 			},
 		},
 		typeOptions: {
@@ -58,8 +59,8 @@ export const properties: INodeProperties[] = [
 		displayOptions: {
 			show: {
 				returnAll: [false],
-				resource: ['company'],
-				operation: ['getMany'],
+				resource: [RESOURCES.COMPANY],
+				operation: [OPERATIONS.GET_MANY],
 			},
 		},
 		typeOptions: {
@@ -78,8 +79,8 @@ export const properties: INodeProperties[] = [
 			'Flat filter keys per OpenAPI (e.g. status, type, company, product, taskType, search, comment, cursor, version, process, role, contact, lastupdate, tab, event, price, hierarchy, filterId, date/createdAt/updatedAt windows, start/end, updateStart/updateEnd, pipeline, category, step, manager, createdBy, user)',
 		displayOptions: {
 			show: {
-				resource: ['company'],
-				operation: ['getMany'],
+				resource: [RESOURCES.COMPANY],
+				operation: [OPERATIONS.GET_MANY],
 			},
 		},
 		options: [
@@ -189,8 +190,8 @@ export const properties: INodeProperties[] = [
 		placeholder: 'Add Sort Option',
 		displayOptions: {
 			show: {
-				resource: ['company'],
-				operation: ['getMany'],
+				resource: [RESOURCES.COMPANY],
+				operation: [OPERATIONS.GET_MANY],
 			},
 		},
 		default: {},
