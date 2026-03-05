@@ -1,5 +1,6 @@
 import { IExecuteFunctions, sleep } from 'n8n-workflow';
 import { INodeExecutionData, INodeProperties } from 'n8n-workflow';
+import { RESOURCES, OPERATIONS, CUSTOM_FIELDS } from '../../constants';
 
 // Properties for the Create operation
 export const properties: INodeProperties[] = [
@@ -12,8 +13,8 @@ export const properties: INodeProperties[] = [
 		description: 'Name of the project',
 		displayOptions: {
 			show: {
-				resource: ['project'],
-				operation: ['create'],
+				resource: [RESOURCES.PROJECT],
+				operation: [OPERATIONS.CREATE],
 			},
 		},
 	},
@@ -26,8 +27,8 @@ export const properties: INodeProperties[] = [
 		description: 'External ID of the project',
 		displayOptions: {
 			show: {
-				resource: ['project'],
-				operation: ['create'],
+				resource: [RESOURCES.PROJECT],
+				operation: [OPERATIONS.CREATE],
 			},
 		},
 	},
@@ -40,8 +41,8 @@ export const properties: INodeProperties[] = [
 		description: 'ID of the company associated with this project',
 		displayOptions: {
 			show: {
-				resource: ['project'],
-				operation: ['create'],
+				resource: [RESOURCES.PROJECT],
+				operation: [OPERATIONS.CREATE],
 			},
 		},
 	},
@@ -54,8 +55,8 @@ export const properties: INodeProperties[] = [
 		description: 'ID of the manager associated with this project (Internal user ID)',
 		displayOptions: {
 			show: {
-				resource: ['project'],
-				operation: ['create'],
+				resource: [RESOURCES.PROJECT],
+				operation: [OPERATIONS.CREATE],
 			},
 		},
 	},
@@ -67,14 +68,14 @@ export const properties: INodeProperties[] = [
 		default: {},
 		displayOptions: {
 			show: {
-				resource: ['project'],
-				operation: ['create'],
+				resource: [RESOURCES.PROJECT],
+				operation: [OPERATIONS.CREATE],
 			},
 		},
 		options: [
 			{
-				displayName: 'Custom Fields',
-				name: 'customFields',
+				displayName: CUSTOM_FIELDS.displayName,
+				name: CUSTOM_FIELDS.name,
 				type: 'json',
 				default: '',
 				description: 'Custom fields of the project',

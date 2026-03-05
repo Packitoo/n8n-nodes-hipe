@@ -1,3 +1,4 @@
+import { RESOURCES, OPERATIONS } from '../../constants';
 import * as create from './Create';
 import * as get from './Get';
 import * as list from './List';
@@ -9,7 +10,7 @@ import * as setPreview from './SetPreview';
 import * as deleteArticle from './Delete';
 import * as addBriefElement from './AddBriefElement';
 
-export const RESOURCE = 'article';
+export const RESOURCE = RESOURCES.ARTICLE;
 
 export const ACTIONS = {
 	create: create,
@@ -31,72 +32,72 @@ export function buildProperties() {
 			displayName: 'Operation',
 			name: 'operation',
 			type: 'options',
+			default: OPERATIONS.GET_MANY,
 			displayOptions: {
 				show: { resource: [RESOURCE] },
 			},
 			options: [
 				{
 					name: 'Add Brief Element',
-					value: 'addBriefElement',
+					value: OPERATIONS.ADD_BRIEF_ELEMENT,
 					description: 'Add a brief element to an article',
 					action: 'Add a brief element to an article',
 				},
 				{
 					name: 'Create',
-					value: 'create',
+					value: OPERATIONS.CREATE,
 					description: 'Create a new article',
 					action: 'Create a new article',
 				},
 				{
 					name: 'Delete',
-					value: 'delete',
+					value: OPERATIONS.DELETE,
 					description: 'Delete an article',
 					action: 'Delete an article',
 				},
 				{
 					name: 'Delete File',
-					value: 'deleteFile',
+					value: OPERATIONS.DELETE_FILE,
 					description: 'Delete a file from an article',
 					action: 'Delete a file from an article',
 				},
 				{
 					name: 'Get',
-					value: 'get',
+					value: OPERATIONS.GET,
 					description: 'Get a specific article',
 					action: 'Get a specific article',
 				},
 				{
 					name: 'Get Files',
-					value: 'getFiles',
+					value: OPERATIONS.GET_FILES,
 					description: 'Retrieve files for an article',
 					action: 'Retrieve files for an article',
 				},
 				{
 					name: 'Get Many',
-					value: 'getMany',
+					value: OPERATIONS.GET_MANY,
 					description: 'Get multiple articles',
 					action: 'Get multiple articles',
 				},
 				{
 					name: 'Set Preview',
-					value: 'setPreview',
+					value: OPERATIONS.SET_PREVIEW,
 					description: 'Set a file as the preview image for an article',
 					action: 'Set a file as the preview image for an article',
 				},
 				{
 					name: 'Update',
-					value: 'update',
+					value: OPERATIONS.UPDATE,
 					description: 'Update a specific article',
 					action: 'Update a specific article',
 				},
 				{
 					name: 'Upload File',
-					value: 'uploadFile',
+					value: OPERATIONS.UPLOAD_FILE,
 					description: 'Upload a file to an article',
 					action: 'Upload a file to an article',
 				},
 			],
-			default: 'getMany',
 			noDataExpression: true,
 		},
 		...create.properties,

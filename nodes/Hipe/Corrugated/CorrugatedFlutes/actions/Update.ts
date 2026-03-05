@@ -1,6 +1,7 @@
 import { IExecuteFunctions, sleep } from 'n8n-workflow';
 import { INodeExecutionData, INodeProperties } from 'n8n-workflow';
 import { ICorrugatedFlute } from '../../../interfaces';
+import { RESOURCES, OPERATIONS } from '../../../constants';
 
 // Properties for the Update operation
 export const properties: INodeProperties[] = [
@@ -13,8 +14,8 @@ export const properties: INodeProperties[] = [
 		description: 'ID of the corrugated flute to update',
 		displayOptions: {
 			show: {
-				resource: ['corrugatedFlute'],
-				operation: ['update'],
+				resource: [RESOURCES.CORRUGATED_FLUTE],
+				operation: [OPERATIONS.UPDATE],
 			},
 		},
 	},
@@ -26,8 +27,8 @@ export const properties: INodeProperties[] = [
 		default: {},
 		displayOptions: {
 			show: {
-				resource: ['corrugatedFlute'],
-				operation: ['update'],
+				resource: [RESOURCES.CORRUGATED_FLUTE],
+				operation: [OPERATIONS.UPDATE],
 			},
 		},
 		options: [

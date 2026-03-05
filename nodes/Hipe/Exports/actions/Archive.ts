@@ -1,5 +1,6 @@
 import { IExecuteFunctions, sleep } from 'n8n-workflow';
 import { INodeExecutionData, INodeProperties } from 'n8n-workflow';
+import { RESOURCES, OPERATIONS } from '../../constants';
 
 export const properties: INodeProperties[] = [
 	{
@@ -9,7 +10,7 @@ export const properties: INodeProperties[] = [
 		required: true,
 		default: '',
 		description: 'ID of the export to archive',
-		displayOptions: { show: { resource: ['export'], operation: ['archive'] } },
+		displayOptions: { show: { resource: [RESOURCES.EXPORT], operation: [OPERATIONS.ARCHIVE] } },
 	},
 ];
 

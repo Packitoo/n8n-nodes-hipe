@@ -1,5 +1,6 @@
 import { IExecuteFunctions, sleep } from 'n8n-workflow';
 import { INodeExecutionData, INodeProperties } from 'n8n-workflow';
+import { RESOURCES, OPERATIONS } from '../../constants';
 
 // Properties for the Delete File operation
 export const properties: INodeProperties[] = [
@@ -12,8 +13,8 @@ export const properties: INodeProperties[] = [
 		description: 'ID of the article',
 		displayOptions: {
 			show: {
-				resource: ['article'],
-				operation: ['deleteFile'],
+				resource: [RESOURCES.ARTICLE],
+				operation: [OPERATIONS.DELETE_FILE],
 			},
 		},
 	},
@@ -26,8 +27,8 @@ export const properties: INodeProperties[] = [
 		description: 'ID of the file to delete',
 		displayOptions: {
 			show: {
-				resource: ['article'],
-				operation: ['deleteFile'],
+				resource: [RESOURCES.ARTICLE],
+				operation: [OPERATIONS.DELETE_FILE],
 			},
 		},
 	},

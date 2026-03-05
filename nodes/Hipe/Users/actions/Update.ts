@@ -1,6 +1,7 @@
 import { IExecuteFunctions, sleep } from 'n8n-workflow';
 import { INodeExecutionData, INodeProperties } from 'n8n-workflow';
 import { IUser } from '../../interfaces';
+import { RESOURCES, OPERATIONS, CUSTOM_FIELDS } from '../../constants';
 
 // Properties for the Update operation
 export const properties: INodeProperties[] = [
@@ -13,8 +14,8 @@ export const properties: INodeProperties[] = [
 		description: 'ID of the user to update',
 		displayOptions: {
 			show: {
-				resource: ['user'],
-				operation: ['update'],
+				resource: [RESOURCES.USER],
+				operation: [OPERATIONS.UPDATE],
 			},
 		},
 	},
@@ -26,8 +27,8 @@ export const properties: INodeProperties[] = [
 		default: {},
 		displayOptions: {
 			show: {
-				resource: ['user'],
-				operation: ['update'],
+				resource: [RESOURCES.USER],
+				operation: [OPERATIONS.UPDATE],
 			},
 		},
 		options: [
@@ -39,8 +40,8 @@ export const properties: INodeProperties[] = [
 				description: 'Array of collaboration UUIDs to associate with the user',
 			},
 			{
-				displayName: 'Custom Fields',
-				name: 'customFields',
+				displayName: CUSTOM_FIELDS.displayName,
+				name: CUSTOM_FIELDS.name,
 				type: 'json',
 				default: '',
 				description: 'Custom fields of the user',

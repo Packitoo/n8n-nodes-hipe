@@ -1,5 +1,6 @@
 import { IExecuteFunctions, sleep } from 'n8n-workflow';
 import { INodeExecutionData, INodeProperties } from 'n8n-workflow';
+import { RESOURCES, OPERATIONS } from '../../constants';
 
 // Properties for the Set Preview operation
 export const properties: INodeProperties[] = [
@@ -12,8 +13,8 @@ export const properties: INodeProperties[] = [
 		description: 'ID of the article to set preview for',
 		displayOptions: {
 			show: {
-				resource: ['article'],
-				operation: ['setPreview'],
+				resource: [RESOURCES.ARTICLE],
+				operation: [OPERATIONS.SET_PREVIEW],
 			},
 		},
 	},
@@ -26,8 +27,8 @@ export const properties: INodeProperties[] = [
 		description: 'ID of the image file to set as preview (must be jpeg, png, webp, jpg, etc.)',
 		displayOptions: {
 			show: {
-				resource: ['article'],
-				operation: ['setPreview'],
+				resource: [RESOURCES.ARTICLE],
+				operation: [OPERATIONS.SET_PREVIEW],
 			},
 		},
 	},

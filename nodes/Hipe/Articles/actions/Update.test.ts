@@ -39,7 +39,10 @@ describe('Articles Update action', () => {
 					call: jest.fn().mockRejectedValue(new Error('fail!')),
 				},
 			},
-			getNodeParameter: () => undefined,
+			getNodeParameter: (name: string) => {
+				if (name === 'updateFields') return {};
+				return undefined;
+			},
 			continueOnFail: () => true,
 		} as any;
 		const items = [{ json: {} }];

@@ -1,5 +1,6 @@
 import { IExecuteFunctions, sleep } from 'n8n-workflow';
 import { INodeExecutionData, INodeProperties } from 'n8n-workflow';
+import { RESOURCES, OPERATIONS } from '../../../constants';
 import { ICorrugatedSupplier } from '../../../interfaces';
 
 // Properties for the Update operation
@@ -13,8 +14,8 @@ export const properties: INodeProperties[] = [
 		description: 'ID of the corrugated supplier to update',
 		displayOptions: {
 			show: {
-				resource: ['corrugatedSupplier'],
-				operation: ['update'],
+				resource: [RESOURCES.CORRUGATED_SUPPLIER],
+				operation: [OPERATIONS.UPDATE],
 			},
 		},
 	},
@@ -26,8 +27,8 @@ export const properties: INodeProperties[] = [
 		default: {},
 		displayOptions: {
 			show: {
-				resource: ['corrugatedSupplier'],
-				operation: ['update'],
+				resource: [RESOURCES.CORRUGATED_SUPPLIER],
+				operation: [OPERATIONS.UPDATE],
 			},
 		},
 		options: [
@@ -39,8 +40,8 @@ export const properties: INodeProperties[] = [
 				description: 'Name of the corrugated supplier',
 				displayOptions: {
 					show: {
-						resource: ['corrugatedSupplier'],
-						operation: ['update'],
+						resource: [RESOURCES.CORRUGATED_SUPPLIER],
+						operation: [OPERATIONS.UPDATE],
 					},
 				},
 			},
@@ -52,8 +53,8 @@ export const properties: INodeProperties[] = [
 				description: 'Contact information of the supplier',
 				displayOptions: {
 					show: {
-						resource: ['corrugatedSupplier'],
-						operation: ['update'],
+						resource: [RESOURCES.CORRUGATED_SUPPLIER],
+						operation: [OPERATIONS.UPDATE],
 					},
 				},
 			},

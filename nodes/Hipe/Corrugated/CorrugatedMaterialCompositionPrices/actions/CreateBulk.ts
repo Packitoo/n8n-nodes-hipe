@@ -1,5 +1,6 @@
 import { IExecuteFunctions, sleep } from 'n8n-workflow';
 import { INodeExecutionData, INodeProperties } from 'n8n-workflow';
+import { RESOURCES, OPERATIONS } from '../../../constants';
 
 // Properties for the CreateBulk operation
 export const properties: INodeProperties[] = [
@@ -12,8 +13,8 @@ export const properties: INodeProperties[] = [
 		description: 'The name of the input field containing the array of composition prices to create',
 		displayOptions: {
 			show: {
-				resource: ['corrugatedMaterialCompositionPrice'],
-				operation: ['createBulk'],
+				resource: [RESOURCES.CORRUGATED_MATERIAL_COMPOSITION_PRICE],
+				operation: [OPERATIONS.CREATE_BULK],
 			},
 		},
 	},
@@ -25,8 +26,8 @@ export const properties: INodeProperties[] = [
 		default: {},
 		displayOptions: {
 			show: {
-				resource: ['corrugatedMaterialCompositionPrice'],
-				operation: ['createBulk'],
+				resource: [RESOURCES.CORRUGATED_MATERIAL_COMPOSITION_PRICE],
+				operation: [OPERATIONS.CREATE_BULK],
 			},
 		},
 		options: [

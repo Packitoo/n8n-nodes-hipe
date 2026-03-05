@@ -1,5 +1,6 @@
 import { IExecuteFunctions, sleep } from 'n8n-workflow';
 import { INodeExecutionData, INodeProperties } from 'n8n-workflow';
+import { RESOURCES, OPERATIONS } from '../../constants';
 
 // Properties for the Delete operation
 export const properties: INodeProperties[] = [
@@ -12,8 +13,21 @@ export const properties: INodeProperties[] = [
 		description: 'ID of the article to delete',
 		displayOptions: {
 			show: {
-				resource: ['article'],
-				operation: ['delete'],
+				resource: [RESOURCES.ARTICLE],
+				operation: [OPERATIONS.DELETE],
+			},
+		},
+	},
+	{
+		displayName: 'Hard Delete',
+		name: 'hardDelete',
+		type: 'boolean',
+		default: false,
+		description: 'Whether to permanently delete the article instead of soft deleting it',
+		displayOptions: {
+			show: {
+				resource: [RESOURCES.ARTICLE],
+				operation: [OPERATIONS.DELETE],
 			},
 		},
 	},
@@ -39,14 +53,21 @@ export async function execute(
 		try {
 			// Get input data
 			const articleId = this.getNodeParameter('articleId', i) as string;
+			const hardDelete = this.getNodeParameter('hardDelete', i, false) as boolean;
+
+			const qs: Record<string, any> = {};
+			if (hardDelete) {
+				qs.hardDelete = true;
+			}
 
 			// Make API call to delete the article
 			const response = await this.helpers.requestWithAuthentication.call(this, 'hipeApi', {
 				method: 'DELETE',
 				url: `${baseUrl}/api/articles/${articleId}`,
 				json: true,
+				qs,
 			});
-			returnData.push({ json: response });
+			returnData.push({ json: response ?? { success: true } });
 		} catch (error) {
 			if (this.continueOnFail()) {
 				returnData.push({ json: { error: error.message } });

@@ -1,5 +1,6 @@
 import { IExecuteFunctions, sleep } from 'n8n-workflow';
 import { INodeExecutionData, INodeProperties } from 'n8n-workflow';
+import { RESOURCES, OPERATIONS } from '../../constants';
 
 // Properties for the Get operation
 export const properties: INodeProperties[] = [
@@ -12,8 +13,8 @@ export const properties: INodeProperties[] = [
 		description: 'ID of the project to retrieve files',
 		displayOptions: {
 			show: {
-				resource: ['project'],
-				operation: ['uploadFile'],
+				resource: [RESOURCES.PROJECT],
+				operation: [OPERATIONS.UPLOAD_FILE],
 			},
 		},
 	},
@@ -26,8 +27,8 @@ export const properties: INodeProperties[] = [
 		description: 'Name of the binary property that contains the file to upload',
 		displayOptions: {
 			show: {
-				resource: ['project'],
-				operation: ['uploadFile'],
+				resource: [RESOURCES.PROJECT],
+				operation: [OPERATIONS.UPLOAD_FILE],
 			},
 		},
 	},

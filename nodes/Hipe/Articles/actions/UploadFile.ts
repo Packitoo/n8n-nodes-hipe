@@ -1,5 +1,6 @@
 import { IExecuteFunctions, sleep } from 'n8n-workflow';
 import { INodeExecutionData, INodeProperties } from 'n8n-workflow';
+import { RESOURCES, OPERATIONS } from '../../constants';
 
 // Properties for the Upload File operation
 export const properties: INodeProperties[] = [
@@ -12,8 +13,8 @@ export const properties: INodeProperties[] = [
 		description: 'ID of the article to upload file to',
 		displayOptions: {
 			show: {
-				resource: ['article'],
-				operation: ['uploadFile'],
+				resource: [RESOURCES.ARTICLE],
+				operation: [OPERATIONS.UPLOAD_FILE],
 			},
 		},
 	},
@@ -26,8 +27,8 @@ export const properties: INodeProperties[] = [
 		description: 'Name of the binary property that contains the file to upload',
 		displayOptions: {
 			show: {
-				resource: ['article'],
-				operation: ['uploadFile'],
+				resource: [RESOURCES.ARTICLE],
+				operation: [OPERATIONS.UPLOAD_FILE],
 			},
 		},
 	},

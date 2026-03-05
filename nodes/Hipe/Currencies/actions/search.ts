@@ -1,4 +1,5 @@
 import { IExecuteFunctions, INodeExecutionData, INodeProperties, sleep } from 'n8n-workflow';
+import { RESOURCES, OPERATIONS } from '../../constants';
 
 export const properties: INodeProperties[] = [
 	{
@@ -9,8 +10,8 @@ export const properties: INodeProperties[] = [
 		description: 'Search query string',
 		displayOptions: {
 			show: {
-				resource: ['currency'],
-				operation: ['search'],
+				resource: [RESOURCES.CURRENCY],
+				operation: [OPERATIONS.SEARCH],
 			},
 		},
 	},
@@ -22,8 +23,8 @@ export const properties: INodeProperties[] = [
 		description: 'Whether to return all results or only up to a given limit',
 		displayOptions: {
 			show: {
-				resource: ['currency'],
-				operation: ['search'],
+				resource: [RESOURCES.CURRENCY],
+				operation: [OPERATIONS.SEARCH],
 			},
 		},
 	},
@@ -38,8 +39,8 @@ export const properties: INodeProperties[] = [
 		},
 		displayOptions: {
 			show: {
-				resource: ['currency'],
-				operation: ['search'],
+				resource: [RESOURCES.CURRENCY],
+				operation: [OPERATIONS.SEARCH],
 				returnAll: [false],
 			},
 		},
@@ -53,8 +54,8 @@ export const properties: INodeProperties[] = [
 		default: {},
 		displayOptions: {
 			show: {
-				resource: ['currency'],
-				operation: ['search'],
+				resource: [RESOURCES.CURRENCY],
+				operation: [OPERATIONS.SEARCH],
 			},
 		},
 	},

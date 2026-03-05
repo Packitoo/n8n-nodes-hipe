@@ -1,5 +1,6 @@
 import { IExecuteFunctions, sleep } from 'n8n-workflow';
 import { INodeExecutionData, INodeProperties } from 'n8n-workflow';
+import { RESOURCES, OPERATIONS } from '../../../constants';
 import { listWithPagination } from '../../shared/pagination';
 
 // Properties for the List operation
@@ -12,8 +13,8 @@ export const properties: INodeProperties[] = [
 		description: 'Whether to return all results or only up to a given limit',
 		displayOptions: {
 			show: {
-				resource: ['corrugatedMaterialCompositionPrice'],
-				operation: ['getMany'],
+				resource: [RESOURCES.CORRUGATED_MATERIAL_COMPOSITION_PRICE],
+				operation: [OPERATIONS.GET_MANY],
 			},
 		},
 	},
@@ -23,8 +24,8 @@ export const properties: INodeProperties[] = [
 		type: 'number',
 		displayOptions: {
 			show: {
-				resource: ['corrugatedMaterialCompositionPrice'],
-				operation: ['getMany'],
+				resource: [RESOURCES.CORRUGATED_MATERIAL_COMPOSITION_PRICE],
+				operation: [OPERATIONS.GET_MANY],
 				returnAll: [false],
 			},
 		},
@@ -40,8 +41,8 @@ export const properties: INodeProperties[] = [
 		type: 'number',
 		displayOptions: {
 			show: {
-				resource: ['corrugatedMaterialCompositionPrice'],
-				operation: ['getMany'],
+				resource: [RESOURCES.CORRUGATED_MATERIAL_COMPOSITION_PRICE],
+				operation: [OPERATIONS.GET_MANY],
 				returnAll: [false],
 			},
 		},
@@ -58,8 +59,8 @@ export const properties: INodeProperties[] = [
 		placeholder: 'Add Filter',
 		displayOptions: {
 			show: {
-				resource: ['corrugatedMaterialCompositionPrice'],
-				operation: ['getMany'],
+				resource: [RESOURCES.CORRUGATED_MATERIAL_COMPOSITION_PRICE],
+				operation: [OPERATIONS.GET_MANY],
 			},
 		},
 		default: {},
@@ -96,8 +97,8 @@ export const properties: INodeProperties[] = [
 		default: {},
 		displayOptions: {
 			show: {
-				resource: ['corrugatedMaterialCompositionPrice'],
-				operation: ['getMany'],
+				resource: [RESOURCES.CORRUGATED_MATERIAL_COMPOSITION_PRICE],
+				operation: [OPERATIONS.GET_MANY],
 			},
 		},
 		options: [

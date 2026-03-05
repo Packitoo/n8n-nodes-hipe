@@ -1,6 +1,7 @@
 import { IExecuteFunctions, sleep } from 'n8n-workflow';
 import { INodeExecutionData, INodeProperties } from 'n8n-workflow';
 import { listWithPagination } from '../../shared/pagination';
+import { RESOURCES, OPERATIONS } from '../../../constants';
 
 // Properties for the List operation
 export const properties: INodeProperties[] = [
@@ -12,8 +13,8 @@ export const properties: INodeProperties[] = [
 		description: 'Whether to return all results or only up to a given limit',
 		displayOptions: {
 			show: {
-				resource: ['corrugatedFormat'],
-				operation: ['getMany'],
+				resource: [RESOURCES.CORRUGATED_FORMAT],
+				operation: [OPERATIONS.GET_MANY],
 			},
 		},
 	},
@@ -23,8 +24,8 @@ export const properties: INodeProperties[] = [
 		type: 'number',
 		displayOptions: {
 			show: {
-				resource: ['corrugatedFormat'],
-				operation: ['getMany'],
+				resource: [RESOURCES.CORRUGATED_FORMAT],
+				operation: [OPERATIONS.GET_MANY],
 				returnAll: [false],
 			},
 		},
@@ -40,8 +41,8 @@ export const properties: INodeProperties[] = [
 		type: 'number',
 		displayOptions: {
 			show: {
-				resource: ['corrugatedFormat'],
-				operation: ['getMany'],
+				resource: [RESOURCES.CORRUGATED_FORMAT],
+				operation: [OPERATIONS.GET_MANY],
 				returnAll: [false],
 			},
 		},
@@ -59,8 +60,8 @@ export const properties: INodeProperties[] = [
 		default: {},
 		displayOptions: {
 			show: {
-				resource: ['corrugatedFormat'],
-				operation: ['getMany'],
+				resource: [RESOURCES.CORRUGATED_FORMAT],
+				operation: [OPERATIONS.GET_MANY],
 			},
 		},
 		options: [
@@ -89,8 +90,8 @@ export const properties: INodeProperties[] = [
 		default: {},
 		displayOptions: {
 			show: {
-				resource: ['corrugatedFormat'],
-				operation: ['getMany'],
+				resource: [RESOURCES.CORRUGATED_FORMAT],
+				operation: [OPERATIONS.GET_MANY],
 			},
 		},
 		options: [

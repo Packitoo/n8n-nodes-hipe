@@ -6,8 +6,9 @@ import * as download from './Download';
 import * as getTypes from './GetTypes';
 import * as getStatus from './GetStatus';
 import * as getDelimiters from './GetDelimiters';
+import { RESOURCES, OPERATIONS } from '../../constants';
 
-export const RESOURCE = 'import';
+export const RESOURCE = RESOURCES.IMPORT;
 
 export const ACTIONS = {
 	create: create,
@@ -26,31 +27,32 @@ export function buildProperties() {
 			displayName: 'Operation',
 			name: 'operation',
 			type: 'options',
+			default: OPERATIONS.GET_MANY,
 			displayOptions: {
 				show: { resource: [RESOURCE] },
 			},
 			options: [
 				{
 					name: 'Archive',
-					value: 'archive',
+					value: OPERATIONS.ARCHIVE,
 					description: 'Archive a specific import',
 					action: 'Archive a specific import',
 				},
 				{
 					name: 'Create',
-					value: 'create',
+					value: OPERATIONS.CREATE,
 					description: 'Create a new import',
 					action: 'Create a new import',
 				},
 				{
 					name: 'Download File',
-					value: 'download',
+					value: OPERATIONS.DOWNLOAD,
 					description: 'Download file for a specific import',
 					action: 'Download file for a specific import',
 				},
 				{
 					name: 'Get',
-					value: 'get',
+					value: OPERATIONS.GET,
 					description: 'Get a specific import',
 					action: 'Get a specific import',
 				},
@@ -62,7 +64,7 @@ export function buildProperties() {
 				},
 				{
 					name: 'Get Many',
-					value: 'getMany',
+					value: OPERATIONS.GET_MANY,
 					description: 'Get multiple imports',
 					action: 'Get multiple imports',
 				},
@@ -79,7 +81,6 @@ export function buildProperties() {
 					action: 'Get import types enum',
 				},
 			],
-			default: 'getMany',
 			noDataExpression: true,
 		},
 		...create.properties,

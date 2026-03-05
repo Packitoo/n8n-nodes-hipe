@@ -1,5 +1,6 @@
 import { IExecuteFunctions, sleep } from 'n8n-workflow';
 import { INodeExecutionData, INodeProperties } from 'n8n-workflow';
+import { RESOURCES, OPERATIONS } from '../../../constants';
 import { listWithPagination } from '../../shared/pagination';
 
 // Properties for the List operation
@@ -12,8 +13,8 @@ export const properties: INodeProperties[] = [
 		description: 'Whether to return all results or only up to a given limit',
 		displayOptions: {
 			show: {
-				resource: ['corrugatedSupplier'],
-				operation: ['getMany'],
+				resource: [RESOURCES.CORRUGATED_SUPPLIER],
+				operation: [OPERATIONS.GET_MANY],
 			},
 		},
 	},
@@ -23,8 +24,8 @@ export const properties: INodeProperties[] = [
 		type: 'number',
 		displayOptions: {
 			show: {
-				resource: ['corrugatedSupplier'],
-				operation: ['getMany'],
+				resource: [RESOURCES.CORRUGATED_SUPPLIER],
+				operation: [OPERATIONS.GET_MANY],
 				returnAll: [false],
 			},
 		},
@@ -40,8 +41,8 @@ export const properties: INodeProperties[] = [
 		type: 'number',
 		displayOptions: {
 			show: {
-				resource: ['corrugatedSupplier'],
-				operation: ['getMany'],
+				resource: [RESOURCES.CORRUGATED_SUPPLIER],
+				operation: [OPERATIONS.GET_MANY],
 				returnAll: [false],
 			},
 		},
@@ -59,8 +60,8 @@ export const properties: INodeProperties[] = [
 		default: {},
 		displayOptions: {
 			show: {
-				resource: ['corrugatedSupplier'],
-				operation: ['getMany'],
+				resource: [RESOURCES.CORRUGATED_SUPPLIER],
+				operation: [OPERATIONS.GET_MANY],
 			},
 		},
 		options: [
@@ -72,8 +73,8 @@ export const properties: INodeProperties[] = [
 				description: 'Filter by name',
 				displayOptions: {
 					show: {
-						resource: ['corrugatedSupplier'],
-						operation: ['getMany'],
+						resource: [RESOURCES.CORRUGATED_SUPPLIER],
+						operation: [OPERATIONS.GET_MANY],
 					},
 				},
 			},
@@ -88,8 +89,8 @@ export const properties: INodeProperties[] = [
 		default: {},
 		displayOptions: {
 			show: {
-				resource: ['corrugatedSupplier'],
-				operation: ['getMany'],
+				resource: [RESOURCES.CORRUGATED_SUPPLIER],
+				operation: [OPERATIONS.GET_MANY],
 			},
 		},
 		options: [
@@ -107,8 +108,8 @@ export const properties: INodeProperties[] = [
 				default: 'name',
 				displayOptions: {
 					show: {
-						resource: ['corrugatedSupplier'],
-						operation: ['getMany'],
+						resource: [RESOURCES.CORRUGATED_SUPPLIER],
+						operation: [OPERATIONS.GET_MANY],
 					},
 				},
 			},
@@ -129,8 +130,8 @@ export const properties: INodeProperties[] = [
 				default: 'asc',
 				displayOptions: {
 					show: {
-						resource: ['corrugatedSupplier'],
-						operation: ['getMany'],
+						resource: [RESOURCES.CORRUGATED_SUPPLIER],
+						operation: [OPERATIONS.GET_MANY],
 					},
 				},
 			},

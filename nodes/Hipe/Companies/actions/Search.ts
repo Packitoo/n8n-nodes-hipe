@@ -1,5 +1,6 @@
 import { IExecuteFunctions } from 'n8n-workflow';
 import { INodeExecutionData, INodeProperties } from 'n8n-workflow';
+import { RESOURCES, OPERATIONS } from '../../constants';
 
 // Properties for the List operation
 export const properties: INodeProperties[] = [
@@ -11,8 +12,8 @@ export const properties: INodeProperties[] = [
 		description: 'Search query',
 		displayOptions: {
 			show: {
-				resource: ['company'],
-				operation: ['search'],
+				resource: [RESOURCES.COMPANY],
+				operation: [OPERATIONS.SEARCH],
 			},
 		},
 	},
@@ -23,8 +24,8 @@ export const properties: INodeProperties[] = [
 		displayOptions: {
 			show: {
 				returnAll: [false],
-				resource: ['company'],
-				operation: ['search'],
+				resource: [RESOURCES.COMPANY],
+				operation: [OPERATIONS.SEARCH],
 			},
 		},
 		typeOptions: {
@@ -32,7 +33,7 @@ export const properties: INodeProperties[] = [
 		},
 		default: 50,
 		description: 'Max number of results to return',
-	}
+	},
 ];
 
 // Execute function for the List operation
@@ -60,7 +61,7 @@ export async function execute(
 				qs: {
 					limit,
 					s: search,
-				}
+				},
 			});
 			returnData.push({ json: response });
 		} catch (error) {

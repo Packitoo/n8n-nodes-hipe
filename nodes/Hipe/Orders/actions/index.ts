@@ -8,8 +8,9 @@ import * as deleteFile from './DeleteFile';
 import * as addItems from './AddItems';
 import * as removeItem from './RemoveItem';
 import * as deleteOrder from './Delete';
+import { RESOURCES, OPERATIONS } from '../../constants';
 
-export const RESOURCE = 'order';
+export const RESOURCE = RESOURCES.ORDER;
 
 export const ACTIONS = {
 	create: create,
@@ -31,72 +32,72 @@ export function buildProperties() {
 			displayName: 'Operation',
 			name: 'operation',
 			type: 'options',
+			default: OPERATIONS.GET_MANY,
 			displayOptions: {
 				show: { resource: [RESOURCE] },
 			},
 			options: [
 				{
 					name: 'Add Items',
-					value: 'addItems',
+					value: OPERATIONS.ADD_ITEMS,
 					description: 'Add items to an order',
 					action: 'Add items to an order',
 				},
 				{
 					name: 'Create',
-					value: 'create',
+					value: OPERATIONS.CREATE,
 					description: 'Create a new order',
 					action: 'Create a new order',
 				},
 				{
 					name: 'Delete',
-					value: 'delete',
+					value: OPERATIONS.DELETE,
 					description: 'Delete an order',
 					action: 'Delete an order',
 				},
 				{
 					name: 'Delete File',
-					value: 'deleteFile',
+					value: OPERATIONS.DELETE_FILE,
 					description: 'Delete a file from an order',
 					action: 'Delete a file from an order',
 				},
 				{
 					name: 'Get',
-					value: 'get',
+					value: OPERATIONS.GET,
 					description: 'Get a specific order',
 					action: 'Get a specific order',
 				},
 				{
 					name: 'Get Files',
-					value: 'getFiles',
+					value: OPERATIONS.GET_FILES,
 					description: 'Retrieve files for an order',
 					action: 'Retrieve files for an order',
 				},
 				{
 					name: 'Get Many',
-					value: 'getMany',
+					value: OPERATIONS.GET_MANY,
 					description: 'Get multiple orders',
 					action: 'Get multiple orders',
 				},
 				{
 					name: 'Remove Item',
-					value: 'removeItem',
+					value: OPERATIONS.REMOVE_ITEM,
 					description: 'Remove an item from an order',
 					action: 'Remove an item from an order',
 				},
 				{
 					name: 'Update',
-					value: 'update',
+					value: OPERATIONS.UPDATE,
 					description: 'Update a specific order',
 					action: 'Update a specific order',
 				},
 				{
 					name: 'Upload File',
-					value: 'uploadFile',
+					value: OPERATIONS.UPLOAD_FILE,
 					description: 'Upload a file to an order',
 					action: 'Upload a file to an order',
 				},
 			],
-			default: 'getMany',
 			noDataExpression: true,
 		},
 		...create.properties,

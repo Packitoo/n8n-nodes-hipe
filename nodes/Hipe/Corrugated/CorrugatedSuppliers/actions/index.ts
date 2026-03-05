@@ -1,8 +1,9 @@
 import * as create from './Create';
 import * as list from './List';
 import * as update from './Update';
+import { RESOURCES, OPERATIONS } from '../../../constants';
 
-export const RESOURCE = 'corrugatedSupplier';
+export const RESOURCE = RESOURCES.CORRUGATED_SUPPLIER;
 
 export const ACTIONS = {
 	create: create,
@@ -17,30 +18,30 @@ export function buildProperties() {
 			displayName: 'Operation',
 			name: 'operation',
 			type: 'options',
+			default: OPERATIONS.GET_MANY,
 			displayOptions: {
 				show: { resource: [RESOURCE] },
 			},
 			options: [
 				{
 					name: 'Create',
-					value: 'create',
+					value: OPERATIONS.CREATE,
 					description: 'Create a new corrugated supplier',
 					action: 'Create a new corrugated supplier',
 				},
 				{
 					name: 'Get Many',
-					value: 'getMany',
+					value: OPERATIONS.GET_MANY,
 					description: 'Get multiple corrugated suppliers',
 					action: 'Get multiple corrugated suppliers',
 				},
 				{
 					name: 'Update',
-					value: 'update',
+					value: OPERATIONS.UPDATE,
 					description: 'Update a specific corrugated supplier',
 					action: 'Update a specific corrugated supplier',
 				},
 			],
-			default: 'getMany',
 			noDataExpression: true,
 		},
 		...create.properties,

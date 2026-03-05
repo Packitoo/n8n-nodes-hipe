@@ -2,6 +2,7 @@ import { IExecuteFunctions, sleep } from 'n8n-workflow';
 import { INodeExecutionData, INodeProperties } from 'n8n-workflow';
 import { IStatus } from '../../interfaces';
 import { ENTITIES_OPTIONS } from './constant';
+import { RESOURCES, OPERATIONS } from '../../constants';
 
 // Properties for the Create Contact
 export const properties: INodeProperties[] = [
@@ -13,8 +14,8 @@ export const properties: INodeProperties[] = [
 		options: ENTITIES_OPTIONS || [],
 		displayOptions: {
 			show: {
-				resource: ['statuses'],
-				operation: ['create'],
+				resource: [RESOURCES.STATUSES],
+				operation: [OPERATIONS.CREATE],
 			},
 		},
 	},
@@ -26,8 +27,8 @@ export const properties: INodeProperties[] = [
 		description: 'Position of the status',
 		displayOptions: {
 			show: {
-				resource: ['statuses'],
-				operation: ['create'],
+				resource: [RESOURCES.STATUSES],
+				operation: [OPERATIONS.CREATE],
 			},
 		},
 	},
@@ -42,8 +43,8 @@ export const properties: INodeProperties[] = [
 		description: 'Internal label of the status',
 		displayOptions: {
 			show: {
-				resource: ['statuses'],
-				operation: ['create'],
+				resource: [RESOURCES.STATUSES],
+				operation: [OPERATIONS.CREATE],
 			},
 		},
 	},
@@ -58,8 +59,8 @@ export const properties: INodeProperties[] = [
 		description: 'External label of the status',
 		displayOptions: {
 			show: {
-				resource: ['statuses'],
-				operation: ['create'],
+				resource: [RESOURCES.STATUSES],
+				operation: [OPERATIONS.CREATE],
 			},
 		},
 	},
@@ -71,8 +72,8 @@ export const properties: INodeProperties[] = [
 		description: 'Whether external ID of the status',
 		displayOptions: {
 			show: {
-				resource: ['statuses'],
-				operation: ['create'],
+				resource: [RESOURCES.STATUSES],
+				operation: [OPERATIONS.CREATE],
 			},
 		},
 	},
@@ -84,8 +85,8 @@ export const properties: INodeProperties[] = [
 		description: 'Whether the status is completed',
 		displayOptions: {
 			show: {
-				resource: ['statuses'],
-				operation: ['create'],
+				resource: [RESOURCES.STATUSES],
+				operation: [OPERATIONS.CREATE],
 			},
 		},
 	},
@@ -97,8 +98,8 @@ export const properties: INodeProperties[] = [
 		description: 'Whether the status is a creation status',
 		displayOptions: {
 			show: {
-				resource: ['statuses'],
-				operation: ['create'],
+				resource: [RESOURCES.STATUSES],
+				operation: [OPERATIONS.CREATE],
 			},
 		},
 	},
@@ -110,8 +111,8 @@ export const properties: INodeProperties[] = [
 		description: 'Whether the status is overdue',
 		displayOptions: {
 			show: {
-				resource: ['statuses'],
-				operation: ['create'],
+				resource: [RESOURCES.STATUSES],
+				operation: [OPERATIONS.CREATE],
 			},
 		},
 	},
@@ -123,8 +124,8 @@ export const properties: INodeProperties[] = [
 		default: {},
 		displayOptions: {
 			show: {
-				resource: ['statuses'],
-				operation: ['create'],
+				resource: [RESOURCES.STATUSES],
+				operation: [OPERATIONS.CREATE],
 			},
 		},
 		options: [

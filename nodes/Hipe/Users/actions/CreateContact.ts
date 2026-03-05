@@ -1,6 +1,7 @@
 import { IExecuteFunctions, sleep } from 'n8n-workflow';
 import { INodeExecutionData, INodeProperties } from 'n8n-workflow';
 import { IUser } from '../../interfaces';
+import { RESOURCES, OPERATIONS, CUSTOM_FIELDS } from '../../constants';
 
 // Properties for the Create Contact
 export const properties: INodeProperties[] = [
@@ -13,8 +14,8 @@ export const properties: INodeProperties[] = [
 		description: 'First name of the contact',
 		displayOptions: {
 			show: {
-				resource: ['user'],
-				operation: ['createContact'],
+				resource: [RESOURCES.USER],
+				operation: [OPERATIONS.CREATE_CONTACT],
 			},
 		},
 	},
@@ -26,8 +27,8 @@ export const properties: INodeProperties[] = [
 		description: 'Last name of the contact',
 		displayOptions: {
 			show: {
-				resource: ['user'],
-				operation: ['createContact'],
+				resource: [RESOURCES.USER],
+				operation: [OPERATIONS.CREATE_CONTACT],
 			},
 		},
 	},
@@ -40,8 +41,8 @@ export const properties: INodeProperties[] = [
 		description: 'Email of the contact',
 		displayOptions: {
 			show: {
-				resource: ['user'],
-				operation: ['createContact'],
+				resource: [RESOURCES.USER],
+				operation: [OPERATIONS.CREATE_CONTACT],
 			},
 		},
 	},
@@ -53,8 +54,8 @@ export const properties: INodeProperties[] = [
 		description: 'External ID of the contact',
 		displayOptions: {
 			show: {
-				resource: ['user'],
-				operation: ['createContact'],
+				resource: [RESOURCES.USER],
+				operation: [OPERATIONS.CREATE_CONTACT],
 			},
 		},
 	},
@@ -66,8 +67,8 @@ export const properties: INodeProperties[] = [
 		description: 'Phone number of the contact',
 		displayOptions: {
 			show: {
-				resource: ['user'],
-				operation: ['createContact'],
+				resource: [RESOURCES.USER],
+				operation: [OPERATIONS.CREATE_CONTACT],
 			},
 		},
 	},
@@ -79,8 +80,8 @@ export const properties: INodeProperties[] = [
 		description: 'Mobile phone number of the contact',
 		displayOptions: {
 			show: {
-				resource: ['user'],
-				operation: ['createContact'],
+				resource: [RESOURCES.USER],
+				operation: [OPERATIONS.CREATE_CONTACT],
 			},
 		},
 	},
@@ -92,8 +93,8 @@ export const properties: INodeProperties[] = [
 		default: {},
 		displayOptions: {
 			show: {
-				resource: ['user'],
-				operation: ['createContact'],
+				resource: [RESOURCES.USER],
+				operation: [OPERATIONS.CREATE_CONTACT],
 			},
 		},
 		options: [
@@ -112,8 +113,8 @@ export const properties: INodeProperties[] = [
 				description: 'Job title of the contact',
 			},
 			{
-				displayName: 'Custom Fields',
-				name: 'customFields',
+				displayName: CUSTOM_FIELDS.displayName,
+				name: CUSTOM_FIELDS.name,
 				type: 'json',
 				default: '',
 				description: 'Custom fields of the contact',
@@ -162,8 +163,8 @@ export async function execute(
 				[]) as string[];
 			const job =
 				(additionalFields.job as string) || (this.getNodeParameter('job', i, '') as string) || '';
-			const customFields = ((additionalFields.customFields as object) ||
-				(this.getNodeParameter('customFields', i, {}) as object) ||
+			const customFields = ((additionalFields[CUSTOM_FIELDS.name] as object) ||
+				(this.getNodeParameter(CUSTOM_FIELDS.name, i, {}) as object) ||
 				{}) as object;
 
 			// Prepare request data

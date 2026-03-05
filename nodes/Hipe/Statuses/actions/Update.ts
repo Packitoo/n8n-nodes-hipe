@@ -1,6 +1,7 @@
 import { IExecuteFunctions, sleep } from 'n8n-workflow';
 import { INodeExecutionData, INodeProperties } from 'n8n-workflow';
 import { ENTITIES_OPTIONS } from './constant';
+import { RESOURCES, OPERATIONS } from '../../constants';
 
 // Properties for the Create Contact
 export const properties: INodeProperties[] = [
@@ -11,8 +12,8 @@ export const properties: INodeProperties[] = [
 		default: '',
 		displayOptions: {
 			show: {
-				resource: ['statuses'],
-				operation: ['update'],
+				resource: [RESOURCES.STATUSES],
+				operation: [OPERATIONS.UPDATE],
 			},
 		},
 	},
@@ -24,8 +25,8 @@ export const properties: INodeProperties[] = [
 		default: {},
 		displayOptions: {
 			show: {
-				resource: ['statuses'],
-				operation: ['update'],
+				resource: [RESOURCES.STATUSES],
+				operation: [OPERATIONS.UPDATE],
 			},
 		},
 		options: [

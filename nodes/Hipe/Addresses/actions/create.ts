@@ -1,5 +1,6 @@
 import { IExecuteFunctions, INodeExecutionData, INodeProperties, sleep } from 'n8n-workflow';
 import { getAsyncHeaders } from '../../utils/asyncMode';
+import { RESOURCES, OPERATIONS } from '../../constants';
 
 export const properties: INodeProperties[] = [
 	{
@@ -10,8 +11,8 @@ export const properties: INodeProperties[] = [
 		description: 'ID of the company (optional)',
 		displayOptions: {
 			show: {
-				resource: ['address'],
-				operation: ['create'],
+				resource: [RESOURCES.ADDRESS],
+				operation: [OPERATIONS.CREATE],
 			},
 		},
 	},
@@ -23,8 +24,8 @@ export const properties: INodeProperties[] = [
 		default: '',
 		displayOptions: {
 			show: {
-				resource: ['address'],
-				operation: ['create'],
+				resource: [RESOURCES.ADDRESS],
+				operation: [OPERATIONS.CREATE],
 			},
 		},
 	},
@@ -37,8 +38,8 @@ export const properties: INodeProperties[] = [
 		description: 'City of the address',
 		displayOptions: {
 			show: {
-				resource: ['address'],
-				operation: ['create'],
+				resource: [RESOURCES.ADDRESS],
+				operation: [OPERATIONS.CREATE],
 			},
 		},
 	},
@@ -51,8 +52,8 @@ export const properties: INodeProperties[] = [
 		description: 'Country of the address',
 		displayOptions: {
 			show: {
-				resource: ['address'],
-				operation: ['create'],
+				resource: [RESOURCES.ADDRESS],
+				operation: [OPERATIONS.CREATE],
 			},
 		},
 	},
@@ -64,8 +65,8 @@ export const properties: INodeProperties[] = [
 		description: 'First complementary address of the company',
 		displayOptions: {
 			show: {
-				resource: ['address'],
-				operation: ['create'],
+				resource: [RESOURCES.ADDRESS],
+				operation: [OPERATIONS.CREATE],
 			},
 		},
 	},
@@ -77,8 +78,8 @@ export const properties: INodeProperties[] = [
 		description: 'Second complementary address of the company',
 		displayOptions: {
 			show: {
-				resource: ['address'],
-				operation: ['create'],
+				resource: [RESOURCES.ADDRESS],
+				operation: [OPERATIONS.CREATE],
 			},
 		},
 	},
@@ -91,8 +92,8 @@ export const properties: INodeProperties[] = [
 		description: 'Name of the address',
 		displayOptions: {
 			show: {
-				resource: ['address'],
-				operation: ['create'],
+				resource: [RESOURCES.ADDRESS],
+				operation: [OPERATIONS.CREATE],
 			},
 		},
 	},
@@ -104,8 +105,8 @@ export const properties: INodeProperties[] = [
 		description: 'Position of the address',
 		displayOptions: {
 			show: {
-				resource: ['address'],
-				operation: ['create'],
+				resource: [RESOURCES.ADDRESS],
+				operation: [OPERATIONS.CREATE],
 			},
 		},
 	},
@@ -117,8 +118,8 @@ export const properties: INodeProperties[] = [
 		description: 'State of the address',
 		displayOptions: {
 			show: {
-				resource: ['address'],
-				operation: ['create'],
+				resource: [RESOURCES.ADDRESS],
+				operation: [OPERATIONS.CREATE],
 			},
 		},
 	},
@@ -131,8 +132,8 @@ export const properties: INodeProperties[] = [
 		description: 'Zip code of the address',
 		displayOptions: {
 			show: {
-				resource: ['address'],
-				operation: ['create'],
+				resource: [RESOURCES.ADDRESS],
+				operation: [OPERATIONS.CREATE],
 			},
 		},
 	},
@@ -144,8 +145,8 @@ export const properties: INodeProperties[] = [
 		description: 'External ID of the address',
 		displayOptions: {
 			show: {
-				resource: ['address'],
-				operation: ['create'],
+				resource: [RESOURCES.ADDRESS],
+				operation: [OPERATIONS.CREATE],
 			},
 		},
 	},
@@ -158,8 +159,8 @@ export const properties: INodeProperties[] = [
 		default: {},
 		displayOptions: {
 			show: {
-				resource: ['address'],
-				operation: ['create'],
+				resource: [RESOURCES.ADDRESS],
+				operation: [OPERATIONS.CREATE],
 			},
 		},
 	},
@@ -172,8 +173,8 @@ export const properties: INodeProperties[] = [
 			'Whether to use asynchronous processing (returns a job ID instead of waiting for completion)',
 		displayOptions: {
 			show: {
-				resource: ['address'],
-				operation: ['create'],
+				resource: [RESOURCES.ADDRESS],
+				operation: [OPERATIONS.CREATE],
 			},
 		},
 	},

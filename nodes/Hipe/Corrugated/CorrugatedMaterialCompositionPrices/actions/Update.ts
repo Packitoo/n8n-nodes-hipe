@@ -1,5 +1,6 @@
 import { IExecuteFunctions, sleep } from 'n8n-workflow';
 import { INodeExecutionData, INodeProperties } from 'n8n-workflow';
+import { RESOURCES, OPERATIONS } from '../../../constants';
 import { ICorrugatedMaterialCompositionPrice } from '../../../interfaces';
 
 // Properties for the Update operation
@@ -13,8 +14,8 @@ export const properties: INodeProperties[] = [
 		description: 'ID of the corrugated material composition price to update',
 		displayOptions: {
 			show: {
-				resource: ['corrugatedMaterialCompositionPrice'],
-				operation: ['update'],
+				resource: [RESOURCES.CORRUGATED_MATERIAL_COMPOSITION_PRICE],
+				operation: [OPERATIONS.UPDATE],
 			},
 		},
 	},
@@ -26,8 +27,8 @@ export const properties: INodeProperties[] = [
 		default: {},
 		displayOptions: {
 			show: {
-				resource: ['corrugatedMaterialCompositionPrice'],
-				operation: ['update'],
+				resource: [RESOURCES.CORRUGATED_MATERIAL_COMPOSITION_PRICE],
+				operation: [OPERATIONS.UPDATE],
 			},
 		},
 		options: [
@@ -39,8 +40,8 @@ export const properties: INodeProperties[] = [
 				description: 'ID of the corrugated material composition',
 				displayOptions: {
 					show: {
-						resource: ['corrugatedMaterialCompositionPrice'],
-						operation: ['update'],
+						resource: [RESOURCES.CORRUGATED_MATERIAL_COMPOSITION_PRICE],
+						operation: [OPERATIONS.UPDATE],
 					},
 				},
 			},
@@ -52,8 +53,8 @@ export const properties: INodeProperties[] = [
 				description: 'Currency of the price',
 				displayOptions: {
 					show: {
-						resource: ['corrugatedMaterialCompositionPrice'],
-						operation: ['update'],
+						resource: [RESOURCES.CORRUGATED_MATERIAL_COMPOSITION_PRICE],
+						operation: [OPERATIONS.UPDATE],
 					},
 				},
 			},
@@ -65,8 +66,8 @@ export const properties: INodeProperties[] = [
 				description: 'Price of the composition',
 				displayOptions: {
 					show: {
-						resource: ['corrugatedMaterialCompositionPrice'],
-						operation: ['update'],
+						resource: [RESOURCES.CORRUGATED_MATERIAL_COMPOSITION_PRICE],
+						operation: [OPERATIONS.UPDATE],
 					},
 				},
 			},
@@ -78,8 +79,8 @@ export const properties: INodeProperties[] = [
 				description: 'Date from which the price is valid',
 				displayOptions: {
 					show: {
-						resource: ['corrugatedMaterialCompositionPrice'],
-						operation: ['update'],
+						resource: [RESOURCES.CORRUGATED_MATERIAL_COMPOSITION_PRICE],
+						operation: [OPERATIONS.UPDATE],
 					},
 				},
 			},
@@ -91,8 +92,8 @@ export const properties: INodeProperties[] = [
 				description: 'Date until which the price is valid',
 				displayOptions: {
 					show: {
-						resource: ['corrugatedMaterialCompositionPrice'],
-						operation: ['update'],
+						resource: [RESOURCES.CORRUGATED_MATERIAL_COMPOSITION_PRICE],
+						operation: [OPERATIONS.UPDATE],
 					},
 				},
 			},

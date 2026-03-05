@@ -1,5 +1,6 @@
 import { IExecuteFunctions, sleep } from 'n8n-workflow';
 import { INodeExecutionData, INodeProperties } from 'n8n-workflow';
+import { RESOURCES, OPERATIONS } from '../../../constants';
 import { ICorrugatedMaterialComposition } from '../../../interfaces';
 
 // Properties for the Update operation
@@ -13,8 +14,8 @@ export const properties: INodeProperties[] = [
 		description: 'ID of the corrugated material composition to update',
 		displayOptions: {
 			show: {
-				resource: ['corrugatedMaterialComposition'],
-				operation: ['update'],
+				resource: [RESOURCES.CORRUGATED_MATERIAL_COMPOSITION],
+				operation: [OPERATIONS.UPDATE],
 			},
 		},
 	},
@@ -26,8 +27,8 @@ export const properties: INodeProperties[] = [
 		default: {},
 		displayOptions: {
 			show: {
-				resource: ['corrugatedMaterialComposition'],
-				operation: ['update'],
+				resource: [RESOURCES.CORRUGATED_MATERIAL_COMPOSITION],
+				operation: [OPERATIONS.UPDATE],
 			},
 		},
 		options: [
@@ -39,8 +40,8 @@ export const properties: INodeProperties[] = [
 				description: 'ID of the corrugated material',
 				displayOptions: {
 					show: {
-						resource: ['corrugatedMaterialComposition'],
-						operation: ['update'],
+						resource: [RESOURCES.CORRUGATED_MATERIAL_COMPOSITION],
+						operation: [OPERATIONS.UPDATE],
 					},
 				},
 			},
@@ -52,8 +53,8 @@ export const properties: INodeProperties[] = [
 				description: 'ID of the flute',
 				displayOptions: {
 					show: {
-						resource: ['corrugatedMaterialComposition'],
-						operation: ['update'],
+						resource: [RESOURCES.CORRUGATED_MATERIAL_COMPOSITION],
+						operation: [OPERATIONS.UPDATE],
 					},
 				},
 			},
@@ -68,8 +69,8 @@ export const properties: INodeProperties[] = [
 				description: 'IDs of the liners',
 				displayOptions: {
 					show: {
-						resource: ['corrugatedMaterialComposition'],
-						operation: ['update'],
+						resource: [RESOURCES.CORRUGATED_MATERIAL_COMPOSITION],
+						operation: [OPERATIONS.UPDATE],
 					},
 				},
 			},

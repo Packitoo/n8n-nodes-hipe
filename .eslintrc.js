@@ -142,5 +142,11 @@ module.exports = {
 				'n8n-nodes-base/node-param-type-options-password-missing': 'error',
 			},
 		},
+		{
+			files: ['./nodes/**/actions/index.ts'],
+			rules: {
+				'n8n-nodes-base/node-param-default-missing': 'off',
+			},
+		},
 	],
 };

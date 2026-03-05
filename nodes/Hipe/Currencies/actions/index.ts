@@ -4,8 +4,9 @@ import * as list from './list';
 import * as update from './update';
 import * as remove from './remove';
 import * as search from './search';
+import { RESOURCES, OPERATIONS } from '../../constants';
 
-export const RESOURCE = 'currency';
+export const RESOURCE = RESOURCES.CURRENCY;
 
 export const ACTIONS = {
 	create: create,
@@ -22,48 +23,48 @@ export function buildProperties() {
 			displayName: 'Operation',
 			name: 'operation',
 			type: 'options',
+			default: OPERATIONS.GET,
 			displayOptions: {
 				show: { resource: [RESOURCE] },
 			},
 			options: [
 				{
 					name: 'Create',
-					value: 'create',
+					value: OPERATIONS.CREATE,
 					description: 'Create a new currency',
 					action: 'Create a new currency',
 				},
 				{
 					name: 'Delete',
-					value: 'delete',
+					value: OPERATIONS.DELETE,
 					description: 'Delete a specific currency',
 					action: 'Delete a specific currency',
 				},
 				{
 					name: 'Get',
-					value: 'get',
+					value: OPERATIONS.GET,
 					description: 'Get a specific currency',
 					action: 'Get a specific currency',
 				},
 				{
 					name: 'Get Many',
-					value: 'getMany',
+					value: OPERATIONS.GET_MANY,
 					description: 'Get multiple currencies',
 					action: 'Get many currencies',
 				},
 				{
 					name: 'Search',
-					value: 'search',
+					value: OPERATIONS.SEARCH,
 					description: 'Search for currencies',
 					action: 'Search for currencies',
 				},
 				{
 					name: 'Update',
-					value: 'update',
+					value: OPERATIONS.UPDATE,
 					description: 'Update a specific currency',
 					action: 'Update a specific currency',
 				},
 			],
-			default: 'get',
 			noDataExpression: true,
 		},
 		...create.properties,

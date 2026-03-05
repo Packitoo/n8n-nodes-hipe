@@ -1,5 +1,6 @@
 import { IExecuteFunctions, sleep } from 'n8n-workflow';
 import { INodeExecutionData, INodeProperties } from 'n8n-workflow';
+import { RESOURCES, OPERATIONS } from '../../constants';
 
 export const properties: INodeProperties[] = [
 	{
@@ -9,7 +10,7 @@ export const properties: INodeProperties[] = [
 		required: true,
 		default: 0,
 		description: 'Type of the export',
-		displayOptions: { show: { resource: ['export'], operation: ['create'] } },
+		displayOptions: { show: { resource: [RESOURCES.EXPORT], operation: [OPERATIONS.CREATE] } },
 	},
 	{
 		displayName: 'Start Date',
@@ -17,7 +18,7 @@ export const properties: INodeProperties[] = [
 		type: 'string',
 		default: '',
 		description: 'Start date (ISO string)',
-		displayOptions: { show: { resource: ['export'], operation: ['create'] } },
+		displayOptions: { show: { resource: [RESOURCES.EXPORT], operation: [OPERATIONS.CREATE] } },
 	},
 	{
 		displayName: 'End Date',
@@ -25,7 +26,7 @@ export const properties: INodeProperties[] = [
 		type: 'string',
 		default: '',
 		description: 'End date (ISO string)',
-		displayOptions: { show: { resource: ['export'], operation: ['create'] } },
+		displayOptions: { show: { resource: [RESOURCES.EXPORT], operation: [OPERATIONS.CREATE] } },
 	},
 	{
 		displayName: 'User IDs',
@@ -34,7 +35,7 @@ export const properties: INodeProperties[] = [
 		placeholder: 'Add User ID',
 		default: {},
 		typeOptions: { multipleValues: true },
-		displayOptions: { show: { resource: ['export'], operation: ['create'] } },
+		displayOptions: { show: { resource: [RESOURCES.EXPORT], operation: [OPERATIONS.CREATE] } },
 		options: [
 			{
 				name: 'userIdFields',

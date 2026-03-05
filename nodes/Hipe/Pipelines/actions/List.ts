@@ -1,5 +1,6 @@
 import { IExecuteFunctions, sleep, INodeExecutionData, INodeProperties } from 'n8n-workflow';
 import { ENTITIES_OPTIONS } from './constant';
+import { RESOURCES, OPERATIONS } from '../../constants';
 
 export const properties: INodeProperties[] = [
 	{
@@ -10,8 +11,8 @@ export const properties: INodeProperties[] = [
 		options: ENTITIES_OPTIONS || [],
 		displayOptions: {
 			show: {
-				resource: ['pipelines'],
-				operation: ['getMany'],
+				resource: [RESOURCES.PIPELINES],
+				operation: [OPERATIONS.GET_MANY],
 			},
 		},
 	},
@@ -24,8 +25,8 @@ export const properties: INodeProperties[] = [
 		default: {},
 		displayOptions: {
 			show: {
-				resource: ['pipelines'],
-				operation: ['getMany'],
+				resource: [RESOURCES.PIPELINES],
+				operation: [OPERATIONS.GET_MANY],
 			},
 		},
 	},

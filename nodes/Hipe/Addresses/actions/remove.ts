@@ -1,5 +1,6 @@
 import { IExecuteFunctions, INodeExecutionData, INodeProperties, sleep } from 'n8n-workflow';
 import { getAsyncHeaders } from '../../utils/asyncMode';
+import { RESOURCES, OPERATIONS } from '../../constants';
 
 export const properties: INodeProperties[] = [
 	{
@@ -12,8 +13,8 @@ export const properties: INodeProperties[] = [
 		description: 'ID of the address to delete',
 		displayOptions: {
 			show: {
-				resource: ['address'],
-				operation: ['delete'],
+				resource: [RESOURCES.ADDRESS],
+				operation: [OPERATIONS.DELETE],
 			},
 		},
 	},
@@ -22,11 +23,12 @@ export const properties: INodeProperties[] = [
 		name: 'asyncMode',
 		type: 'boolean',
 		default: false,
-		description: 'Whether to use asynchronous processing (returns a job ID instead of waiting for completion)',
+		description:
+			'Whether to use asynchronous processing (returns a job ID instead of waiting for completion)',
 		displayOptions: {
 			show: {
-				resource: ['address'],
-				operation: ['delete'],
+				resource: [RESOURCES.ADDRESS],
+				operation: [OPERATIONS.DELETE],
 			},
 		},
 	},

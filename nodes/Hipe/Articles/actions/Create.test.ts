@@ -54,7 +54,10 @@ describe('Articles Create action', () => {
 					call: jest.fn().mockRejectedValue(new Error('fail!')),
 				},
 			},
-			getNodeParameter: () => undefined,
+			getNodeParameter: (name: string) => {
+				if (name === 'additionalFields') return {};
+				return undefined;
+			},
 			continueOnFail: () => true,
 		} as any;
 		const items = [{ json: {} }];

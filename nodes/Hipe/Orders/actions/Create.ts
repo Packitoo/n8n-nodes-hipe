@@ -1,5 +1,7 @@
 import { IExecuteFunctions, sleep } from 'n8n-workflow';
 import { INodeExecutionData, INodeProperties, IDataObject } from 'n8n-workflow';
+import { RESOURCES, OPERATIONS, CUSTOM_FIELDS } from '../../constants';
+import { sanitizeFields } from '../../utils/sanitizeFields';
 
 // Properties for the Create operation
 export const properties: INodeProperties[] = [
@@ -12,8 +14,8 @@ export const properties: INodeProperties[] = [
 		description: 'Billed amount for the order (will be recalculated when items are added)',
 		displayOptions: {
 			show: {
-				resource: ['order'],
-				operation: ['create'],
+				resource: [RESOURCES.ORDER],
+				operation: [OPERATIONS.CREATE],
 			},
 		},
 	},
@@ -25,8 +27,8 @@ export const properties: INodeProperties[] = [
 		default: {},
 		displayOptions: {
 			show: {
-				resource: ['order'],
-				operation: ['create'],
+				resource: [RESOURCES.ORDER],
+				operation: [OPERATIONS.CREATE],
 			},
 		},
 		options: [
@@ -57,6 +59,13 @@ export const properties: INodeProperties[] = [
 				type: 'string',
 				default: '',
 				description: 'ID of the currency for the billed amount',
+			},
+			{
+				displayName: CUSTOM_FIELDS.displayName,
+				name: CUSTOM_FIELDS.name,
+				type: 'json',
+				default: '',
+				description: 'Custom fields for the order (JSON object)',
 			},
 			{
 				displayName: 'Expected Delivery Date',
@@ -131,14 +140,7 @@ export async function execute(
 			// Get input data
 			const billedAmount = this.getNodeParameter('billedAmount', i) as number;
 			const rawAdditionalFields = this.getNodeParameter('additionalFields', i, {}) as IDataObject;
-			const additionalFields: IDataObject = {};
-			for (const [key, value] of Object.entries(rawAdditionalFields)) {
-				if (value !== null) {
-					additionalFields[key] = value;
-				}
-			}
-
-			// Make API call to create the order
+			const additionalFields = sanitizeFields(rawAdditionalFields);
 			const response = await this.helpers.requestWithAuthentication.call(this, 'hipeApi', {
 				method: 'POST',
 				url: `${baseUrl}/api/orders`,

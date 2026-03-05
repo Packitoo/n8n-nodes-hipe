@@ -1,5 +1,6 @@
 import { IExecuteFunctions, sleep } from 'n8n-workflow';
 import { INodeExecutionData, INodeProperties } from 'n8n-workflow';
+import { RESOURCES, OPERATIONS } from '../../constants';
 
 // Properties for the Add Brief Element operation
 export const properties: INodeProperties[] = [
@@ -12,8 +13,8 @@ export const properties: INodeProperties[] = [
 		description: 'ID of the article to add a brief element to',
 		displayOptions: {
 			show: {
-				resource: ['article'],
-				operation: ['addBriefElement'],
+				resource: [RESOURCES.ARTICLE],
+				operation: [OPERATIONS.ADD_BRIEF_ELEMENT],
 			},
 		},
 	},
@@ -25,8 +26,8 @@ export const properties: INodeProperties[] = [
 		description: "The product's length dimension",
 		displayOptions: {
 			show: {
-				resource: ['article'],
-				operation: ['addBriefElement'],
+				resource: [RESOURCES.ARTICLE],
+				operation: [OPERATIONS.ADD_BRIEF_ELEMENT],
 			},
 		},
 	},
@@ -38,8 +39,8 @@ export const properties: INodeProperties[] = [
 		description: "The product's width dimension",
 		displayOptions: {
 			show: {
-				resource: ['article'],
-				operation: ['addBriefElement'],
+				resource: [RESOURCES.ARTICLE],
+				operation: [OPERATIONS.ADD_BRIEF_ELEMENT],
 			},
 		},
 	},
@@ -51,8 +52,8 @@ export const properties: INodeProperties[] = [
 		description: "The product's height dimension",
 		displayOptions: {
 			show: {
-				resource: ['article'],
-				operation: ['addBriefElement'],
+				resource: [RESOURCES.ARTICLE],
+				operation: [OPERATIONS.ADD_BRIEF_ELEMENT],
 			},
 		},
 	},
