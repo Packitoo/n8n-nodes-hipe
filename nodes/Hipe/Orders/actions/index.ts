@@ -32,7 +32,7 @@ export function buildProperties() {
 			displayName: 'Operation',
 			name: 'operation',
 			type: 'options',
-			default: '',
+			default: OPERATIONS.GET_MANY,
 			displayOptions: {
 				show: { resource: [RESOURCE] },
 			},
@@ -98,7 +98,6 @@ export function buildProperties() {
 					action: 'Upload a file to an order',
 				},
 			],
-			default: OPERATIONS.GET_MANY,
 			noDataExpression: true,
 		},
 		...create.properties,

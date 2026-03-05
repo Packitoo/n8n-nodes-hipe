@@ -23,7 +23,7 @@ export function buildProperties() {
 			displayName: 'Operation',
 			name: 'operation',
 			type: 'options',
-			default: `${OPERATIONS.GET}`,
+			default: OPERATIONS.GET,
 			displayOptions: {
 				show: { resource: [RESOURCE] },
 			},

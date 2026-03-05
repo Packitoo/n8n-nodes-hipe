@@ -16,7 +16,7 @@ export function buildProperties() {
 			displayName: 'Operation',
 			name: 'operation',
 			type: 'options',
-			default: '',
+			default: OPERATIONS.GET_MANY,
 			displayOptions: {
 				show: { resource: [RESOURCE] },
 			},
@@ -34,7 +34,6 @@ export function buildProperties() {
 					action: 'Get a specific pipeline',
 				},
 			],
-			default: OPERATIONS.GET_MANY,
 			noDataExpression: true,
 		},
 		...list.properties,

@@ -10,7 +10,8 @@ export function sanitizeFields(raw: IDataObject): IDataObject {
 	const result: IDataObject = {};
 	for (const [key, value] of Object.entries(raw)) {
 		if (value !== null) {
-			result[key] = key === CUSTOM_FIELDS.name && typeof value === 'string' ? JSON.parse(value) : value;
+			result[key] =
+				key === CUSTOM_FIELDS.name && typeof value === 'string' ? JSON.parse(value) : value;
 		}
 	}
 	return result;

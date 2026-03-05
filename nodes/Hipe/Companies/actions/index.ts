@@ -30,7 +30,7 @@ export function buildProperties() {
 			displayName: 'Operation',
 			name: 'operation',
 			type: 'options',
-			default: '',
+			default: OPERATIONS.GET,
 			displayOptions: {
 				show: { resource: [RESOURCE] },
 			},
@@ -91,7 +91,6 @@ export function buildProperties() {
 				},
 				// { name: 'Create Address', value: 'createAddress', description: 'Create a new address for a company', action: 'Create address' },
 			],
-			default: OPERATIONS.GET,
 			noDataExpression: true,
 		},
 		...create.properties,

@@ -20,7 +20,7 @@ export function buildProperties() {
 			displayName: 'Operation',
 			name: 'operation',
 			type: 'options',
-			default: '',
+			default: OPERATIONS.GET,
 			displayOptions: {
 				show: { resource: [RESOURCE] },
 			},
@@ -50,7 +50,6 @@ export function buildProperties() {
 					action: 'Update a specific corrugated material',
 				},
 			],
-			default: OPERATIONS.GET_MANY,
 			noDataExpression: true,
 		},
 		...create.properties,

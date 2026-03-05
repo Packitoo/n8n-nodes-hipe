@@ -23,7 +23,7 @@ export function buildProperties() {
 			displayName: 'Operation',
 			name: 'operation',
 			type: 'options',
-			default: '',
+			default: OPERATIONS.GET,
 			displayOptions: {
 				show: { resource: [RESOURCE] },
 			},
@@ -65,7 +65,6 @@ export function buildProperties() {
 					action: 'Update a specific currency',
 				},
 			],
-			default: OPERATIONS.GET,
 			noDataExpression: true,
 		},
 		...create.properties,

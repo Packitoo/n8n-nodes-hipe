@@ -27,7 +27,7 @@ export function buildProperties() {
 			displayName: 'Operation',
 			name: 'operation',
 			type: 'options',
-			default: 'getDelimiters',
+			default: OPERATIONS.GET_MANY,
 			displayOptions: {
 				show: { resource: [RESOURCE] },
 			},
@@ -81,7 +81,6 @@ export function buildProperties() {
 					action: 'Get import types enum',
 				},
 			],
-			default: OPERATIONS.GET_MANY,
 			noDataExpression: true,
 		},
 		...create.properties,

@@ -25,7 +25,7 @@ export function buildProperties() {
 			displayName: 'Operation',
 			name: 'operation',
 			type: 'options',
-			default: 'getStatus',
+			default: OPERATIONS.GET_MANY,
 			displayOptions: {
 				show: { resource: [RESOURCE] },
 			},
@@ -73,7 +73,6 @@ export function buildProperties() {
 					action: 'Get export types enum',
 				},
 			],
-			default: OPERATIONS.GET_MANY,
 			noDataExpression: true,
 		},
 		...create.properties,
