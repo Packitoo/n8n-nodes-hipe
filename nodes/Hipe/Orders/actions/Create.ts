@@ -47,6 +47,13 @@ export const properties: INodeProperties[] = [
 				description: 'ID of the company associated with this order',
 			},
 			{
+				displayName: 'Created At',
+				name: 'createdAt',
+				type: 'dateTime',
+				default: '',
+				description: 'Creation date of the order',
+			},
+			{
 				displayName: 'Created By ID',
 				name: 'createdById',
 				type: 'string',

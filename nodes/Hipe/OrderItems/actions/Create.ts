@@ -61,6 +61,13 @@ export const properties: INodeProperties[] = [
 				description: 'ID of the comment associated with this order item',
 			},
 			{
+				displayName: 'Created At',
+				name: 'createdAt',
+				type: 'dateTime',
+				default: '',
+				description: 'Creation date of the order item',
+			},
+			{
 				displayName: CUSTOM_FIELDS.displayName,
 				name: CUSTOM_FIELDS.name,
 				type: 'json',

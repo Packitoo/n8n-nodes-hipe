@@ -59,6 +59,13 @@ export const properties: INodeProperties[] = [
 				description: 'Add one or more Collaborator IDs',
 			},
 			{
+				displayName: 'Created At',
+				name: 'createdAt',
+				type: 'dateTime',
+				default: '',
+				description: 'Creation date of the company',
+			},
+			{
 				displayName: 'Currency ID',
 				name: 'currencyId',
 				type: 'string',

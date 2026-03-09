@@ -61,6 +61,13 @@ export const properties: INodeProperties[] = [
 				description: 'ID of the company associated with this article',
 			},
 			{
+				displayName: 'Created At',
+				name: 'createdAt',
+				type: 'dateTime',
+				default: '',
+				description: 'Creation date of the article',
+			},
+			{
 				displayName: 'Created By ID',
 				name: 'createdById',
 				type: 'string',
