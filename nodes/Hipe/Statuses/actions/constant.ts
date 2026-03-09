@@ -28,6 +28,10 @@ export const ENTITIES_OPTIONS = [
 		value: 'COMPANIES',
 	},
 	{
+		name: 'Order',
+		value: 'ORDERS',
+	},
+	{
 		name: 'File',
 		value: 'FILE',
 	},
