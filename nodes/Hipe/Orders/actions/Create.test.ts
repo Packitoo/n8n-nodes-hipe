@@ -6,7 +6,9 @@ describe('Orders Create action', () => {
 			getCredentials: async () => ({ url: 'https://fake.api' }),
 			helpers: {
 				requestWithAuthentication: {
-					call: jest.fn().mockResolvedValue({ id: '1', billedAmount: 1000, trackingId: 'TRACK123' }),
+					call: jest
+						.fn()
+						.mockResolvedValue({ id: '1', billedAmount: 1000, trackingId: 'TRACK123' }),
 				},
 			},
 			getNodeParameter: (name: string, i: number) => {
@@ -14,6 +16,7 @@ describe('Orders Create action', () => {
 					billedAmount: 1000,
 					additionalFields: {
 						companyId: 'comp-1',
+						createdAt: '2025-01-15T10:00:00.000Z',
 						projectId: 'proj-1',
 						trackingId: 'TRACK123',
 						statusId: 'status-1',
@@ -35,6 +38,7 @@ describe('Orders Create action', () => {
 				body: expect.objectContaining({
 					billedAmount: 1000,
 					companyId: 'comp-1',
+					createdAt: '2025-01-15T10:00:00.000Z',
 					projectId: 'proj-1',
 					trackingId: 'TRACK123',
 					statusId: 'status-1',
@@ -68,8 +72,7 @@ describe('Orders Create action', () => {
 		} as any;
 		const items = [{ json: {} }];
 		await execute.call(mockThis, items);
-		const callArgs =
-			(mockThis.helpers.requestWithAuthentication.call as any).mock.calls[0][2];
+		const callArgs = (mockThis.helpers.requestWithAuthentication.call as any).mock.calls[0][2];
 		expect(callArgs.body).toEqual({
 			billedAmount: 2000,
 			projectId: 'proj-2',
@@ -103,8 +106,7 @@ describe('Orders Create action', () => {
 		} as any;
 		const items = [{ json: {} }];
 		await execute.call(mockThis, items);
-		const callArgs =
-			(mockThis.helpers.requestWithAuthentication.call as any).mock.calls[0][2];
+		const callArgs = (mockThis.helpers.requestWithAuthentication.call as any).mock.calls[0][2];
 		expect(callArgs.body).toEqual({
 			billedAmount: 3000,
 		});

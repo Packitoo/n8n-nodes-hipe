@@ -9,7 +9,8 @@ describe('Update action', () => {
 			},
 			getNodeParameter: (name: string, i: number, defaultValue?: any) => {
 				if (name === 'id') return '1';
-				if (name === 'updateFields') return { name: 'Acme Updated' };
+				if (name === 'updateFields')
+					return { name: 'Acme Updated', createdAt: '2025-01-15T10:00:00.000Z' };
 				return defaultValue;
 			},
 			continueOnFail: () => false,
@@ -22,7 +23,10 @@ describe('Update action', () => {
 			expect.objectContaining({
 				method: 'PATCH',
 				url: 'https://fake.api/api/companies/1',
-				body: { name: 'Acme Updated' },
+				body: expect.objectContaining({
+					name: 'Acme Updated',
+					createdAt: '2025-01-15T10:00:00.000Z',
+				}),
 			}),
 		);
 		expect(result[0].json).toEqual({ updated: true });

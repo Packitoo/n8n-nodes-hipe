@@ -8,6 +8,7 @@ describe('OrderItems Update action', () => {
 				requestWithAuthentication: {
 					call: jest.fn().mockResolvedValue({
 						id: 'item-1',
+						createdAt: '2025-01-15T10:00:00.000Z',
 						quantity: 10,
 						unitPrice: 15,
 						totalPrice: 150,
@@ -16,7 +17,13 @@ describe('OrderItems Update action', () => {
 			},
 			getNodeParameter: (name: string) => {
 				if (name === 'id') return 'item-1';
-				if (name === 'updateFields') return { quantity: 10, unitPrice: 15, totalPrice: 150 };
+				if (name === 'updateFields')
+					return {
+						createdAt: '2025-01-15T10:00:00.000Z',
+						quantity: 10,
+						unitPrice: 15,
+						totalPrice: 150,
+					};
 				return undefined;
 			},
 			continueOnFail: () => false,
@@ -30,11 +37,17 @@ describe('OrderItems Update action', () => {
 				method: 'PATCH',
 				url: 'https://fake.api/api/order-items/item-1',
 				json: true,
-				body: { quantity: 10, unitPrice: 15, totalPrice: 150 },
+				body: {
+					createdAt: '2025-01-15T10:00:00.000Z',
+					quantity: 10,
+					unitPrice: 15,
+					totalPrice: 150,
+				},
 			}),
 		);
 		expect(result[0].json).toEqual({
 			id: 'item-1',
+			createdAt: '2025-01-15T10:00:00.000Z',
 			quantity: 10,
 			unitPrice: 15,
 			totalPrice: 150,

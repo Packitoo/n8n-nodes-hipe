@@ -6,12 +6,24 @@ describe('Orders Update action', () => {
 			getCredentials: async () => ({ url: 'https://fake.api' }),
 			helpers: {
 				requestWithAuthentication: {
-					call: jest.fn().mockResolvedValue({ id: '1', billedAmount: 1500, trackingId: 'NEW123' }),
+					call: jest
+						.fn()
+						.mockResolvedValue({
+							id: '1',
+							billedAmount: 1500,
+							createdAt: '2025-01-15T10:00:00.000Z',
+							trackingId: 'NEW123',
+						}),
 				},
 			},
 			getNodeParameter: (name: string) => {
 				if (name === 'id') return '1';
-				if (name === 'updateFields') return { billedAmount: 1500, trackingId: 'NEW123' };
+				if (name === 'updateFields')
+					return {
+						billedAmount: 1500,
+						createdAt: '2025-01-15T10:00:00.000Z',
+						trackingId: 'NEW123',
+					};
 				return undefined;
 			},
 			continueOnFail: () => false,
@@ -25,10 +37,15 @@ describe('Orders Update action', () => {
 				method: 'PATCH',
 				url: 'https://fake.api/api/orders/1',
 				json: true,
-				body: { billedAmount: 1500, trackingId: 'NEW123' },
+				body: { billedAmount: 1500, createdAt: '2025-01-15T10:00:00.000Z', trackingId: 'NEW123' },
 			}),
 		);
-		expect(result[0].json).toEqual({ id: '1', billedAmount: 1500, trackingId: 'NEW123' });
+		expect(result[0].json).toEqual({
+			id: '1',
+			billedAmount: 1500,
+			createdAt: '2025-01-15T10:00:00.000Z',
+			trackingId: 'NEW123',
+		});
 	});
 
 	it('should omit null updateFields keys from PATCH body', async () => {
@@ -53,8 +70,7 @@ describe('Orders Update action', () => {
 		} as any;
 		const items = [{ json: {} }];
 		await execute.call(mockThis, items);
-		const callArgs =
-			(mockThis.helpers.requestWithAuthentication.call as any).mock.calls[0][2];
+		const callArgs = (mockThis.helpers.requestWithAuthentication.call as any).mock.calls[0][2];
 		expect(callArgs.body).toEqual({ trackingId: 'KEEP' });
 		expect(callArgs.body).not.toHaveProperty('billedAmount');
 		expect(callArgs.body).not.toHaveProperty('statusId');
@@ -81,8 +97,7 @@ describe('Orders Update action', () => {
 		} as any;
 		const items = [{ json: {} }];
 		await execute.call(mockThis, items);
-		const callArgs =
-			(mockThis.helpers.requestWithAuthentication.call as any).mock.calls[0][2];
+		const callArgs = (mockThis.helpers.requestWithAuthentication.call as any).mock.calls[0][2];
 		expect(callArgs.body).toEqual({});
 	});
 
