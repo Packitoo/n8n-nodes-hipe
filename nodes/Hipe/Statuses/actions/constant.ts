@@ -28,7 +28,7 @@ export const ENTITIES_OPTIONS = [
 		value: 'COMPANIES',
 	},
 	{
-		name: 'Order',
+		name: 'Orders',
 		value: 'ORDERS',
 	},
 	{
