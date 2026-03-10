@@ -1,4 +1,5 @@
 import { execute } from './Create';
+import { CREATED_AT } from '../../constants';
 
 describe('Create action', () => {
 	it('should call helpers.request and return correct data (happy path)', async () => {
@@ -11,6 +12,7 @@ describe('Create action', () => {
 				// Simulate n8n parameter structure
 				if (name === 'additionalFields') {
 					return {
+						[CREATED_AT.name]: '2025-01-15T10:00:00.000Z',
 						parentId: 'parent-1',
 						email: 'info@acme.com',
 						website: 'acme.com',
@@ -41,6 +43,7 @@ describe('Create action', () => {
 					name: 'Acme',
 					managedById: 'mgr-1',
 					externalId: 'ext-1',
+					[CREATED_AT.name]: '2025-01-15T10:00:00.000Z',
 					parentId: 'parent-1',
 					email: 'info@acme.com',
 					website: 'acme.com',

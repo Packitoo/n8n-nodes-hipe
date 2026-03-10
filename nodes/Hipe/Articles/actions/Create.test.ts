@@ -1,4 +1,5 @@
 import { execute } from './Create';
+import { CREATED_AT } from '../../constants';
 
 describe('Articles Create action', () => {
 	it('should call helpers.requestWithAuthentication and return correct data (happy path)', async () => {
@@ -14,6 +15,7 @@ describe('Articles Create action', () => {
 					name: 'Test Article',
 					code: 'ART-001',
 					additionalFields: {
+						[CREATED_AT.name]: '2025-01-15T10:00:00.000Z',
 						price: 99.99,
 						companyId: 'comp-1',
 						currencyId: 'curr-1',
@@ -36,6 +38,7 @@ describe('Articles Create action', () => {
 				body: expect.objectContaining({
 					name: 'Test Article',
 					code: 'ART-001',
+					[CREATED_AT.name]: '2025-01-15T10:00:00.000Z',
 					price: 99.99,
 					companyId: 'comp-1',
 					currencyId: 'curr-1',

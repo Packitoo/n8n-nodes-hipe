@@ -1,7 +1,7 @@
 import { IExecuteFunctions, sleep } from 'n8n-workflow';
 import { INodeExecutionData, INodeProperties } from 'n8n-workflow';
 import { ICompany } from '../../interfaces';
-import { RESOURCES, OPERATIONS, CUSTOM_FIELDS } from '../../constants';
+import { RESOURCES, OPERATIONS, CUSTOM_FIELDS, CREATED_AT } from '../../constants';
 
 // Properties for the Update operation
 export const properties: INodeProperties[] = [
@@ -57,6 +57,13 @@ export const properties: INodeProperties[] = [
 					},
 				],
 				description: 'Add one or more Collaborator IDs',
+			},
+			{
+				displayName: CREATED_AT.displayName,
+				name: CREATED_AT.name,
+				type: 'dateTime',
+				default: '',
+				description: 'Creation date of the company',
 			},
 			{
 				displayName: 'Currency ID',

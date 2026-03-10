@@ -1,4 +1,5 @@
 import { execute } from './Update';
+import { CREATED_AT } from '../../constants';
 
 describe('Articles Update action', () => {
 	it('should call helpers.requestWithAuthentication and return correct data (happy path)', async () => {
@@ -11,7 +12,12 @@ describe('Articles Update action', () => {
 			},
 			getNodeParameter: (name: string) => {
 				if (name === 'id') return '1';
-				if (name === 'updateFields') return { name: 'Article X Updated', price: 199.99 };
+				if (name === 'updateFields')
+					return {
+						name: 'Article X Updated',
+						[CREATED_AT.name]: '2025-01-15T10:00:00.000Z',
+						price: 199.99,
+					};
 				return undefined;
 			},
 			continueOnFail: () => false,
@@ -25,7 +31,11 @@ describe('Articles Update action', () => {
 				method: 'PATCH',
 				url: 'https://fake.api/api/articles/1',
 				json: true,
-				body: { name: 'Article X Updated', price: 199.99 },
+				body: {
+					name: 'Article X Updated',
+					[CREATED_AT.name]: '2025-01-15T10:00:00.000Z',
+					price: 199.99,
+				},
 			}),
 		);
 		expect(result[0].json).toEqual({ id: '1', name: 'Article X Updated' });

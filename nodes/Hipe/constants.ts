@@ -63,3 +63,8 @@ export const CUSTOM_FIELDS = {
 	name: 'customFields',
 	displayName: 'Custom Fields',
 } as const;
+
+export const CREATED_AT = {
+	name: 'createdAt',
+	displayName: 'Created At',
+} as const;
