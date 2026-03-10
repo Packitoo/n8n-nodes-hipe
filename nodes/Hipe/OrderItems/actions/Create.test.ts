@@ -1,5 +1,5 @@
 import { execute } from './Create';
-import { TIMESTAMP_CREATION } from '../../constants';
+import { CREATED_AT } from '../../constants';
 
 describe('OrderItems Create action', () => {
 	it('should call helpers.requestWithAuthentication and return correct data (happy path)', async () => {
@@ -23,7 +23,7 @@ describe('OrderItems Create action', () => {
 					quantity: 5,
 					additionalFields: {
 						articleId: 'art-1',
-						[TIMESTAMP_CREATION.name]: '2025-01-15T10:00:00.000Z',
+						[CREATED_AT.name]: '2025-01-15T10:00:00.000Z',
 						unitPrice: 10,
 						totalPrice: 50,
 					},
@@ -45,7 +45,7 @@ describe('OrderItems Create action', () => {
 					orderId: 'order-123',
 					quantity: 5,
 					articleId: 'art-1',
-					[TIMESTAMP_CREATION.name]: '2025-01-15T10:00:00.000Z',
+					[CREATED_AT.name]: '2025-01-15T10:00:00.000Z',
 					unitPrice: 10,
 					totalPrice: 50,
 				}),

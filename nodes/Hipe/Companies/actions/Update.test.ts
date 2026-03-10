@@ -1,5 +1,5 @@
 import { execute } from './Update';
-import { TIMESTAMP_CREATION } from '../../constants';
+import { CREATED_AT } from '../../constants';
 
 describe('Update action', () => {
 	it('should call helpers.request and return correct data (happy path)', async () => {
@@ -11,7 +11,7 @@ describe('Update action', () => {
 			getNodeParameter: (name: string, i: number, defaultValue?: any) => {
 				if (name === 'id') return '1';
 				if (name === 'updateFields')
-					return { name: 'Acme Updated', [TIMESTAMP_CREATION.name]: '2025-01-15T10:00:00.000Z' };
+					return { name: 'Acme Updated', [CREATED_AT.name]: '2025-01-15T10:00:00.000Z' };
 				return defaultValue;
 			},
 			continueOnFail: () => false,
@@ -26,7 +26,7 @@ describe('Update action', () => {
 				url: 'https://fake.api/api/companies/1',
 				body: expect.objectContaining({
 					name: 'Acme Updated',
-					[TIMESTAMP_CREATION.name]: '2025-01-15T10:00:00.000Z',
+					[CREATED_AT.name]: '2025-01-15T10:00:00.000Z',
 				}),
 			}),
 		);

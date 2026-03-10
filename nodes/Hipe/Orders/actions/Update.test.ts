@@ -1,5 +1,5 @@
 import { execute } from './Update';
-import { TIMESTAMP_CREATION } from '../../constants';
+import { CREATED_AT } from '../../constants';
 
 describe('Orders Update action', () => {
 	it('should call helpers.requestWithAuthentication and return correct data (happy path)', async () => {
@@ -10,7 +10,7 @@ describe('Orders Update action', () => {
 					call: jest.fn().mockResolvedValue({
 						id: '1',
 						billedAmount: 1500,
-						[TIMESTAMP_CREATION.name]: '2025-01-15T10:00:00.000Z',
+						[CREATED_AT.name]: '2025-01-15T10:00:00.000Z',
 						trackingId: 'NEW123',
 					}),
 				},
@@ -20,7 +20,7 @@ describe('Orders Update action', () => {
 				if (name === 'updateFields')
 					return {
 						billedAmount: 1500,
-						[TIMESTAMP_CREATION.name]: '2025-01-15T10:00:00.000Z',
+						[CREATED_AT.name]: '2025-01-15T10:00:00.000Z',
 						trackingId: 'NEW123',
 					};
 				return undefined;
@@ -38,7 +38,7 @@ describe('Orders Update action', () => {
 				json: true,
 				body: {
 					billedAmount: 1500,
-					[TIMESTAMP_CREATION.name]: '2025-01-15T10:00:00.000Z',
+					[CREATED_AT.name]: '2025-01-15T10:00:00.000Z',
 					trackingId: 'NEW123',
 				},
 			}),
@@ -46,7 +46,7 @@ describe('Orders Update action', () => {
 		expect(result[0].json).toEqual({
 			id: '1',
 			billedAmount: 1500,
-			[TIMESTAMP_CREATION.name]: '2025-01-15T10:00:00.000Z',
+			[CREATED_AT.name]: '2025-01-15T10:00:00.000Z',
 			trackingId: 'NEW123',
 		});
 	});

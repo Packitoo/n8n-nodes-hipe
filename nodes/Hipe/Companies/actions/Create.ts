@@ -1,7 +1,7 @@
 import { IExecuteFunctions, sleep } from 'n8n-workflow';
 import { INodeExecutionData, INodeProperties } from 'n8n-workflow';
 import { ICompany } from '../../interfaces';
-import { RESOURCES, OPERATIONS, CUSTOM_FIELDS, TIMESTAMP_CREATION } from '../../constants';
+import { RESOURCES, OPERATIONS, CUSTOM_FIELDS, CREATED_AT } from '../../constants';
 
 // Properties for the Create Company
 export const properties: INodeProperties[] = [
@@ -85,8 +85,8 @@ export const properties: INodeProperties[] = [
 				description: 'Add one or more Collaborator IDs',
 			},
 			{
-				displayName: TIMESTAMP_CREATION.displayName,
-				name: TIMESTAMP_CREATION.name,
+				displayName: CREATED_AT.displayName,
+				name: CREATED_AT.name,
 				type: 'dateTime',
 				default: '',
 				description: 'Creation date of the company',

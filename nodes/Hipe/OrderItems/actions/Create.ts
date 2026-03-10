@@ -1,6 +1,6 @@
 import { IExecuteFunctions, sleep } from 'n8n-workflow';
 import { INodeExecutionData, INodeProperties, IDataObject } from 'n8n-workflow';
-import { RESOURCES, OPERATIONS, CUSTOM_FIELDS, TIMESTAMP_CREATION } from '../../constants';
+import { RESOURCES, OPERATIONS, CUSTOM_FIELDS, CREATED_AT } from '../../constants';
 import { sanitizeFields } from '../../utils/sanitizeFields';
 
 // Properties for the Create operation
@@ -61,8 +61,8 @@ export const properties: INodeProperties[] = [
 				description: 'ID of the comment associated with this order item',
 			},
 			{
-				displayName: TIMESTAMP_CREATION.displayName,
-				name: TIMESTAMP_CREATION.name,
+				displayName: CREATED_AT.displayName,
+				name: CREATED_AT.name,
 				type: 'dateTime',
 				default: '',
 				description: 'Creation date of the order item',

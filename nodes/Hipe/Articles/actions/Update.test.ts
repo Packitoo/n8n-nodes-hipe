@@ -1,5 +1,5 @@
 import { execute } from './Update';
-import { TIMESTAMP_CREATION } from '../../constants';
+import { CREATED_AT } from '../../constants';
 
 describe('Articles Update action', () => {
 	it('should call helpers.requestWithAuthentication and return correct data (happy path)', async () => {
@@ -15,7 +15,7 @@ describe('Articles Update action', () => {
 				if (name === 'updateFields')
 					return {
 						name: 'Article X Updated',
-						[TIMESTAMP_CREATION.name]: '2025-01-15T10:00:00.000Z',
+						[CREATED_AT.name]: '2025-01-15T10:00:00.000Z',
 						price: 199.99,
 					};
 				return undefined;
@@ -33,7 +33,7 @@ describe('Articles Update action', () => {
 				json: true,
 				body: {
 					name: 'Article X Updated',
-					[TIMESTAMP_CREATION.name]: '2025-01-15T10:00:00.000Z',
+					[CREATED_AT.name]: '2025-01-15T10:00:00.000Z',
 					price: 199.99,
 				},
 			}),
