@@ -40,13 +40,6 @@ export const properties: INodeProperties[] = [
 				description: 'Array of collaboration UUIDs to associate with the user',
 			},
 			{
-				displayName: 'Created At',
-				name: 'createdAt',
-				type: 'dateTime',
-				default: '',
-				description: 'Creation date of the user',
-			},
-			{
 				displayName: CUSTOM_FIELDS.displayName,
 				name: CUSTOM_FIELDS.name,
 				type: 'json',

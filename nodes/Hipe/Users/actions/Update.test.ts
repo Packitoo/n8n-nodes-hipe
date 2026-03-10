@@ -10,8 +10,7 @@ describe('Update action', () => {
 			},
 			getNodeParameter: (name: string, i: number) => {
 				if (name === 'id') return '1';
-				if (name === 'updateFields')
-					return { createdAt: '2025-01-15T10:00:00.000Z', firstName: 'Jane' };
+				if (name === 'updateFields') return { firstName: 'Jane' };
 				return undefined;
 			},
 			continueOnFail: () => false,
@@ -23,7 +22,7 @@ describe('Update action', () => {
 			expect.objectContaining({
 				method: 'PATCH',
 				url: 'https://fake.api/api/users/1',
-				body: { createdAt: '2025-01-15T10:00:00.000Z', firstName: 'Jane' },
+				body: { firstName: 'Jane' },
 			}),
 		);
 		expect(result[0].json).toEqual({ updated: true });

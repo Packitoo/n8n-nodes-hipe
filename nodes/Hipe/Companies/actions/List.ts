@@ -1,7 +1,7 @@
 import { IExecuteFunctions, sleep } from 'n8n-workflow';
 import { INodeExecutionData, INodeProperties } from 'n8n-workflow';
 import { listWithPaginationFlat } from '../../Corrugated/shared/pagination';
-import { RESOURCES, OPERATIONS } from '../../constants';
+import { RESOURCES, OPERATIONS, TIMESTAMP_CREATION } from '../../constants';
 
 // Properties for the List operation
 export const properties: INodeProperties[] = [
@@ -89,8 +89,8 @@ export const properties: INodeProperties[] = [
 			{ displayName: 'Company', name: 'company', type: 'string', default: '' },
 			{ displayName: 'Contact', name: 'contact', type: 'string', default: '' },
 			{
-				displayName: 'Created At',
-				name: 'createdAt',
+				displayName: TIMESTAMP_CREATION.name,
+				name: TIMESTAMP_CREATION.createdAt,
 				type: 'options',
 				options: [
 					{ name: 'Overdue', value: 'Overdue' },

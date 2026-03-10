@@ -63,3 +63,8 @@ export const CUSTOM_FIELDS = {
 	name: 'customFields',
 	displayName: 'Custom Fields',
 } as const;
+
+export const TIMESTAMP_CREATION = {
+	name: 'Created At',
+	createdAt: 'createdAt',
+} as const;

@@ -1,4 +1,5 @@
 import { execute } from './Update';
+import { TIMESTAMP_CREATION } from '../../constants';
 
 describe('Orders Update action', () => {
 	it('should call helpers.requestWithAuthentication and return correct data (happy path)', async () => {
@@ -11,7 +12,7 @@ describe('Orders Update action', () => {
 						.mockResolvedValue({
 							id: '1',
 							billedAmount: 1500,
-							createdAt: '2025-01-15T10:00:00.000Z',
+							[TIMESTAMP_CREATION.createdAt]: '2025-01-15T10:00:00.000Z',
 							trackingId: 'NEW123',
 						}),
 				},
@@ -21,7 +22,7 @@ describe('Orders Update action', () => {
 				if (name === 'updateFields')
 					return {
 						billedAmount: 1500,
-						createdAt: '2025-01-15T10:00:00.000Z',
+						[TIMESTAMP_CREATION.createdAt]: '2025-01-15T10:00:00.000Z',
 						trackingId: 'NEW123',
 					};
 				return undefined;
@@ -37,13 +38,13 @@ describe('Orders Update action', () => {
 				method: 'PATCH',
 				url: 'https://fake.api/api/orders/1',
 				json: true,
-				body: { billedAmount: 1500, createdAt: '2025-01-15T10:00:00.000Z', trackingId: 'NEW123' },
+				body: { billedAmount: 1500, [TIMESTAMP_CREATION.createdAt]: '2025-01-15T10:00:00.000Z', trackingId: 'NEW123' },
 			}),
 		);
 		expect(result[0].json).toEqual({
 			id: '1',
 			billedAmount: 1500,
-			createdAt: '2025-01-15T10:00:00.000Z',
+			[TIMESTAMP_CREATION.createdAt]: '2025-01-15T10:00:00.000Z',
 			trackingId: 'NEW123',
 		});
 	});
