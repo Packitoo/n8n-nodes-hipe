@@ -89,8 +89,8 @@ export const properties: INodeProperties[] = [
 			{ displayName: 'Company', name: 'company', type: 'string', default: '' },
 			{ displayName: 'Contact', name: 'contact', type: 'string', default: '' },
 			{
-				displayName: TIMESTAMP_CREATION.name,
-				name: TIMESTAMP_CREATION.createdAt,
+				displayName: TIMESTAMP_CREATION.displayName,
+				name: TIMESTAMP_CREATION.name,
 				type: 'options',
 				options: [
 					{ name: 'Overdue', value: 'Overdue' },

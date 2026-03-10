@@ -23,7 +23,7 @@ describe('OrderItems Create action', () => {
 					quantity: 5,
 					additionalFields: {
 						articleId: 'art-1',
-						[TIMESTAMP_CREATION.createdAt]: '2025-01-15T10:00:00.000Z',
+						[TIMESTAMP_CREATION.name]: '2025-01-15T10:00:00.000Z',
 						unitPrice: 10,
 						totalPrice: 50,
 					},
@@ -45,7 +45,7 @@ describe('OrderItems Create action', () => {
 					orderId: 'order-123',
 					quantity: 5,
 					articleId: 'art-1',
-					[TIMESTAMP_CREATION.createdAt]: '2025-01-15T10:00:00.000Z',
+					[TIMESTAMP_CREATION.name]: '2025-01-15T10:00:00.000Z',
 					unitPrice: 10,
 					totalPrice: 50,
 				}),

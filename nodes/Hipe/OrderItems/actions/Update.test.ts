@@ -9,7 +9,7 @@ describe('OrderItems Update action', () => {
 				requestWithAuthentication: {
 					call: jest.fn().mockResolvedValue({
 						id: 'item-1',
-						[TIMESTAMP_CREATION.createdAt]: '2025-01-15T10:00:00.000Z',
+						[TIMESTAMP_CREATION.name]: '2025-01-15T10:00:00.000Z',
 						quantity: 10,
 						unitPrice: 15,
 						totalPrice: 150,
@@ -20,7 +20,7 @@ describe('OrderItems Update action', () => {
 				if (name === 'id') return 'item-1';
 				if (name === 'updateFields')
 					return {
-						[TIMESTAMP_CREATION.createdAt]: '2025-01-15T10:00:00.000Z',
+						[TIMESTAMP_CREATION.name]: '2025-01-15T10:00:00.000Z',
 						quantity: 10,
 						unitPrice: 15,
 						totalPrice: 150,
@@ -39,7 +39,7 @@ describe('OrderItems Update action', () => {
 				url: 'https://fake.api/api/order-items/item-1',
 				json: true,
 				body: {
-					[TIMESTAMP_CREATION.createdAt]: '2025-01-15T10:00:00.000Z',
+					[TIMESTAMP_CREATION.name]: '2025-01-15T10:00:00.000Z',
 					quantity: 10,
 					unitPrice: 15,
 					totalPrice: 150,
@@ -48,7 +48,7 @@ describe('OrderItems Update action', () => {
 		);
 		expect(result[0].json).toEqual({
 			id: 'item-1',
-			[TIMESTAMP_CREATION.createdAt]: '2025-01-15T10:00:00.000Z',
+			[TIMESTAMP_CREATION.name]: '2025-01-15T10:00:00.000Z',
 			quantity: 10,
 			unitPrice: 15,
 			totalPrice: 150,

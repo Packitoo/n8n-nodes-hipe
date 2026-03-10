@@ -17,7 +17,7 @@ describe('Orders Create action', () => {
 					billedAmount: 1000,
 					additionalFields: {
 						companyId: 'comp-1',
-						[TIMESTAMP_CREATION.createdAt]: '2025-01-15T10:00:00.000Z',
+						[TIMESTAMP_CREATION.name]: '2025-01-15T10:00:00.000Z',
 						projectId: 'proj-1',
 						trackingId: 'TRACK123',
 						statusId: 'status-1',
@@ -39,7 +39,7 @@ describe('Orders Create action', () => {
 				body: expect.objectContaining({
 					billedAmount: 1000,
 					companyId: 'comp-1',
-					[TIMESTAMP_CREATION.createdAt]: '2025-01-15T10:00:00.000Z',
+					[TIMESTAMP_CREATION.name]: '2025-01-15T10:00:00.000Z',
 					projectId: 'proj-1',
 					trackingId: 'TRACK123',
 					statusId: 'status-1',

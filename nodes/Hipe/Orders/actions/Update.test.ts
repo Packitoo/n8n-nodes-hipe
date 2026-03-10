@@ -7,14 +7,12 @@ describe('Orders Update action', () => {
 			getCredentials: async () => ({ url: 'https://fake.api' }),
 			helpers: {
 				requestWithAuthentication: {
-					call: jest
-						.fn()
-						.mockResolvedValue({
-							id: '1',
-							billedAmount: 1500,
-							[TIMESTAMP_CREATION.createdAt]: '2025-01-15T10:00:00.000Z',
-							trackingId: 'NEW123',
-						}),
+					call: jest.fn().mockResolvedValue({
+						id: '1',
+						billedAmount: 1500,
+						[TIMESTAMP_CREATION.name]: '2025-01-15T10:00:00.000Z',
+						trackingId: 'NEW123',
+					}),
 				},
 			},
 			getNodeParameter: (name: string) => {
@@ -22,7 +20,7 @@ describe('Orders Update action', () => {
 				if (name === 'updateFields')
 					return {
 						billedAmount: 1500,
-						[TIMESTAMP_CREATION.createdAt]: '2025-01-15T10:00:00.000Z',
+						[TIMESTAMP_CREATION.name]: '2025-01-15T10:00:00.000Z',
 						trackingId: 'NEW123',
 					};
 				return undefined;
@@ -38,13 +36,17 @@ describe('Orders Update action', () => {
 				method: 'PATCH',
 				url: 'https://fake.api/api/orders/1',
 				json: true,
-				body: { billedAmount: 1500, [TIMESTAMP_CREATION.createdAt]: '2025-01-15T10:00:00.000Z', trackingId: 'NEW123' },
+				body: {
+					billedAmount: 1500,
+					[TIMESTAMP_CREATION.name]: '2025-01-15T10:00:00.000Z',
+					trackingId: 'NEW123',
+				},
 			}),
 		);
 		expect(result[0].json).toEqual({
 			id: '1',
 			billedAmount: 1500,
-			[TIMESTAMP_CREATION.createdAt]: '2025-01-15T10:00:00.000Z',
+			[TIMESTAMP_CREATION.name]: '2025-01-15T10:00:00.000Z',
 			trackingId: 'NEW123',
 		});
 	});

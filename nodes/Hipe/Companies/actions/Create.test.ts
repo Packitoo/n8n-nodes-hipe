@@ -12,7 +12,7 @@ describe('Create action', () => {
 				// Simulate n8n parameter structure
 				if (name === 'additionalFields') {
 					return {
-						[TIMESTAMP_CREATION.createdAt]: '2025-01-15T10:00:00.000Z',
+						[TIMESTAMP_CREATION.name]: '2025-01-15T10:00:00.000Z',
 						parentId: 'parent-1',
 						email: 'info@acme.com',
 						website: 'acme.com',
@@ -43,7 +43,7 @@ describe('Create action', () => {
 					name: 'Acme',
 					managedById: 'mgr-1',
 					externalId: 'ext-1',
-					[TIMESTAMP_CREATION.createdAt]: '2025-01-15T10:00:00.000Z',
+					[TIMESTAMP_CREATION.name]: '2025-01-15T10:00:00.000Z',
 					parentId: 'parent-1',
 					email: 'info@acme.com',
 					website: 'acme.com',
