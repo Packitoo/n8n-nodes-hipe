@@ -22,6 +22,7 @@ export const RESOURCES = {
 	ORDER_ITEM: 'orderItem',
 	PIPELINES: 'pipelines',
 	PROJECT: 'project',
+	JOB: 'job',
 	STATUSES: 'statuses',
 	USER: 'user',
 } as const;
@@ -52,6 +53,11 @@ export const OPERATIONS = {
 	UNARCHIVE: 'unarchive',
 	UNLINK_CONTACT: 'unlinkContact',
 	UPDATE: 'update',
+	UPDATE_PROGRESS: 'updateProgress',
+	APPEND_LOGS: 'appendLogs',
+	COMPLETE: 'complete',
+	FAIL: 'fail',
+	CANCEL: 'cancel',
 	UPLOAD_FILE: 'uploadFile',
 } as const;
 
