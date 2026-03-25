@@ -145,6 +145,20 @@ export interface IStatus {
 	[key: string]: any;
 }
 
+// Jobs
+export interface IJob {
+	type?: string;
+	subType?: string;
+	status?: number;
+	completeness?: number;
+	entityType?: string;
+	entityId?: string;
+	externalId?: string;
+	metadata?: Record<string, any>;
+	error?: Record<string, any>;
+	[key: string]: any;
+}
+
 // Async job interfaces
 export interface CreateJobData {
 	entity: string;
