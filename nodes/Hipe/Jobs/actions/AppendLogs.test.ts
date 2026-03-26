@@ -61,7 +61,7 @@ describe('Jobs AppendLogs action', () => {
 			continueOnFail: () => false,
 		} as any;
 		const items = [{ json: {} }];
-		await expect(execute.call(mockThis, items)).rejects.toThrow('At least one log entry is required');
+		await expect(execute.call(mockThis, items)).rejects.toThrow('At least one log entry or a completeness value is required');
 		expect(mockThis.helpers.requestWithAuthentication.call).not.toHaveBeenCalled();
 	});
 
@@ -84,7 +84,7 @@ describe('Jobs AppendLogs action', () => {
 		} as any;
 		const items = [{ json: {} }];
 		const result = await execute.call(mockThis, items);
-		expect(result[0].json).toEqual({ error: 'At least one log entry is required' });
+		expect(result[0].json).toEqual({ error: 'At least one log entry or a completeness value is required' });
 	});
 
 	it('should handle undefined entryFields gracefully (empty fixedCollection)', async () => {
@@ -105,7 +105,7 @@ describe('Jobs AppendLogs action', () => {
 			continueOnFail: () => false,
 		} as any;
 		const items = [{ json: {} }];
-		await expect(execute.call(mockThis, items)).rejects.toThrow('At least one log entry is required');
+		await expect(execute.call(mockThis, items)).rejects.toThrow('At least one log entry or a completeness value is required');
 	});
 
 	it('should accept context as pre-parsed object', async () => {
