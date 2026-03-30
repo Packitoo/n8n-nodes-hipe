@@ -65,15 +65,15 @@ export async function execute(
 				json: true,
 			});
 
-			returnData.push({ json: response });
+			returnData.push({ json: response, pairedItem: { item: i } });
 		} catch (error) {
 			if (this.continueOnFail()) {
-				returnData.push({ json: { error: error.message } });
+				returnData.push({ json: { error: error.message }, pairedItem: { item: i } });
 				continue;
 			}
 			throw error;
 		}
-		await sleep(500);
+		if (i < items.length - 1) await sleep(500);
 	}
 	return returnData;
 }

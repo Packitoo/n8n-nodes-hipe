@@ -75,6 +75,69 @@ describe('Jobs Create action', () => {
 		);
 	});
 
+	it('should include status in body when provided in additionalFields', async () => {
+		const mockThis = {
+			getCredentials: async () => ({ url: 'https://fake.api' }),
+			helpers: {
+				requestWithAuthentication: {
+					call: jest.fn().mockResolvedValue({ id: 'job-3', status: 2 }),
+				},
+			},
+			getNodeParameter: (name: string, i: number, defaultValue?: any) => {
+				const params: { [key: string]: any } = {
+					type: 'n8n_workflow',
+					subType: 'Company ETL',
+					externalId: 'exec-456',
+					additionalFields: {
+						status: 2,
+					},
+				};
+				return params[name] !== undefined ? params[name] : defaultValue;
+			},
+			continueOnFail: () => false,
+		} as any;
+		const items = [{ json: {} }];
+		const result = await execute.call(mockThis, items);
+		expect(mockThis.helpers.requestWithAuthentication.call).toHaveBeenCalledWith(
+			mockThis,
+			'hipeApi',
+			expect.objectContaining({
+				body: {
+					type: 'n8n_workflow',
+					subType: 'Company ETL',
+					externalId: 'exec-456',
+					status: 2,
+				},
+			}),
+		);
+		expect(result[0].json).toEqual({ id: 'job-3', status: 2 });
+	});
+
+	it('should not include status in body when not provided', async () => {
+		const mockThis = {
+			getCredentials: async () => ({ url: 'https://fake.api' }),
+			helpers: {
+				requestWithAuthentication: {
+					call: jest.fn().mockResolvedValue({ id: 'job-4' }),
+				},
+			},
+			getNodeParameter: (name: string, i: number, defaultValue?: any) => {
+				const params: { [key: string]: any } = {
+					type: 'n8n_workflow',
+					subType: 'test',
+					externalId: '',
+					additionalFields: {},
+				};
+				return params[name] !== undefined ? params[name] : defaultValue;
+			},
+			continueOnFail: () => false,
+		} as any;
+		const items = [{ json: {} }];
+		await execute.call(mockThis, items);
+		const body = mockThis.helpers.requestWithAuthentication.call.mock.calls[0][2].body;
+		expect(body).not.toHaveProperty('status');
+	});
+
 	it('should strip trailing slash from base URL', async () => {
 		const mockThis = {
 			getCredentials: async () => ({ url: 'https://fake.api/' }),

@@ -84,6 +84,17 @@ export const properties: INodeProperties[] = [
 				description: 'ID of the entity this job relates to',
 			},
 			{
+				displayName: 'Status',
+				name: 'status',
+				type: 'options',
+				options: [
+					{ name: 'Requested', value: 1 },
+					{ name: 'In Progress', value: 2 },
+				],
+				default: 2,
+				description: 'Initial status of the job (1=Requested, 2=In Progress)',
+			},
+			{
 				displayName: 'Metadata',
 				name: 'metadata',
 				type: 'json',
@@ -120,6 +131,7 @@ export async function execute(
 				...(externalId ? { externalId } : {}),
 			};
 
+			if (additionalFields.status) body.status = additionalFields.status;
 			if (additionalFields.entityType) body.entityType = additionalFields.entityType;
 			if (additionalFields.entityId) body.entityId = additionalFields.entityId;
 			if (additionalFields.metadata) {
@@ -135,15 +147,15 @@ export async function execute(
 				json: true,
 			});
 
-			returnData.push({ json: response });
+			returnData.push({ json: response, pairedItem: { item: i } });
 		} catch (error) {
 			if (this.continueOnFail()) {
-				returnData.push({ json: { error: error.message } });
+				returnData.push({ json: { error: error.message }, pairedItem: { item: i } });
 				continue;
 			}
 			throw error;
 		}
-		await sleep(500);
+		if (i < items.length - 1) await sleep(500);
 	}
 	return returnData;
 }

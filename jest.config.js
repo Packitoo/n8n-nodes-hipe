@@ -2,6 +2,7 @@
 module.exports = {
   preset: 'ts-jest',
   testEnvironment: 'node',
-  testMatch: ['**/?(*.)+(test).[tj]s?(x)'],
+  testMatch: ['<rootDir>/nodes/**/?(*.)+(test).ts'],
+  testPathIgnorePatterns: ['/dist/'],
   moduleFileExtensions: ['ts', 'js', 'json', 'node'],
 };
