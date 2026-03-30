@@ -58,10 +58,10 @@ export async function execute(
 				url: `${baseUrl}/api/corrugated-material-composition-prices/${priceId}`,
 				json: true,
 			});
-			returnData.push({ json: response as ICorrugatedMaterialCompositionPrice });
+			returnData.push({ json: response as ICorrugatedMaterialCompositionPrice, pairedItem: { item: i } });
 		} catch (error) {
 			if (this.continueOnFail()) {
-				returnData.push({ json: { error: error.message } });
+				returnData.push({ json: { error: error.message }, pairedItem: { item: i } });
 				continue;
 			}
 			throw error;

@@ -167,10 +167,10 @@ export async function execute(
 				filters,
 				sort,
 			});
-			returnData.push({ json: result });
+			returnData.push({ json: result, pairedItem: { item: i } });
 		} catch (error) {
 			if (this.continueOnFail()) {
-				returnData.push({ json: { error: error.message } });
+				returnData.push({ json: { error: error.message }, pairedItem: { item: i } });
 				continue;
 			}
 			throw error;

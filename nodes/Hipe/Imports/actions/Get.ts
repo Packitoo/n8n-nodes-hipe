@@ -35,10 +35,10 @@ export async function execute(
 				url: `${baseUrl}/api/imports/${encodeURIComponent(id)}`,
 				json: true,
 			});
-			returnData.push({ json: response });
+			returnData.push({ json: response, pairedItem: { item: i } });
 		} catch (error) {
 			if (this.continueOnFail()) {
-				returnData.push({ json: { error: (error as Error).message } });
+				returnData.push({ json: { error: (error as Error).message }, pairedItem: { item: i } });
 				continue;
 			}
 			throw error;

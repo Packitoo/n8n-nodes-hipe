@@ -92,10 +92,10 @@ export async function execute(
 				json: true,
 			});
 
-			returnData.push({ json: response as ICorrugatedMaterial });
+			returnData.push({ json: response as ICorrugatedMaterial, pairedItem: { item: i } });
 		} catch (error) {
 			if (this.continueOnFail()) {
-				returnData.push({ json: { error: (error as Error).message } });
+				returnData.push({ json: { error: (error as Error).message }, pairedItem: { item: i } });
 				continue;
 			}
 			throw error;

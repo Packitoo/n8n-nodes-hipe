@@ -58,10 +58,10 @@ export async function execute(
 			})) as Buffer;
 
 			const binary = await this.helpers.prepareBinaryData(response, fileName);
-			returnData.push({ json: { id }, binary: { [binaryPropertyName]: binary } });
+			returnData.push({ json: { id }, binary: { [binaryPropertyName]: binary }, pairedItem: { item: i } });
 		} catch (error) {
 			if (this.continueOnFail()) {
-				returnData.push({ json: { error: (error as Error).message } });
+				returnData.push({ json: { error: (error as Error).message }, pairedItem: { item: i } });
 				continue;
 			}
 			throw error;
