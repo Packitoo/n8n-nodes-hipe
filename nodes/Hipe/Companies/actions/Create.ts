@@ -141,6 +141,14 @@ export const properties: INodeProperties[] = [
 				default: '',
 				description: 'Website of the company',
 			},
+			{
+				displayName: 'Minimum Order Quantity (Corrugated)',
+				name: 'minimumOrderQuantityCorrugatedCompositionMaterial',
+				type: 'number',
+				default: 0,
+				description:
+					'Company-level minimum order quantity (in m²) for corrugated material compositions',
+			},
 		],
 	},
 ];

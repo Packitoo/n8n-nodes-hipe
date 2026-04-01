@@ -63,7 +63,13 @@ export const properties: INodeProperties[] = [
 			},
 		},
 		options: [
-			// Add any additional fields specific to creating corrugated material compositions
+			{
+				displayName: 'Minimum Order Quantity',
+				name: 'minimumOrderQuantity',
+				type: 'number',
+				default: 0,
+				description: 'Minimum order quantity (in m²) for this composition',
+			},
 		],
 	},
 ];

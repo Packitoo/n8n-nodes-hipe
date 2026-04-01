@@ -40,6 +40,7 @@ export interface ICorrugatedMaterialComposition {
 	corrugatedMaterial?: string;
 	flute?: string;
 	liners?: string[];
+	minimumOrderQuantity?: number;
 	[key: string]: any;
 }
 
@@ -128,6 +129,7 @@ export interface ICompany {
 	phone?: string;
 	vat?: string;
 	externalId?: string;
+	minimumOrderQuantityCorrugatedCompositionMaterial?: number;
 	[key: string]: any;
 }
 
