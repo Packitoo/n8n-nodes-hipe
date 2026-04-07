@@ -41,7 +41,7 @@ export const properties: INodeProperties[] = [
 		type: 'collection',
 		placeholder: 'Add Log Entry',
 		default: {},
-		description: 'Optional log entry to append with the progress update',
+		description: 'Optional. Log entry to append along with the progress update.',
 		displayOptions: {
 			show: {
 				resource: [RESOURCES.JOB],

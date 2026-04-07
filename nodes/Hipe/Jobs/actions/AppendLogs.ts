@@ -26,7 +26,7 @@ export const properties: INodeProperties[] = [
 			minValue: -1,
 			maxValue: 100,
 		},
-		description: 'Optional progress percentage (0-100). Leave at -1 to skip updating progress.',
+		description: 'Optional. Progress percentage (0-100). Leave at -1 to skip updating progress.',
 		displayOptions: {
 			show: {
 				resource: [RESOURCES.JOB],

@@ -22,7 +22,7 @@ export const properties: INodeProperties[] = [
 		name: 'metadata',
 		type: 'json',
 		default: '{}',
-		description: 'Optional final summary metadata as JSON',
+		description: 'Optional. Final summary metadata as JSON. Leave empty to complete without metadata.',
 		displayOptions: {
 			show: {
 				resource: [RESOURCES.JOB],

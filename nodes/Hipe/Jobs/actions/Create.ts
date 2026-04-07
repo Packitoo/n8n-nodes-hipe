@@ -48,7 +48,7 @@ export const properties: INodeProperties[] = [
 		name: 'externalId',
 		type: 'string',
 		default: '={{ $execution.id }}',
-		description: 'External reference ID (e.g. n8n execution ID)',
+		description: 'Optional. External reference ID (e.g. n8n execution ID). Defaults to the current execution ID.',
 		displayOptions: {
 			show: {
 				resource: [RESOURCES.JOB],
@@ -69,6 +69,20 @@ export const properties: INodeProperties[] = [
 			},
 		},
 		options: [
+			{
+				displayName: 'Status',
+				name: 'status',
+				type: 'options',
+				default: 1,
+				description: 'Optional. Initial job status. Defaults to Requested. Use final statuses (Succeeded, Failed, Canceled) to log a completed job.',
+				options: [
+					{ name: 'Requested', value: 1 },
+					{ name: 'In Progress', value: 2 },
+					{ name: 'Succeeded', value: 3 },
+					{ name: 'Failed', value: 4 },
+					{ name: 'Canceled', value: 5 },
+				],
+			},
 			{
 				displayName: 'Entity Type',
 				name: 'entityType',
@@ -120,6 +134,7 @@ export async function execute(
 				...(externalId ? { externalId } : {}),
 			};
 
+			if (additionalFields.status) body.status = additionalFields.status;
 			if (additionalFields.entityType) body.entityType = additionalFields.entityType;
 			if (additionalFields.entityId) body.entityId = additionalFields.entityId;
 			if (additionalFields.metadata) {
