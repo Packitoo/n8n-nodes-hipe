@@ -201,11 +201,12 @@ export async function execute(
 				json: true,
 			});
 
-			returnData.push({ json: response });
+			returnData.push({ json: response, pairedItem: { item: i } });
 		} catch (error) {
 			if (this.continueOnFail()) {
 				returnData.push({
 					json: { error: error.message.replace('collaboraterIds', 'collaboratorIds') },
+					pairedItem: { item: i },
 				});
 				continue;
 			}

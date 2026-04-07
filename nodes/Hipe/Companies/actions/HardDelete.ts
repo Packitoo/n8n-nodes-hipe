@@ -43,10 +43,10 @@ export async function execute(
 				url: `${baseUrl}/api/companies/${encId}`,
 				json: true,
 			});
-			returnData.push({ json: response ?? { success: true } });
+			returnData.push({ json: response ?? { success: true }, pairedItem: { item: i } });
 		} catch (error) {
 			if (this.continueOnFail()) {
-				returnData.push({ json: { error: (error as Error).message } });
+				returnData.push({ json: { error: (error as Error).message }, pairedItem: { item: i } });
 				continue;
 			}
 			throw error;

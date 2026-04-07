@@ -97,11 +97,11 @@ export async function execute(
 				},
 			});
 			const data = typeof response === 'string' ? JSON.parse(response) : (response as IDataObject);
-			returnData.push({ json: data });
+			returnData.push({ json: data, pairedItem: { item: i } });
 			await sleep(500);
 		} catch (error: any) {
 			if (this.continueOnFail()) {
-				returnData.push({ json: { error: error.message } });
+				returnData.push({ json: { error: error.message }, pairedItem: { item: i } });
 				continue;
 			}
 			throw error;

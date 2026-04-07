@@ -58,10 +58,10 @@ export async function execute(
 				json: true,
 			});
 
-			returnData.push({ json: { success: true, id, ...response } });
+			returnData.push({ json: { success: true, id, ...response }, pairedItem: { item: i } });
 		} catch (error) {
 			if (this.continueOnFail()) {
-				returnData.push({ json: { error: error.message } });
+				returnData.push({ json: { error: error.message }, pairedItem: { item: i } });
 				continue;
 			}
 			throw error;
