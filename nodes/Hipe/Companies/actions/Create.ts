@@ -211,7 +211,7 @@ export async function execute(
 			}
 			throw error;
 		}
-		sleep(500);
+		await sleep(500);
 	}
 	return returnData;
 }

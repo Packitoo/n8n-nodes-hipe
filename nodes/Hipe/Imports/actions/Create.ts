@@ -98,7 +98,7 @@ export async function execute(
 			});
 			const data = typeof response === 'string' ? JSON.parse(response) : (response as IDataObject);
 			returnData.push({ json: data });
-			sleep(500);
+			await sleep(500);
 		} catch (error: any) {
 			if (this.continueOnFail()) {
 				returnData.push({ json: { error: error.message } });
