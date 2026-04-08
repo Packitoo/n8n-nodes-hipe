@@ -56,7 +56,6 @@ export async function execute(
 		try {
 			// Get input data
 			const linerId = this.getNodeParameter('linerId', i) as string;
-			// const options = this.getNodeParameter('options', i, {}) as object;
 
 			// Make API call to get the corrugated liner
 			const response = await this.helpers.requestWithAuthentication.call(this, 'hipeApi', {

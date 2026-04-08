@@ -138,7 +138,6 @@ export class Hipe implements INodeType {
 		this.logger.debug('[hipe][EXECUTE] === HIPE NODE EXECUTE START ===');
 		try {
 			const items = this.getInputData();
-			// const returnData: INodeExecutionData[] = [];
 			const resource = this.getNodeParameter('resource', 0) as string;
 			const operation = this.getNodeParameter('operation', 0) as string;
 

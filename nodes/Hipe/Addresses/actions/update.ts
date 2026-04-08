@@ -226,7 +226,6 @@ export async function execute(
 		const asyncMode = this.getNodeParameter('asyncMode', i, false) as boolean;
 		try {
 			// Get input data
-			// const options = this.getNodeParameter('options', i, {}) as { includeDetails?: boolean };
 
 			// Make API call to get the corrugated format
 			const response = await this.helpers.requestWithAuthentication.call(this, 'hipeApi', {

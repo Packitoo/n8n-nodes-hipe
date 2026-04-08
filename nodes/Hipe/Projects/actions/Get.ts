@@ -55,7 +55,6 @@ export async function execute(
 		try {
 			// Get input data
 			const projectId = this.getNodeParameter('projectId', i) as string;
-			// const options = this.getNodeParameter('options', i, {}) as { includeDetails?: boolean };
 
 			const response = await this.helpers.requestWithAuthentication.call(this, 'hipeApi', {
 				method: 'GET',

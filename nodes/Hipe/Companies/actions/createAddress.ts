@@ -36,7 +36,6 @@ export async function execute(
 		const zipCode = this.getNodeParameter('zipCode', i) as string;
 		try {
 			// Get input data
-			// const options = this.getNodeParameter('options', i, {}) as { includeDetails?: boolean };
 
 			// Make API call to get the corrugated format
 			const response = await this.helpers.requestWithAuthentication.call(this, 'hipeApi', {

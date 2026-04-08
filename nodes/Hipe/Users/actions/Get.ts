@@ -57,7 +57,6 @@ export async function execute(
 			// Get input data
 			const id = this.getNodeParameter('id', i) as string;
 			const encId = encodeURIComponent(id);
-			// const options = this.getNodeParameter('options', i, {}) as { includeDetails?: boolean };
 
 			// Make API call to get the corrugated format
 			const response = await this.helpers.requestWithAuthentication.call(this, 'hipeApi', {

@@ -55,7 +55,6 @@ export async function execute(
 		try {
 			// Get input data
 			const formatId = this.getNodeParameter('formatId', i) as string;
-			// const options = this.getNodeParameter('options', i, {}) as object; // Not used for GET by ID
 
 			// Make API call to get the corrugated format
 			const response = await this.helpers.request!({

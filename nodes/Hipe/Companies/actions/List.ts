@@ -18,23 +18,6 @@ export const properties: INodeProperties[] = [
 			},
 		},
 	},
-	// {
-	// 	displayName: 'Limit',
-	// 	name: 'limit',
-	// 	type: 'number',
-	// 	displayOptions: {
-	// 		show: {
-	// 			returnAll: [false],
-	// 			resource: ['company'],
-	// 			operation: ['getMany'],
-	// 		},
-	// 	},
-	// 	typeOptions: {
-	// 		minValue: 1,
-	// 	},
-	// 	default: 50,
-	// 	description: 'Max number of results to return',
-	// },
 	{
 		displayName: 'Limit',
 		name: 'limit',
