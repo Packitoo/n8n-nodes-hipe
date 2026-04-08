@@ -166,15 +166,15 @@ export async function execute(
 				filters: filters as Record<string, any>,
 				sort: sort as { sortBy?: string; sortOrder?: 'asc' | 'desc' },
 			});
-			returnData.push({ json: response });
+			returnData.push({ json: response, pairedItem: { item: i } });
 		} catch (error) {
 			if (this.continueOnFail()) {
-				returnData.push({ json: { error: error.message } });
+				returnData.push({ json: { error: error.message }, pairedItem: { item: i } });
 				continue;
 			}
 			throw error;
 		}
-		sleep(500);
+		await sleep(500);
 	}
 	return returnData;
 }

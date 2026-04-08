@@ -58,18 +58,18 @@ export async function execute(
 			});
 			// If response is an array, push each item; otherwise, push the object
 			if (Array.isArray(response)) {
-				response.forEach((item) => returnData.push({ json: item }));
+				response.forEach((item) => returnData.push({ json: item, pairedItem: { item: i } }));
 			} else if (response) {
-				returnData.push({ json: response });
+				returnData.push({ json: response, pairedItem: { item: i } });
 			}
 		} catch (error) {
 			if (this.continueOnFail()) {
-				returnData.push({ json: { error: error.message } });
+				returnData.push({ json: { error: error.message }, pairedItem: { item: i } });
 				continue;
 			}
 			throw error;
 		}
-		sleep(500);
+		await sleep(500);
 	}
 	return returnData;
 }

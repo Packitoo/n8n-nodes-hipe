@@ -155,15 +155,15 @@ export async function execute(
 				filters,
 				sort,
 			});
-			returnData.push({ json: result });
+			returnData.push({ json: result, pairedItem: { item: i } });
 		} catch (error) {
 			if (this.continueOnFail()) {
-				returnData.push({ json: { error: (error as any).message } });
+				returnData.push({ json: { error: (error as any).message }, pairedItem: { item: i } });
 				continue;
 			}
 			throw error;
 		}
-		sleep(500);
+		await sleep(500);
 	}
 	return returnData;
 }

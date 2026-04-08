@@ -92,15 +92,15 @@ export async function execute(
 				json: true,
 			});
 
-			returnData.push({ json: response as ICorrugatedSupplier });
+			returnData.push({ json: response as ICorrugatedSupplier, pairedItem: { item: i } });
 		} catch (error) {
 			if (this.continueOnFail()) {
-				returnData.push({ json: { error: (error as Error).message } });
+				returnData.push({ json: { error: (error as Error).message }, pairedItem: { item: i } });
 				continue;
 			}
 			throw error;
 		}
-		sleep(500);
+		await sleep(500);
 	}
 	return returnData;
 }

@@ -55,22 +55,21 @@ export async function execute(
 		try {
 			// Get input data
 			const projectId = this.getNodeParameter('projectId', i) as string;
-			// const options = this.getNodeParameter('options', i, {}) as { includeDetails?: boolean };
 
 			const response = await this.helpers.requestWithAuthentication.call(this, 'hipeApi', {
 				method: 'GET',
 				url: `${baseUrl}/api/projects/${projectId}/files`,
 				json: true,
 			});
-			returnData.push({ json: response });
+			returnData.push({ json: response, pairedItem: { item: i } });
 		} catch (error) {
 			if (this.continueOnFail()) {
-				returnData.push({ json: { error: error.message } });
+				returnData.push({ json: { error: error.message }, pairedItem: { item: i } });
 				continue;
 			}
 			throw error;
 		}
-		sleep(500);
+		await sleep(500);
 	}
 
 	return returnData;

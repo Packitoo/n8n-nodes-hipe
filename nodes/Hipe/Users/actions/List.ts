@@ -265,7 +265,7 @@ export async function execute(
 					if (batch.length < pageLimit) break;
 					page += 1;
 				}
-				returnData.push({ json: { data: aggregated } });
+				returnData.push({ json: { data: aggregated }, pairedItem: { item: i } });
 			} else {
 				const response = await this.helpers.requestWithAuthentication.call(this, 'hipeApi', {
 					method: 'GET',
@@ -273,16 +273,16 @@ export async function execute(
 					qs: buildQs(uiPage, uiLimit),
 					json: true,
 				});
-				returnData.push({ json: response });
+				returnData.push({ json: response, pairedItem: { item: i } });
 			}
 		} catch (error) {
 			if (this.continueOnFail()) {
-				returnData.push({ json: { error: (error as Error).message } });
+				returnData.push({ json: { error: (error as Error).message }, pairedItem: { item: i } });
 				continue;
 			}
 			throw error;
 		}
-		sleep(500);
+		await sleep(500);
 	}
 	return returnData;
 }
