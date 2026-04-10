@@ -66,15 +66,15 @@ export async function execute(
 			});
 
 			// Response is an array of users
-			returnData.push({ json: { data: Array.isArray(response) ? response : [response] } });
+			returnData.push({ json: { data: Array.isArray(response) ? response : [response] }, pairedItem: { item: i } });
 		} catch (error) {
 			if (this.continueOnFail()) {
-				returnData.push({ json: { error: (error as Error).message } });
+				returnData.push({ json: { error: (error as Error).message }, pairedItem: { item: i } });
 				continue;
 			}
 			throw error;
 		}
-		sleep(500);
+		await sleep(500);
 	}
 
 	return returnData;

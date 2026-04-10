@@ -226,7 +226,6 @@ export async function execute(
 		const asyncMode = this.getNodeParameter('asyncMode', i, false) as boolean;
 		try {
 			// Get input data
-			// const options = this.getNodeParameter('options', i, {}) as { includeDetails?: boolean };
 
 			// Make API call to get the corrugated format
 			const response = await this.helpers.requestWithAuthentication.call(this, 'hipeApi', {
@@ -249,15 +248,15 @@ export async function execute(
 				headers: getAsyncHeaders(asyncMode),
 			});
 
-			returnData.push({ json: response });
+			returnData.push({ json: response, pairedItem: { item: i } });
 		} catch (error) {
 			if (this.continueOnFail()) {
-				returnData.push({ json: { error: error.message } });
+				returnData.push({ json: { error: error.message }, pairedItem: { item: i } });
 				continue;
 			}
 			throw error;
 		}
-		sleep(500);
+		await sleep(500);
 	}
 	return returnData;
 }

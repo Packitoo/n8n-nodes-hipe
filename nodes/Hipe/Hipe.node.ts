@@ -29,6 +29,7 @@ import * as articles from './Articles/actions';
 import * as orders from './Orders/actions';
 import * as orderItems from './OrderItems/actions';
 import * as currencies from './Currencies/actions';
+import * as jobs from './Jobs/actions';
 
 export const EMBEDDED_RESOURCES = [
 	companies,
@@ -50,6 +51,7 @@ export const EMBEDDED_RESOURCES = [
 	orders,
 	orderItems,
 	currencies,
+	jobs,
 ];
 
 // Runtime check for resource registration
@@ -136,7 +138,6 @@ export class Hipe implements INodeType {
 		this.logger.debug('[hipe][EXECUTE] === HIPE NODE EXECUTE START ===');
 		try {
 			const items = this.getInputData();
-			// const returnData: INodeExecutionData[] = [];
 			const resource = this.getNodeParameter('resource', 0) as string;
 			const operation = this.getNodeParameter('operation', 0) as string;
 

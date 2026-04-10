@@ -100,20 +100,20 @@ export async function execute(
 
 			// Handle response
 			if (Array.isArray(response)) {
-				response.forEach((item: any) => returnData.push({ json: item }));
+				response.forEach((item: any) => returnData.push({ json: item, pairedItem: { item: i } }));
 			} else if (response.data && Array.isArray(response.data)) {
-				response.data.forEach((item: any) => returnData.push({ json: item }));
+				response.data.forEach((item: any) => returnData.push({ json: item, pairedItem: { item: i } }));
 			} else {
-				returnData.push({ json: response });
+				returnData.push({ json: response, pairedItem: { item: i } });
 			}
 		} catch (error) {
 			if (this.continueOnFail()) {
-				returnData.push({ json: { error: error.message } });
+				returnData.push({ json: { error: error.message }, pairedItem: { item: i } });
 				continue;
 			}
 			throw error;
 		}
-		sleep(500);
+		await sleep(500);
 	}
 	return returnData;
 }
