@@ -79,7 +79,9 @@ export const properties: INodeProperties[] = [
 				name: 'minimumOrderQuantity',
 				type: 'number',
 				default: 0,
-				description: 'Minimum order quantity (in m²) for this composition',
+				typeOptions: { minValue: 0, numberPrecision: 0 },
+				description:
+					'Minimum order quantity (in m²) for this composition. 0 = no minimum required.',
 			},
 		],
 	},
