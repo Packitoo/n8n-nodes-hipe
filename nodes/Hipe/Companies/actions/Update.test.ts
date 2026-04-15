@@ -11,7 +11,11 @@ describe('Update action', () => {
 			getNodeParameter: (name: string, i: number, defaultValue?: any) => {
 				if (name === 'id') return '1';
 				if (name === 'updateFields')
-					return { name: 'Acme Updated', [CREATED_AT.name]: '2025-01-15T10:00:00.000Z' };
+					return {
+							name: 'Acme Updated',
+							[CREATED_AT.name]: '2025-01-15T10:00:00.000Z',
+							minimumOrderQuantityCorrugatedCompositionMaterial: 750,
+						};
 				return defaultValue;
 			},
 			continueOnFail: () => false,
@@ -27,6 +31,7 @@ describe('Update action', () => {
 				body: expect.objectContaining({
 					name: 'Acme Updated',
 					[CREATED_AT.name]: '2025-01-15T10:00:00.000Z',
+					minimumOrderQuantityCorrugatedCompositionMaterial: 750,
 				}),
 			}),
 		);

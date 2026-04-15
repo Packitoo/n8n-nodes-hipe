@@ -18,6 +18,7 @@ describe('Create action', () => {
 						website: 'acme.com',
 						phone: '555-0000',
 						vat: 'FR123',
+						minimumOrderQuantityCorrugatedCompositionMaterial: 500,
 						customFields: {},
 						collaboratorIds: { collaboratorIdFields: [{ id: 'collab-1' }, { id: 'collab-2' }] },
 					};
@@ -49,6 +50,7 @@ describe('Create action', () => {
 					website: 'acme.com',
 					phone: '555-0000',
 					vat: 'FR123',
+					minimumOrderQuantityCorrugatedCompositionMaterial: 500,
 					customFields: {},
 					collaboratorIds: ['collab-1', 'collab-2'],
 				}),
