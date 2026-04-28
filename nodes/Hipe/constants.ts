@@ -7,6 +7,7 @@
 export const RESOURCES = {
 	ADDRESS: 'address',
 	ARTICLE: 'article',
+	BRIEF_ELEMENT: 'briefElement',
 	COMPANY: 'company',
 	CORRUGATED_FLUTE: 'corrugatedFlute',
 	CORRUGATED_FORMAT: 'corrugatedFormat',

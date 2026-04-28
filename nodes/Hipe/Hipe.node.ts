@@ -26,6 +26,7 @@ import * as pipelines from './Pipelines/actions';
 import * as importsResource from './Imports/actions';
 import * as exportsResource from './Exports/actions';
 import * as articles from './Articles/actions';
+import * as briefElements from './BriefElements/actions';
 import * as orders from './Orders/actions';
 import * as orderItems from './OrderItems/actions';
 import * as currencies from './Currencies/actions';
@@ -48,6 +49,7 @@ export const EMBEDDED_RESOURCES = [
 	corrugatedFlutes,
 	corrugatedLiners,
 	articles,
+	briefElements,
 	orders,
 	orderItems,
 	currencies,
