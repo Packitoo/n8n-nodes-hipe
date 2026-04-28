@@ -98,19 +98,6 @@ export const properties: INodeProperties[] = [
 		},
 	},
 	{
-		displayName: 'Position',
-		name: 'position',
-		type: 'number',
-		default: 1,
-		description: 'Position of the address',
-		displayOptions: {
-			show: {
-				resource: [RESOURCES.ADDRESS],
-				operation: [OPERATIONS.CREATE],
-			},
-		},
-	},
-	{
 		displayName: 'State',
 		name: 'state',
 		type: 'string',
@@ -204,7 +191,6 @@ export async function execute(
 			i,
 		) as string;
 		const name = this.getNodeParameter('name', i) as string;
-		const position = this.getNodeParameter('position', i) as number;
 		const secondComplementaryAddress = this.getNodeParameter(
 			'secondComplementaryAddress',
 			i,
@@ -226,7 +212,6 @@ export async function execute(
 					country,
 					firstComplementaryAddress,
 					name,
-					position,
 					secondComplementaryAddress,
 					state,
 					zipCode,
