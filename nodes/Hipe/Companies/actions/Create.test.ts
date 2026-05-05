@@ -18,6 +18,7 @@ describe('Create action', () => {
 						website: 'acme.com',
 						phone: '555-0000',
 						vat: 'FR123',
+						minimumOrderQuantityCorrugatedCompositionMaterial: 500,
 						customFields: {},
 						collaboratorIds: { collaboratorIdFields: [{ id: 'collab-1' }, { id: 'collab-2' }] },
 					};
@@ -49,12 +50,43 @@ describe('Create action', () => {
 					website: 'acme.com',
 					phone: '555-0000',
 					vat: 'FR123',
+					minimumOrderQuantityCorrugatedCompositionMaterial: 500,
 					customFields: {},
 					collaboratorIds: ['collab-1', 'collab-2'],
 				}),
 			}),
 		);
 		expect(result[0].json).toEqual({ created: true });
+	});
+
+	it('should forward minimumOrderQuantityCorrugatedCompositionMaterial=0 (no-minimum semantics)', async () => {
+		// 0 must be preserved distinct from omitted/null — see workspace CLAUDE.md "Key decisions":
+		// "MOQ = 0 vs null: 0 means no minimum required, null means no MOQ at this level".
+		const mockThis = {
+			getCredentials: async () => ({ url: 'https://fake.api' }),
+			helpers: {
+				requestWithAuthentication: { call: jest.fn().mockResolvedValue({ created: true }) },
+			},
+			getNodeParameter: (name: string, i: number, defaultValue?: any) => {
+				if (name === 'additionalFields') {
+					return { minimumOrderQuantityCorrugatedCompositionMaterial: 0 };
+				}
+				const params: { [key: string]: any } = { name: 'Acme', managedById: 'mgr-1', externalId: 'ext-1' };
+				return params[name] !== undefined ? params[name] : defaultValue;
+			},
+			continueOnFail: () => false,
+		} as any;
+		const items = [{ json: {} }];
+		await execute.call(mockThis, items);
+		expect(mockThis.helpers.requestWithAuthentication.call).toHaveBeenCalledWith(
+			mockThis,
+			'hipeApi',
+			expect.objectContaining({
+				body: expect.objectContaining({
+					minimumOrderQuantityCorrugatedCompositionMaterial: 0,
+				}),
+			}),
+		);
 	});
 
 	it('should handle errors and push error object when continueOnFail is true (edge case)', async () => {
